@@ -40,6 +40,9 @@
 
     // 8. Astraz Tested Projects Horizontal Gallery & Filter
     initHorizontalProjectGallery();
+
+    // 9. Bug Catcher Specimen Section & 3D Interactive Bugs
+    initBugCatcher();
   }
 
   /* ----------------------------------------------------
@@ -801,13 +804,12 @@
         clearProps: 'transform,opacity'
       });
 
-      // Metric Cards Staggered Rise & Counter Numbers
+      // Metric Cards Staggered Rise (Numeric counters handled by initBugCatcher)
       ScrollTrigger.create({
         trigger: '.metrics-grid',
         start: 'top 85%',
         once: true,
         onEnter: () => {
-          // Animate card containers
           gsap.from('.metric-card', {
             opacity: 0,
             y: 45,
@@ -816,33 +818,6 @@
             duration: 0.85,
             ease: 'power3.out',
             clearProps: 'transform,opacity'
-          });
-
-          // Dynamic Numeric Counter Animation (0 -> Target)
-          metricsSection.querySelectorAll('.metric-number').forEach((numEl) => {
-            const target = parseFloat(numEl.getAttribute('data-target')) || 0;
-            const suffix = numEl.getAttribute('data-suffix') || '';
-            const hasComma = numEl.getAttribute('data-format') === 'comma';
-            const decimals = parseInt(numEl.getAttribute('data-decimals') || '0', 10);
-
-            const counterObj = { val: 0 };
-            gsap.to(counterObj, {
-              val: target,
-              duration: 2.0,
-              ease: 'power2.out',
-              onUpdate: () => {
-                let displayVal;
-                if (decimals > 0) {
-                  displayVal = counterObj.val.toFixed(decimals);
-                } else {
-                  displayVal = Math.round(counterObj.val);
-                  if (hasComma) {
-                    displayVal = displayVal.toLocaleString('en-US');
-                  }
-                }
-                numEl.textContent = `${displayVal}${suffix}`;
-              }
-            });
           });
         }
       });
@@ -1158,6 +1133,303 @@
           }
         });
       });
+    });
+  }
+
+  /* ==========================================================================
+     9. BUG CATCHER SPECIMEN SECTION & 3D INTERACTIVE BUGS
+     Stats count-up, 3D card tilt & glare, 7 crawling bugs with bounce & catch audio
+     ========================================================================== */
+  function initBugCatcher() {
+    const section = document.getElementById('metrics-section') || document.querySelector('.bc-section');
+    const bugsLayer = document.getElementById('bc-bugs-layer');
+    const caughtCountEl = document.getElementById('bc-caught-count');
+    const resetBtn = document.getElementById('bc-reset-bugs');
+    const victoryToast = document.getElementById('bc-victory-toast');
+    const cards = document.querySelectorAll('[data-tilt-card]');
+    const statNumbers = document.querySelectorAll('.bc-card-number[data-target]');
+
+    if (!section || !bugsLayer || !caughtCountEl) return;
+
+    const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ----------------------------------------------------
+       1. STATS NUMBERS COUNT-UP (IntersectionObserver)
+       ---------------------------------------------------- */
+    function initNumberCounters() {
+      if (!('IntersectionObserver' in window)) {
+        statNumbers.forEach(el => renderFinalNumber(el));
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          obs.unobserve(entry.target);
+
+          const el = entry.target;
+          const target = parseFloat(el.getAttribute('data-target')) || 0;
+          const suffix = el.getAttribute('data-suffix') || '';
+          const decimals = parseInt(el.getAttribute('data-decimals'), 10) || 0;
+          const hasComma = el.getAttribute('data-comma') === 'true' || el.getAttribute('data-format') === 'comma';
+
+          if (isReducedMotion) {
+            renderFinalNumber(el);
+            return;
+          }
+
+          const duration = 1600;
+          const startTime = performance.now();
+
+          function countFrame(now) {
+            const progress = Math.min((now - startTime) / duration, 1);
+            // Ease-out cubic
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = eased * target;
+
+            let displayVal = decimals > 0 ? current.toFixed(decimals) : Math.round(current);
+            if (hasComma) {
+              displayVal = displayVal.toLocaleString('en-US');
+            }
+            el.textContent = `${displayVal}${suffix}`;
+
+            if (progress < 1) {
+              requestAnimationFrame(countFrame);
+            } else {
+              renderFinalNumber(el);
+            }
+          }
+
+          requestAnimationFrame(countFrame);
+        });
+      }, { threshold: 0.35 });
+
+      statNumbers.forEach(numEl => observer.observe(numEl));
+    }
+
+    function renderFinalNumber(el) {
+      const target = parseFloat(el.getAttribute('data-target')) || 0;
+      const suffix = el.getAttribute('data-suffix') || '';
+      const decimals = parseInt(el.getAttribute('data-decimals'), 10) || 0;
+      const hasComma = el.getAttribute('data-comma') === 'true' || el.getAttribute('data-format') === 'comma';
+
+      let displayVal = decimals > 0 ? target.toFixed(decimals) : Math.round(target);
+      if (hasComma) {
+        displayVal = displayVal.toLocaleString('en-US');
+      }
+      el.textContent = `${displayVal}${suffix}`;
+    }
+
+    /* ----------------------------------------------------
+       2. 3D CARD PERSPECTIVE TILT & MOUSE GLARE
+       ---------------------------------------------------- */
+    function init3DCardTilt() {
+      if (isReducedMotion) return;
+
+      cards.forEach(card => {
+        card.addEventListener('pointermove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const mouseX = e.clientX - rect.left;
+          const mouseY = e.clientY - rect.top;
+
+          // Relative coordinates from -1 to 1
+          const xPercent = (mouseX / rect.width) * 2 - 1;
+          const yPercent = (mouseY / rect.height) * 2 - 1;
+
+          // Max tilt angles (14deg Y, 10deg X)
+          const tiltX = -yPercent * 10;
+          const tiltY = xPercent * 14;
+
+          card.style.transform = `rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) translateZ(12px)`;
+          card.style.setProperty('--mouse-x', `${mouseX}px`);
+          card.style.setProperty('--mouse-y', `${mouseY}px`);
+        });
+
+        card.addEventListener('pointerleave', () => {
+          card.style.transform = 'rotateX(0deg) rotateY(0deg) translateZ(0px)';
+        });
+      });
+    }
+
+    /* ----------------------------------------------------
+       3. 7 LOOSE CRAWLING BUGS ENGINE (Turn, Bounce, Catch)
+       ---------------------------------------------------- */
+    const TOTAL_BUGS = 7;
+    let bugs = [];
+    let caughtCount = 0;
+    let crawlAnimationId = null;
+
+    function spawnLooseBugs() {
+      // Clear any existing bugs
+      bugsLayer.innerHTML = '';
+      bugs = [];
+      caughtCount = 0;
+      caughtCountEl.textContent = '0';
+      if (victoryToast) victoryToast.classList.remove('visible');
+
+      const secRect = section.getBoundingClientRect();
+      const boundsWidth = Math.max(secRect.width, 320);
+      const boundsHeight = Math.max(secRect.height, 600);
+
+      for (let i = 0; i < TOTAL_BUGS; i++) {
+        const bugBtn = document.createElement('button');
+        bugBtn.className = 'bc-loose-bug';
+        bugBtn.type = 'button';
+        bugBtn.setAttribute('aria-label', 'Catch rogue bug');
+        bugBtn.innerHTML = `
+          <svg viewBox="0 0 44 44" aria-hidden="true">
+            <use href="#bc-bug-symbol" />
+          </svg>
+        `;
+
+        // Random starting coordinates
+        const x = Math.random() * (boundsWidth - 80) + 40;
+        const y = Math.random() * (boundsHeight - 120) + 60;
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 0.85 + Math.random() * 0.95; // pixels per frame
+
+        const bugObj = {
+          el: bugBtn,
+          x: x,
+          y: y,
+          angle: angle,
+          speed: speed,
+          turnRate: (Math.random() - 0.5) * 0.08,
+          isCaught: false
+        };
+
+        // Click / Tap / Enter to catch
+        function catchThisBug() {
+          if (bugObj.isCaught) return;
+          bugObj.isCaught = true;
+          bugBtn.classList.add('caught');
+
+          caughtCount++;
+          caughtCountEl.textContent = caughtCount.toString();
+
+          // Audio pop synthesis (safe Web Audio API)
+          playCatchPop();
+
+          // Check if all 7 caught
+          if (caughtCount >= TOTAL_BUGS && victoryToast) {
+            victoryToast.classList.add('visible');
+          }
+        }
+
+        bugBtn.addEventListener('click', catchThisBug);
+        bugBtn.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            catchThisBug();
+          }
+        });
+
+        bugsLayer.appendChild(bugBtn);
+        bugs.push(bugObj);
+      }
+
+      if (!isReducedMotion) {
+        if (crawlAnimationId) cancelAnimationFrame(crawlAnimationId);
+        crawlAnimationId = requestAnimationFrame(animateBugs);
+      } else {
+        bugs.forEach(b => {
+          b.el.style.transform = `translate3d(${b.x}px, ${b.y}px, 0)`;
+        });
+      }
+    }
+
+    function animateBugs() {
+      const secRect = section.getBoundingClientRect();
+      const boundsWidth = secRect.width;
+      const boundsHeight = secRect.height;
+      const bugSize = 36;
+      const padding = 16;
+
+      bugs.forEach(b => {
+        if (b.isCaught) return;
+
+        // Random wandering angle adjustment
+        b.turnRate += (Math.random() - 0.5) * 0.02;
+        // Damping turn rate
+        b.turnRate = Math.max(-0.08, Math.min(0.08, b.turnRate));
+        b.angle += b.turnRate;
+
+        // Forward step
+        b.x += Math.cos(b.angle) * b.speed;
+        b.y += Math.sin(b.angle) * b.speed;
+
+        // Soft boundary bouncing (turning away from edges)
+        if (b.x < padding) {
+          b.x = padding;
+          b.angle = Math.PI - b.angle;
+        } else if (b.x > boundsWidth - bugSize - padding) {
+          b.x = boundsWidth - bugSize - padding;
+          b.angle = Math.PI - b.angle;
+        }
+
+        if (b.y < padding) {
+          b.y = padding;
+          b.angle = -b.angle;
+        } else if (b.y > boundsHeight - bugSize - padding) {
+          b.y = boundsHeight - bugSize - padding;
+          b.angle = -b.angle;
+        }
+
+        // Render transform facing direction of travel (90 deg offset for head pointing up)
+        const deg = (b.angle * 180 / Math.PI) + 90;
+        b.el.style.transform = `translate3d(${b.x.toFixed(1)}px, ${b.y.toFixed(1)}px, 0) rotate(${deg.toFixed(1)}deg)`;
+      });
+
+      crawlAnimationId = requestAnimationFrame(animateBugs);
+    }
+
+    // Soft tactile acoustic pop when catching a bug
+    function playCatchPop() {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(420, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(160, ctx.currentTime + 0.08);
+
+        gain.gain.setValueAtTime(0.18, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start();
+        osc.stop(ctx.currentTime + 0.09);
+      } catch (e) {}
+    }
+
+    // Reset button action
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        spawnLooseBugs();
+      });
+    }
+
+    // Initialize all features on load
+    initNumberCounters();
+    init3DCardTilt();
+    spawnLooseBugs();
+
+    // Resize handler to keep bugs inside bounds
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        const secRect = section.getBoundingClientRect();
+        bugs.forEach(b => {
+          b.x = Math.max(16, Math.min(secRect.width - 50, b.x));
+          b.y = Math.max(16, Math.min(secRect.height - 50, b.y));
+        });
+      }, 150);
     });
   }
 })();

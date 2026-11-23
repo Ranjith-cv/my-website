@@ -138,67 +138,222 @@ include __DIR__ . '/includes/header.php';
 </section>
 
 <!-- ==========================================================================
-     SECTION 2: PROVEN QA METRICS & STATISTICS (SCROLL-TRIGGERED COUNTERS)
-     "200+ Projects Tested" & "4,000+ Bugs Identified"
+     INLINE SVG DEFINITIONS FOR BUG CATCHER SPECIMEN JARS & GLOSSY 3D BUGS
      ========================================================================== -->
-<section id="metrics-section" class="rishi-metrics-section">
-  <div class="rishi-container">
-    <div class="metrics-header">
-      <div class="section-badge">PROVEN TRACK RECORD // ASTRAZ SOFTWARE SOLUTIONS</div>
-      <h2 class="metrics-title">Quality measured in bulletproof numbers.</h2>
-      <p class="metrics-subtitle">
-        Every metric reflects intercepted defects, preserved revenue, and flawless production sign-offs.
-      </p>
+<svg width="0" height="0" style="position:absolute; display:none;" aria-hidden="true">
+  <defs>
+    <!-- Shaded Bug Body Gradient (Orange-Red Gloss) -->
+    <linearGradient id="bc-bug-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff8a00" />
+      <stop offset="45%" stop-color="#ff4d1f" />
+      <stop offset="100%" stop-color="#ff3b30" />
+    </linearGradient>
+
+    <!-- Glossy Radial Sheen for 3D Bug Carapace -->
+    <radialGradient id="bc-bug-sheen" cx="35%" cy="25%" r="75%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.65" />
+      <stop offset="35%" stop-color="#ffffff" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.45" />
+    </radialGradient>
+
+    <!-- Specimen Jar Glass Gradient -->
+    <linearGradient id="bc-glass-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.5" />
+      <stop offset="15%" stop-color="#ffffff" stop-opacity="0.1" />
+      <stop offset="85%" stop-color="#ffffff" stop-opacity="0.05" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.4" />
+    </linearGradient>
+
+    <!-- Lid Gradient (Brushed Metallic Orange) -->
+    <linearGradient id="bc-lid-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ff8a00" />
+      <stop offset="50%" stop-color="#ff4d1f" />
+      <stop offset="100%" stop-color="#d6360e" />
+    </linearGradient>
+
+    <!-- Reusable Bug Master Symbol -->
+    <symbol id="bc-bug-symbol" viewBox="0 0 44 44">
+      <g stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+        <path d="M14 17 L5 12 L2 6" />
+        <path d="M30 17 L39 12 L42 6" />
+        <path d="M13 24 L4 23 L2 29" />
+        <path d="M31 24 L40 23 L42 29" />
+        <path d="M14 31 L6 36 L4 42" />
+        <path d="M30 31 L38 36 L40 42" />
+        <path d="M18 7 C16 3, 12 2, 9 3" />
+        <path d="M26 7 C28 3, 32 2, 35 3" />
+      </g>
+      <circle cx="22" cy="10" r="5" fill="currentColor" />
+      <circle cx="19.5" cy="8.5" r="1.2" fill="#ffffff" />
+      <circle cx="24.5" cy="8.5" r="1.2" fill="#ffffff" />
+      <ellipse cx="22" cy="25" rx="10.5" ry="13.5" fill="url(#bc-bug-grad)" />
+      <ellipse cx="22" cy="25" rx="10.5" ry="13.5" fill="url(#bc-bug-sheen)" />
+      <path d="M22 13 L22 38" stroke="rgba(0, 0, 0, 0.45)" stroke-width="1.4" />
+      <circle cx="17" cy="21" r="1.8" fill="#ffffff" opacity="0.85" />
+      <circle cx="27" cy="21" r="1.8" fill="#ffffff" opacity="0.85" />
+      <circle cx="16" cy="28" r="1.6" fill="#ffffff" opacity="0.85" />
+      <circle cx="28" cy="28" r="1.6" fill="#ffffff" opacity="0.85" />
+      <circle cx="21" cy="33" r="1.5" fill="#ffffff" opacity="0.85" />
+    </symbol>
+
+    <!-- Glass Specimen Jar Master Symbol -->
+    <symbol id="bc-jar-symbol" viewBox="0 0 64 82">
+      <rect x="15" y="2" width="34" height="9" rx="3" fill="url(#bc-lid-grad)" stroke="#ffffff" stroke-width="0.8" />
+      <path d="M19 11 H45 V15 H19 Z" fill="#c0c0c0" opacity="0.5" />
+      <path d="M18 15 C13 18, 10 24, 10 32 V68 C10 74, 15 79, 21 79 H43 C49 79, 54 74, 54 68 V32 C54 24, 51 18, 46 15 Z" 
+            fill="url(#bc-glass-grad)" stroke="#9e9e9e" stroke-width="1.8" stroke-linejoin="round" />
+      <path d="M14 30 V68 C14 71, 17 74, 21 75" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity="0.75" />
+      <path d="M50 32 V66" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" opacity="0.4" />
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ==========================================================================
+     SECTION 2: PROVEN QA METRICS & STATISTICS — BUG CATCHER EXPERIENCE
+     "Quality measured in bulletproof numbers."
+     ========================================================================== -->
+<section id="metrics-section" class="bc-section rishi-metrics-section" aria-label="Proven Track Record Stats and Bug Catcher Experience">
+
+  <!-- Interactive HUD: Bug Catch Counter & Reset Button -->
+  <div class="bc-hud" role="status" aria-live="polite">
+    <div class="bc-hud-status">
+      <span class="bc-hud-icon" aria-hidden="true">
+        <svg viewBox="0 0 44 44" width="18" height="18"><use href="#bc-bug-symbol"/></svg>
+      </span>
+      <span>Caught <span id="bc-caught-count" class="bc-hud-count">0</span>/7</span>
+    </div>
+    <button type="button" class="bc-reset-btn" id="bc-reset-bugs" aria-label="Release all caught bugs back to the section">Release bugs</button>
+  </div>
+
+  <!-- Victory Toast Message when 7 Bugs Caught -->
+  <div class="bc-victory-toast" id="bc-victory-toast" role="alert">
+    <span class="bc-victory-dot" aria-hidden="true"></span>
+    <span>All caught. We do the same before your release.</span>
+  </div>
+
+  <div class="bc-container rishi-container">
+
+    <!-- 3D Floating & Spinning Bug Stage -->
+    <div class="bc-stage-3d" aria-hidden="true">
+      <div class="bc-spin-wrapper">
+        <div class="bc-spinning-bug">
+          <svg viewBox="0 0 44 44" width="72" height="72">
+            <use href="#bc-bug-symbol" />
+          </svg>
+        </div>
+      </div>
+      <div class="bc-spin-shadow"></div>
     </div>
 
-    <div class="metrics-grid">
-      
-      <!-- Metric 1: 200+ Projects Tested -->
-      <div class="metric-card" data-stat-card>
-        <div class="metric-top-row">
-          <div class="metric-value-wrap">
-            <span class="metric-number" data-target="200" data-suffix="+">0</span>
-          </div>
-        </div>
-        <div class="metric-title">Projects Tested</div>
-        <p class="metric-desc">Web, Mobile &amp; AI Enterprise Platforms across India and UAE</p>
-      </div>
+    <!-- Section Header (Exact Required Content) -->
+    <header class="bc-header metrics-header">
+      <span class="bc-label section-badge">Proven track record // Astraz Software Solutions</span>
+      <h2 class="bc-title metrics-title">Quality measured in bulletproof numbers.</h2>
+      <p class="bc-subtext metrics-subtitle">Every metric reflects intercepted defects, preserved revenue, and flawless production sign-offs. Catch a few loose bugs while you read.</p>
+    </header>
 
-      <!-- Metric 2: 4,000+ Bugs Identified -->
-      <div class="metric-card" data-stat-card>
-        <div class="metric-top-row">
-          <div class="metric-value-wrap">
-            <span class="metric-number" data-target="4000" data-suffix="+" data-format="comma">0</span>
-          </div>
-        </div>
-        <div class="metric-title">Bugs Identified</div>
-        <p class="metric-desc">Critical security vulnerabilities, edge-case leaks &amp; API regressions</p>
-      </div>
+    <!-- 4 Stats Cards Grid -->
+    <div class="bc-grid metrics-grid">
 
-      <!-- Metric 3: 99.8% Release Stability -->
-      <div class="metric-card" data-stat-card>
-        <div class="metric-top-row">
-          <div class="metric-value-wrap">
-            <span class="metric-number" data-target="99.8" data-suffix="%" data-decimals="1">0</span>
-          </div>
+      <!-- CARD 1: 200+ Projects Tested -->
+      <article class="bc-card metric-card" data-tilt-card tabindex="0">
+        <!-- Specimen Jar with 1 Bug Wiggling Inside -->
+        <div class="bc-card-jar-wrap" aria-hidden="true">
+          <svg class="bc-jar-svg" viewBox="0 0 64 82">
+            <use href="#bc-jar-symbol" />
+            <g class="bc-in-jar-bug">
+              <svg x="18" y="38" width="28" height="28" viewBox="0 0 44 44">
+                <use href="#bc-bug-symbol" />
+              </svg>
+            </g>
+          </svg>
         </div>
-        <div class="metric-title">Release Stability</div>
-        <p class="metric-desc">Flawless production deploy sign-offs backed by rigorous QA auditing</p>
-      </div>
+        <div class="bc-card-top-tag">SPECIMEN // 01</div>
+        <div class="bc-card-number-wrap">
+          <span class="bc-card-number metric-number" data-target="200" data-suffix="+">0</span>
+        </div>
+        <div>
+          <h3 class="bc-card-title">Projects Tested</h3>
+          <p class="bc-card-desc">Web, Mobile &amp; AI Enterprise Platforms across India and UAE</p>
+        </div>
+      </article>
 
-      <!-- Metric 4: 85% Automation Coverage -->
-      <div class="metric-card" data-stat-card>
-        <div class="metric-top-row">
-          <div class="metric-value-wrap">
-            <span class="metric-number" data-target="85" data-suffix="%">0</span>
-          </div>
+      <!-- CARD 2: 4,000+ Bugs Identified -->
+      <article class="bc-card metric-card" data-tilt-card tabindex="0">
+        <!-- Specimen Jar with 2 Bugs Wiggling Inside -->
+        <div class="bc-card-jar-wrap" aria-hidden="true">
+          <svg class="bc-jar-svg" viewBox="0 0 64 82">
+            <use href="#bc-jar-symbol" />
+            <g class="bc-in-jar-bug">
+              <svg x="13" y="34" width="24" height="24" viewBox="0 0 44 44">
+                <use href="#bc-bug-symbol" />
+              </svg>
+            </g>
+            <g class="bc-in-jar-bug-2">
+              <svg x="27" y="46" width="22" height="22" viewBox="0 0 44 44">
+                <use href="#bc-bug-symbol" />
+              </svg>
+            </g>
+          </svg>
         </div>
-        <div class="metric-title">Automation Coverage</div>
-        <p class="metric-desc">Playwright, Cypress &amp; continuous GitHub Actions regression gates</p>
-      </div>
+        <div class="bc-card-top-tag">SPECIMEN // 02</div>
+        <div class="bc-card-number-wrap">
+          <span class="bc-card-number metric-number" data-target="4000" data-suffix="+" data-comma="true" data-format="comma">0</span>
+        </div>
+        <div>
+          <h3 class="bc-card-title">Bugs Identified</h3>
+          <p class="bc-card-desc">Critical security vulnerabilities, edge-case leaks &amp; API regressions</p>
+        </div>
+      </article>
+
+      <!-- CARD 3: 99.8% Release Stability (INVERTED BLACK CARD - FOCAL POINT) -->
+      <article class="bc-card bc-card-inverted metric-card" data-tilt-card tabindex="0">
+        <!-- Empty Specimen Jar with Bold Green Tick (Zero Bugs Escaped) -->
+        <div class="bc-card-jar-wrap" aria-hidden="true">
+          <svg class="bc-jar-svg" viewBox="0 0 64 82">
+            <use href="#bc-jar-symbol" />
+            <path d="M21 48 L29 57 L45 34" fill="none" stroke="#22c55e" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <div class="bc-card-top-tag">ZERO DEFECT ESCAPES</div>
+        <div class="bc-card-number-wrap">
+          <span class="bc-card-number metric-number" data-target="99.8" data-suffix="%" data-decimals="1">0</span>
+        </div>
+        <div>
+          <h3 class="bc-card-title">Release Stability</h3>
+          <p class="bc-card-desc">Flawless production deploy sign-offs backed by rigorous QA auditing</p>
+        </div>
+      </article>
+
+      <!-- CARD 4: 85% Automation Coverage -->
+      <article class="bc-card metric-card" data-tilt-card tabindex="0">
+        <!-- Specimen Jar with Automated Bug Inside -->
+        <div class="bc-card-jar-wrap" aria-hidden="true">
+          <svg class="bc-jar-svg" viewBox="0 0 64 82">
+            <use href="#bc-jar-symbol" />
+            <g class="bc-in-jar-bug">
+              <svg x="17" y="38" width="30" height="30" viewBox="0 0 44 44">
+                <use href="#bc-bug-symbol" />
+              </svg>
+            </g>
+          </svg>
+        </div>
+        <div class="bc-card-top-tag">CONTINUOUS GATES</div>
+        <div class="bc-card-number-wrap">
+          <span class="bc-card-number metric-number" data-target="85" data-suffix="%">0</span>
+        </div>
+        <div>
+          <h3 class="bc-card-title">Automation Coverage</h3>
+          <p class="bc-card-desc">Playwright, Cypress &amp; continuous GitHub Actions regression gates</p>
+        </div>
+      </article>
 
     </div>
   </div>
+
+  <!-- Container for the 7 Live Crawling Bugs -->
+  <div id="bc-bugs-layer" class="bc-bugs-layer" aria-label="Interactive Loose Bugs Field"></div>
+
 </section>
 
 <!-- ==========================================================================
