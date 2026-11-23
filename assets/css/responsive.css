@@ -1,0 +1,330 @@
+/* ==========================================================================
+   RANJITH C V — RESPONSIVE DESIGN (RISHI THAKUR THEME)
+   Mobile, Tablet, and Desktop Breakpoints
+   ========================================================================== */
+
+@media (max-width: 992px) {
+  .rishi-nav-menu {
+    display: none;
+  }
+
+  .rishi-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+
+  .rishi-hero-right {
+    order: -1;
+  }
+
+  .rishi-portrait-wrapper {
+    max-width: 380px;
+    height: 440px;
+  }
+
+  .doors-row {
+    gap: 1.25rem;
+  }
+
+  .projects-horizontal-pin-wrapper {
+    min-height: auto;
+    padding: 3.5rem 0 2rem 0;
+  }
+
+  .projects-horizontal-viewport {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding: 1rem 1.25rem 2rem 1.25rem;
+    scrollbar-width: none;
+  }
+
+  .projects-horizontal-viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .projects-horizontal-track {
+    padding: 0 1rem;
+    gap: 1.25rem;
+  }
+
+  .astraz-project-card {
+    flex: 0 0 85vw !important;
+    width: 85vw !important;
+    min-width: 0 !important;
+    max-width: 380px !important;
+    height: auto !important;
+    min-height: 480px;
+    flex-direction: column !important;
+    scroll-snap-align: center;
+  }
+
+  .astraz-project-card:hover,
+  .astraz-project-card.is-expanded {
+    flex: 0 0 85vw !important;
+    width: 85vw !important;
+    min-width: 0 !important;
+  }
+
+  .card-primary-col {
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: auto !important;
+  }
+
+  .card-expandable-drawer {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: auto !important;
+    max-height: 0;
+    transform: translateY(10px) !important;
+    border-left: none !important;
+    border-top: 1px solid transparent;
+  }
+
+  .astraz-project-card.is-expanded .card-expandable-drawer {
+    max-height: 380px !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    border-top-color: rgba(0, 0, 0, 0.08) !important;
+  }
+
+  .drawer-inner-content {
+    width: 100% !important;
+    height: auto !important;
+    padding: 1.25rem 1.4rem !important;
+  }
+
+  .rishi-footer-nav-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .rishi-hero-section {
+    padding-top: 2.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .modal-card {
+    padding: 1.75rem 1.25rem;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .astraz-projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .projects-filter-bar {
+    gap: 0.5rem;
+  }
+
+  .pfilter-btn {
+    padding: 0.5rem 0.95rem;
+    font-size: 0.8125rem;
+  }
+
+  .rishi-hero-greeting {
+    font-size: clamp(2.5rem, 8vw, 3.5rem);
+  }
+
+  .rishi-hero-subhead .i-am-a {
+    font-size: 1.75rem;
+  }
+
+  .spiral-notebook-card {
+    min-width: 280px;
+    width: fit-content;
+    max-width: 100%;
+    padding: 0.75rem 2.8rem 0.75rem 1.4rem;
+  }
+
+  .spiral-role-text {
+    font-size: clamp(1rem, 3.8vw, 1.25rem);
+  }
+
+  .rishi-portrait-wrapper {
+    max-width: 320px;
+    height: 380px;
+  }
+
+  .doors-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.25rem;
+  }
+
+  .door-frame {
+    flex: 0 1 calc(50% - 0.75rem);
+    width: calc(50% - 0.75rem);
+    max-width: 200px;
+    height: 340px;
+    min-height: 340px;
+    border-radius: 68px 68px 8px 8px;
+  }
+
+  .door-leaf {
+    border-radius: 64px 64px 6px 6px;
+  }
+
+  .door-plate {
+    font-size: 0.625rem;
+    padding: 0.35rem 0.55rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .room-capabilities-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .testing-room {
+    padding: 2.5rem 1rem 4.5rem 1rem;
+  }
+
+  .room-top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .room-title {
+    font-size: 2rem;
+  }
+
+  .story-giant-year {
+    font-size: 5.5rem;
+  }
+
+  .contact-giant-headline {
+    font-size: clamp(2.2rem, 8vw, 3.5rem);
+  }
+
+  .rishi-footer-nav-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .rishi-bottom-bar-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .floating-shortcuts-container {
+    bottom: 16px;
+    right: 16px;
+    gap: 10px;
+    z-index: 998;
+  }
+
+  .floating-action-btn {
+    width: 44px;
+    height: 44px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  }
+
+  .floating-action-btn .btn-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .floating-status-dot {
+    width: 9px;
+    height: 9px;
+    top: 1px;
+    right: 1px;
+  }
+
+  .aichat-drawer {
+    right: 12px;
+    left: 12px;
+    bottom: 12px;
+    top: auto;
+    width: auto;
+    max-width: 100%;
+    margin: 0 auto;
+    height: min(560px, calc(100dvh - 24px));
+    max-height: calc(100dvh - 24px);
+    border-radius: 20px;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.28);
+  }
+
+  .aichat-chips-shelf {
+    padding: 7px 12px 9px;
+    gap: 6px;
+  }
+
+  .chat-chip {
+    padding: 0.32rem 0.72rem;
+    font-size: 0.75rem;
+  }
+
+  .aichat-input-bar {
+    padding: 10px 12px max(10px, env(safe-area-inset-bottom, 10px));
+    gap: 8px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+
+  .aichat-input-wrap {
+    padding: 2px 4px 2px 14px;
+  }
+
+  .aichat-input {
+    font-size: 0.8125rem;
+    padding: 7px 0;
+  }
+
+  .aichat-send-btn {
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .rishi-hero-cta-row {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .rishi-hero-cta-row .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .contact-action-row {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .contact-action-row .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .contact-direct-badges {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .contact-email-link,
+  .contact-whatsapp-link {
+    width: 100%;
+    justify-content: center;
+  }
+}

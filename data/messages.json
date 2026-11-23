@@ -1,0 +1,26 @@
+[
+    {
+        "id": "QA-MSG-55DFDC",
+        "timestamp": "2026-11-21 15:29:25",
+        "name": "Enterprise QA Client",
+        "email": "lead@qualitytech.com",
+        "subject": "End-to-End Test Suite Consultation",
+        "inquiry_type": "Full QA Audit",
+        "message": "We would like to book software testing services with Ranjith C V.",
+        "ip_hash": "12ca17b49af2289436f303e0166030a21e525d266e209267433801a8fd4071a0",
+        "user_agent": "Unknown",
+        "status": "NEW"
+    },
+    {
+        "id": "QA-MSG-BDAF41",
+        "timestamp": "2026-11-21 14:44:43",
+        "name": "Alexander Vance",
+        "email": "alex@enterprise.com",
+        "subject": "Senior QA Engagement Discussion",
+        "inquiry_type": "Enterprise QA Audit",
+        "message": "Hello Ranjith, we would like to consult with you on our testing pipeline at enterprise scale.",
+        "ip_hash": "12ca17b49af2289436f303e0166030a21e525d266e209267433801a8fd4071a0",
+        "user_agent": "Unknown",
+        "status": "NEW"
+    }
+]

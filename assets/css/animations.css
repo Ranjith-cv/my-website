@@ -1,0 +1,54 @@
+/* ==========================================================================
+   RANJITH C V — KEYFRAME UTILITIES & SCROLL REVEAL STYLES
+   ========================================================================== */
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes metricShimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Base Reveal Optimizations */
+.metric-card,
+.door-frame,
+.door-details-panel,
+.astraz-project-card,
+.contact-cta-wrapper {
+  will-change: transform, opacity;
+}
+
+/* Smooth Progressive Scrolling Styles */
+.rishi-metrics-section,
+.rishi-doors-section,
+.rishi-work-section,
+.rishi-contact-section {
+  scroll-margin-top: 50px;
+}
+
+/* Reduced Motion Mode (Full Accessibility Compliance) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .metric-card,
+  .door-frame,
+  .door-details-panel,
+  .astraz-project-card,
+  .contact-cta-wrapper,
+  .doors-section-header,
+  .work-header,
+  .f-col {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
