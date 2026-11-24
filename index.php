@@ -11,131 +11,10 @@ include __DIR__ . '/includes/header.php';
 ?>
 
 <!-- ==========================================================================
-     SECTION 1: HERO (00:00 - 00:03 IN VIDEO)
-     Left: Freelancer badge + Hi, I'm Ranjith + 3D Spiral Notebook with Flipping Roles + CTAs
-     Right: Portrait with "My ability card" badge + Lamp pull cord
-     Bottom: Available for work status bar
+     SECTION 1: HERO SECTION COMPONENT (MODULAR)
+     Matches ref1_light_theme, ref2_dark_spotlight, ref3_dark_cursor
      ========================================================================== -->
-<section id="hero" class="rishi-hero-section">
-  <div class="rishi-container">
-    <div class="rishi-hero-grid">
-      
-      <!-- Left Column: Introduction & 3D Spiral Notebook -->
-      <div class="rishi-hero-left">
-        <div class="rishi-status-pill">
-          <span class="status-dot-pulse"></span>
-          <span>Senior Software Tester // Astraz</span>
-        </div>
-
-        <h1 class="rishi-hero-greeting">
-          Hi, I'm Ranjith.
-        </h1>
-
-        <div class="rishi-hero-subhead">
-          <span class="i-am-a">I am a</span>
-          
-          <!-- 3D SPIRAL NOTEBOOK CARD (EXACT VIDEO COMPONENT) -->
-          <div class="spiral-notebook-card" id="spiral-notebook">
-            <!-- Wire Binding Rings on Top (16 Metallic Rings) -->
-            <div class="spiral-rings-track">
-              <span class="spiral-ring"></span>
-              <span class="spiral-ring"></span>
-              <span class="spiral-ring"></span>
-              <span class="spiral-ring"></span>
-              <span class="spiral-ring"></span>
-              <span class="spiral-ring"></span>
-              <span class="spiral-ring"></span>
-              <span class="spiral-ring"></span>
-              <span class="spiral-ring"></span>
-              <span class="spiral-ring"></span>
-              <span class="spiral-ring"></span>
-              <span class="spiral-ring"></span>
-              <span class="spiral-ring"></span>
-              <span class="spiral-ring"></span>
-              <span class="spiral-ring"></span>
-              <span class="spiral-ring"></span>
-            </div>
-
-            <!-- Flipping Text Container (5 Exact Titles from Video / Prompt) -->
-            <div class="spiral-content">
-              <span class="spiral-role-text active" data-index="0">Software Tester</span>
-              <span class="spiral-role-text" data-index="1">Quality Assurance Professional</span>
-              <span class="spiral-role-text" data-index="2">Manual Testing Specialist</span>
-              <span class="spiral-role-text" data-index="3">API Testing</span>
-              <span class="spiral-role-text" data-index="4">Performance Testing</span>
-            </div>
-
-            <!-- Page / Role Counter (01 / 05) -->
-            <span class="spiral-corner-index" id="spiral-counter">01 / 05</span>
-          </div>
-        </div>
-
-        <p class="rishi-hero-desc">
-          Astraz Software Solutions Senior Software Tester. Delivering bulletproof reliability across Manual, Automation, and AI workflows. 200+ projects tested with 4,000+ bugs identified.
-        </p>
-
-        <div class="rishi-hero-cta-row">
-          <button class="btn btn-dark-pill" data-open-enquiry>
-            <span>START A PROJECT</span>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </button>
-          <a href="#doors-section" class="btn btn-outline-pill-dark">
-            <span>VIEW MY WORK</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- Right Column: Ranjith's Portrait with 3D Depth & Lighting (100% Preserved Original Photograph) -->
-      <div class="rishi-hero-right">
-        <div class="hero-ambient-glow" aria-hidden="true"></div>
-        <div class="rishi-portrait-wrapper" id="hero-portrait-wrap">
-          <div class="portrait-lighting-rim" aria-hidden="true"></div>
-          <img 
-            src="assets/images/ranjith-portrait-theme.png" 
-            alt="Ranjith C V — Senior Software Tester" 
-            class="rishi-portrait-img"
-            loading="eager"
-            id="hero-portrait-img"
-          >
-          
-          <!-- Floating "My ability card" badge (exact from video) -->
-          <div class="ability-card-pill" data-open-enquiry title="Click to view QA credentials">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-            </svg>
-            <span>My ability card</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- Bottom Hero Status Bar (Exact Video Feature 00:03) -->
-  <div class="rishi-hero-bottom-bar">
-    <div class="rishi-container rishi-bottom-bar-inner">
-      <div class="bar-item">
-        <span class="bar-dot green-pulse"></span>
-        <span>AVAILABLE FOR WORK</span>
-      </div>
-      <div class="bar-item">
-        <span class="bar-dot"></span>
-        <span>REMOTE-FIRST, WORLDWIDE</span>
-      </div>
-      <a href="#metrics-section" class="bar-item bar-scroll-link">
-        <span>SCROLL TO EXPLORE</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="7" y1="7" x2="17" y2="17"></line>
-          <polyline points="17 7 17 17 7 17"></polyline>
-        </svg>
-      </a>
-    </div>
-  </div>
-</section>
+<?php include __DIR__ . '/components/hero.php'; ?>
 
 <!-- ==========================================================================
      INLINE SVG DEFINITIONS FOR BUG CATCHER SPECIMEN JARS & GLOSSY 3D BUGS
@@ -247,8 +126,7 @@ include __DIR__ . '/includes/header.php';
 
     <!-- Section Header (Exact Required Content) -->
     <header class="bc-header metrics-header">
-      <span class="bc-label section-badge">Proven track record // Astraz Software Solutions</span>
-      <h2 class="bc-title metrics-title">Quality measured in bulletproof numbers.</h2>
+      <h2 class="bc-title metrics-title">Quality in Numbers</h2>
       <p class="bc-subtext metrics-subtitle">Every metric reflects intercepted defects, preserved revenue, and flawless production sign-offs. Catch a few loose bugs while you read.</p>
     </header>
 
@@ -257,22 +135,33 @@ include __DIR__ . '/includes/header.php';
 
       <!-- CARD 1: 200+ Projects Tested -->
       <article class="bc-card metric-card" data-tilt-card tabindex="0">
-        <!-- Specimen Jar with 1 Bug Wiggling Inside -->
-        <div class="bc-card-jar-wrap" aria-hidden="true">
-          <svg class="bc-jar-svg" viewBox="0 0 64 82">
-            <use href="#bc-jar-symbol" />
-            <g class="bc-in-jar-bug">
-              <svg x="18" y="38" width="28" height="28" viewBox="0 0 44 44">
-                <use href="#bc-bug-symbol" />
-              </svg>
-            </g>
-          </svg>
+        <div class="bc-card-top-group">
+          <!-- Specimen Jar with 3 Bugs Wiggling Inside -->
+          <div class="bc-card-jar-wrap" aria-hidden="true">
+            <svg class="bc-jar-svg" viewBox="0 0 64 82">
+              <use href="#bc-jar-symbol" />
+              <g class="bc-in-jar-bug">
+                <svg x="12" y="27" width="20" height="20" viewBox="0 0 44 44">
+                  <use href="#bc-bug-symbol" />
+                </svg>
+              </g>
+              <g class="bc-in-jar-bug-2">
+                <svg x="29" y="37" width="22" height="22" viewBox="0 0 44 44">
+                  <use href="#bc-bug-symbol" />
+                </svg>
+              </g>
+              <g class="bc-in-jar-bug-3">
+                <svg x="16" y="49" width="21" height="21" viewBox="0 0 44 44">
+                  <use href="#bc-bug-symbol" />
+                </svg>
+              </g>
+            </svg>
+          </div>
+          <div class="bc-card-number-wrap">
+            <span class="bc-card-number metric-number" data-target="200" data-suffix="+">0</span>
+          </div>
         </div>
-        <div class="bc-card-top-tag">SPECIMEN // 01</div>
-        <div class="bc-card-number-wrap">
-          <span class="bc-card-number metric-number" data-target="200" data-suffix="+">0</span>
-        </div>
-        <div>
+        <div class="bc-card-bottom-group">
           <h3 class="bc-card-title">Projects Tested</h3>
           <p class="bc-card-desc">Web, Mobile &amp; AI Enterprise Platforms across India and UAE</p>
         </div>
@@ -280,27 +169,33 @@ include __DIR__ . '/includes/header.php';
 
       <!-- CARD 2: 4,000+ Bugs Identified -->
       <article class="bc-card metric-card" data-tilt-card tabindex="0">
-        <!-- Specimen Jar with 2 Bugs Wiggling Inside -->
-        <div class="bc-card-jar-wrap" aria-hidden="true">
-          <svg class="bc-jar-svg" viewBox="0 0 64 82">
-            <use href="#bc-jar-symbol" />
-            <g class="bc-in-jar-bug">
-              <svg x="13" y="34" width="24" height="24" viewBox="0 0 44 44">
-                <use href="#bc-bug-symbol" />
-              </svg>
-            </g>
-            <g class="bc-in-jar-bug-2">
-              <svg x="27" y="46" width="22" height="22" viewBox="0 0 44 44">
-                <use href="#bc-bug-symbol" />
-              </svg>
-            </g>
-          </svg>
+        <div class="bc-card-top-group">
+          <!-- Specimen Jar with 3 Bugs Wiggling Inside -->
+          <div class="bc-card-jar-wrap" aria-hidden="true">
+            <svg class="bc-jar-svg" viewBox="0 0 64 82">
+              <use href="#bc-jar-symbol" />
+              <g class="bc-in-jar-bug">
+                <svg x="11" y="26" width="21" height="21" viewBox="0 0 44 44">
+                  <use href="#bc-bug-symbol" />
+                </svg>
+              </g>
+              <g class="bc-in-jar-bug-2">
+                <svg x="29" y="35" width="22" height="22" viewBox="0 0 44 44">
+                  <use href="#bc-bug-symbol" />
+                </svg>
+              </g>
+              <g class="bc-in-jar-bug-3">
+                <svg x="15" y="49" width="20" height="20" viewBox="0 0 44 44">
+                  <use href="#bc-bug-symbol" />
+                </svg>
+              </g>
+            </svg>
+          </div>
+          <div class="bc-card-number-wrap">
+            <span class="bc-card-number metric-number" data-target="4000" data-suffix="+" data-comma="true" data-format="comma">0</span>
+          </div>
         </div>
-        <div class="bc-card-top-tag">SPECIMEN // 02</div>
-        <div class="bc-card-number-wrap">
-          <span class="bc-card-number metric-number" data-target="4000" data-suffix="+" data-comma="true" data-format="comma">0</span>
-        </div>
-        <div>
+        <div class="bc-card-bottom-group">
           <h3 class="bc-card-title">Bugs Identified</h3>
           <p class="bc-card-desc">Critical security vulnerabilities, edge-case leaks &amp; API regressions</p>
         </div>
@@ -308,18 +203,19 @@ include __DIR__ . '/includes/header.php';
 
       <!-- CARD 3: 99.8% Release Stability (INVERTED BLACK CARD - FOCAL POINT) -->
       <article class="bc-card bc-card-inverted metric-card" data-tilt-card tabindex="0">
-        <!-- Empty Specimen Jar with Bold Green Tick (Zero Bugs Escaped) -->
-        <div class="bc-card-jar-wrap" aria-hidden="true">
-          <svg class="bc-jar-svg" viewBox="0 0 64 82">
-            <use href="#bc-jar-symbol" />
-            <path d="M21 48 L29 57 L45 34" fill="none" stroke="#22c55e" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
+        <div class="bc-card-top-group">
+          <!-- Empty Specimen Jar with Bold Green Tick (Zero Bugs Escaped) -->
+          <div class="bc-card-jar-wrap" aria-hidden="true">
+            <svg class="bc-jar-svg" viewBox="0 0 64 82">
+              <use href="#bc-jar-symbol" />
+              <path d="M21 48 L29 57 L45 34" fill="none" stroke="#22c55e" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="bc-card-number-wrap">
+            <span class="bc-card-number metric-number" data-target="99.8" data-suffix="%" data-decimals="1">0</span>
+          </div>
         </div>
-        <div class="bc-card-top-tag">ZERO DEFECT ESCAPES</div>
-        <div class="bc-card-number-wrap">
-          <span class="bc-card-number metric-number" data-target="99.8" data-suffix="%" data-decimals="1">0</span>
-        </div>
-        <div>
+        <div class="bc-card-bottom-group">
           <h3 class="bc-card-title">Release Stability</h3>
           <p class="bc-card-desc">Flawless production deploy sign-offs backed by rigorous QA auditing</p>
         </div>
@@ -327,22 +223,33 @@ include __DIR__ . '/includes/header.php';
 
       <!-- CARD 4: 85% Automation Coverage -->
       <article class="bc-card metric-card" data-tilt-card tabindex="0">
-        <!-- Specimen Jar with Automated Bug Inside -->
-        <div class="bc-card-jar-wrap" aria-hidden="true">
-          <svg class="bc-jar-svg" viewBox="0 0 64 82">
-            <use href="#bc-jar-symbol" />
-            <g class="bc-in-jar-bug">
-              <svg x="17" y="38" width="30" height="30" viewBox="0 0 44 44">
-                <use href="#bc-bug-symbol" />
-              </svg>
-            </g>
-          </svg>
+        <div class="bc-card-top-group">
+          <!-- Specimen Jar with 3 Automated Bugs Inside -->
+          <div class="bc-card-jar-wrap" aria-hidden="true">
+            <svg class="bc-jar-svg" viewBox="0 0 64 82">
+              <use href="#bc-jar-symbol" />
+              <g class="bc-in-jar-bug">
+                <svg x="12" y="27" width="20" height="20" viewBox="0 0 44 44">
+                  <use href="#bc-bug-symbol" />
+                </svg>
+              </g>
+              <g class="bc-in-jar-bug-2">
+                <svg x="28" y="36" width="22" height="22" viewBox="0 0 44 44">
+                  <use href="#bc-bug-symbol" />
+                </svg>
+              </g>
+              <g class="bc-in-jar-bug-3">
+                <svg x="16" y="49" width="21" height="21" viewBox="0 0 44 44">
+                  <use href="#bc-bug-symbol" />
+                </svg>
+              </g>
+            </svg>
+          </div>
+          <div class="bc-card-number-wrap">
+            <span class="bc-card-number metric-number" data-target="85" data-suffix="%">0</span>
+          </div>
         </div>
-        <div class="bc-card-top-tag">CONTINUOUS GATES</div>
-        <div class="bc-card-number-wrap">
-          <span class="bc-card-number metric-number" data-target="85" data-suffix="%">0</span>
-        </div>
-        <div>
+        <div class="bc-card-bottom-group">
           <h3 class="bc-card-title">Automation Coverage</h3>
           <p class="bc-card-desc">Playwright, Cypress &amp; continuous GitHub Actions regression gates</p>
         </div>
@@ -364,465 +271,295 @@ include __DIR__ . '/includes/header.php';
   <div class="rishi-container">
     
     <div class="doors-section-header">
-      <h2 class="doors-main-title">Magic happens behind the doors</h2>
-      <p class="doors-sub-title">Select a door to reveal my specialized software testing practices and execution blueprints.</p>
+      <div class="doors-mask-heading">
+        <h2 class="doors-main-title">Magic happens behind the doors</h2>
+      </div>
+      <div class="doors-mask-sub">
+        <p class="doors-sub-title">Step inside to inspect execution blueprints, live test telemetries, and QA methodologies.</p>
+      </div>
     </div>
 
-    <!-- 3D Cinematic Stage Wrapper -->
-    <div class="doors-cinema-stage" id="doors-stage">
-      
-      <!-- Camera Rig that zooms toward the selected door -->
-      <div class="doors-camera-rig" id="doors-camera-rig">
-        <div class="doors-row" id="doors-row">
-          
-          <!-- Door 1: Manual Testing (Blue Door) -->
-          <div class="door-frame door-blue" data-door-id="0" id="door-0" tabindex="0" role="button" aria-label="Enter Manual Testing Room">
+    <!-- 3D Cinematic Doors Stage -->
+    <div class="doors-stage-container" id="doors-stage">
+      <div class="doors-grid" id="doors-grid">
+        
+        <!-- Door 1: Manual Testing -->
+        <button type="button" class="door-btn door-manual" data-door-id="0" id="door-btn-0" aria-label="Enter Manual Testing Room">
+          <div class="door-frame">
+            <div class="door-behind"></div>
             <div class="door-leaf">
-              <div class="door-plate">MANUAL TESTING</div>
-              <div class="door-handle"></div>
-              <div class="door-panel-grooves"></div>
+              <div class="door-wood-grain"></div>
+              <div class="door-inner-arch"></div>
+              <div class="door-hinges">
+                <span class="gold-hinge"></span>
+                <span class="gold-hinge"></span>
+                <span class="gold-hinge"></span>
+              </div>
+              <div class="door-handle orange-handle"></div>
+              <div class="door-gold-plate">MANUAL TESTING</div>
             </div>
-            <div class="door-portal-glow"></div>
-            <div class="door-light-beam"></div>
+            <div class="door-floor-shadow"></div>
           </div>
+        </button>
 
-          <!-- Door 2: Automation Testing (Dark Purple Door) -->
-          <div class="door-frame door-obsidian door-purple" data-door-id="1" id="door-1" tabindex="0" role="button" aria-label="Enter Automation Testing Room">
-            <div class="door-leaf">
-              <div class="door-plate">AUTOMATION TESTING</div>
-              <div class="door-handle"></div>
-              <div class="door-panel-grooves"></div>
+        <!-- Door 2: Automation Testing -->
+        <button type="button" class="door-btn door-automation" data-door-id="1" id="door-btn-1" aria-label="Enter Automation Testing Room">
+          <div class="door-frame door-overflow-hidden">
+            <div class="door-behind"></div>
+            <div class="door-half door-half-left">
+              <div class="circuit-grid"></div>
             </div>
-            <div class="door-portal-glow"></div>
-            <div class="door-light-beam"></div>
-          </div>
-
-          <!-- Door 3: AI Testing (Sage Green Door) -->
-          <div class="door-frame door-green" data-door-id="2" id="door-2" tabindex="0" role="button" aria-label="Enter AI Testing Room">
-            <div class="door-leaf">
-              <div class="door-plate">AI TESTING</div>
-              <div class="door-handle"></div>
-              <div class="door-panel-grooves"></div>
+            <div class="door-half door-half-right">
+              <div class="circuit-grid"></div>
             </div>
-            <div class="door-portal-glow"></div>
-            <div class="door-light-beam"></div>
+            <div class="door-center-seam-glow"></div>
+            <div class="door-gold-plate plate-pinned">AUTOMATION TESTING</div>
+            <div class="door-floor-shadow"></div>
           </div>
+        </button>
 
-          <!-- Door 4: Security & Audit (Amber / Brown Door) -->
-          <div class="door-frame door-amber door-brown" data-door-id="3" id="door-3" tabindex="0" role="button" aria-label="Enter Security & Auditing Room">
-            <div class="door-leaf">
-              <div class="door-plate">SECURITY &amp; AUDITING</div>
-              <div class="door-handle"></div>
-              <div class="door-panel-grooves"></div>
+        <!-- Door 3: AI Testing -->
+        <button type="button" class="door-btn door-ai" data-door-id="2" id="door-btn-2" aria-label="Enter AI Testing Room">
+          <div class="door-frame door-overflow-hidden">
+            <div class="door-behind"></div>
+            <div class="door-leaf shutter-leaf">
+              <div class="shutter-slats"></div>
+              <div class="ai-eye-wrapper">
+                <div class="ai-eye-ring ring-outer"></div>
+                <div class="ai-eye-ring ring-mid"></div>
+                <div class="ai-eye-pupil"></div>
+              </div>
+              <div class="ai-scan-line"></div>
+              <div class="door-gold-plate">AI TESTING</div>
             </div>
-            <div class="door-portal-glow"></div>
-            <div class="door-light-beam"></div>
+            <div class="door-floor-shadow"></div>
           </div>
+        </button>
 
+        <!-- Door 4: Security & Auditing -->
+        <button type="button" class="door-btn door-security" data-door-id="3" id="door-btn-3" aria-label="Enter Security & Auditing Room">
+          <div class="door-frame">
+            <div class="door-behind"></div>
+            <div class="door-leaf vault-leaf">
+              <div class="vault-rivet-border"></div>
+              <div class="vault-wheel-wrap">
+                <div class="vault-wheel">
+                  <div class="vault-spoke spoke-1"></div>
+                  <div class="vault-spoke spoke-2"></div>
+                  <div class="vault-spoke spoke-3"></div>
+                  <div class="vault-hub"></div>
+                </div>
+              </div>
+              <div class="door-gold-plate">SECURITY &amp; AUDITING</div>
+            </div>
+            <div class="door-floor-shadow"></div>
+          </div>
+        </button>
+
+      </div>
+
+      <!-- Instruction Pill with bobbing arrow -->
+      <div class="doors-instruction-wrap">
+        <div class="doors-instruction-pill">
+          <span class="pill-arrow-bob" aria-hidden="true">&#8593;</span>
+          <span class="pill-text">Click a door to step inside</span>
         </div>
       </div>
-      
-      <!-- Subtle instruction hint under doors -->
-      <div class="doors-hint" id="doors-hint">
-        <span class="hint-pulse"></span>
-        <span>Click any door to step inside the testing environment</span>
+
+      <!-- Modern Interactive Service Ticker Ribbon (Elevated Badge UI) -->
+      <div class="doors-marquee-wrap" aria-label="Testing Services Ticker">
+        <div class="doors-marquee-track">
+          <!-- SET 1 -->
+          <div class="service-ticker-chip chip-manual" data-door-id="0" role="button" tabindex="0" title="Inspect Manual Testing">
+            <span class="chip-icon-box">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <polyline points="9 12 11 14 15 10"></polyline>
+              </svg>
+            </span>
+            <span class="chip-title">MANUAL TESTING</span>
+            <span class="chip-badge-tag">01 • QA</span>
+            <span class="chip-status-dot dot-manual"></span>
+          </div>
+          <div class="marquee-separator" aria-hidden="true"><span class="separator-diamond">◆</span></div>
+
+          <div class="service-ticker-chip chip-automation" data-door-id="1" role="button" tabindex="0" title="Inspect Automation Testing">
+            <span class="chip-icon-box">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polyline>
+              </svg>
+            </span>
+            <span class="chip-title">AUTOMATION TESTING</span>
+            <span class="chip-badge-tag">02 • CI/CD</span>
+            <span class="chip-status-dot dot-auto"></span>
+          </div>
+          <div class="marquee-separator" aria-hidden="true"><span class="separator-diamond">◆</span></div>
+
+          <div class="service-ticker-chip chip-ai" data-door-id="2" role="button" tabindex="0" title="Inspect AI Testing">
+            <span class="chip-icon-box">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"></path>
+                <circle cx="19" cy="5" r="1.5" fill="currentColor"></circle>
+              </svg>
+            </span>
+            <span class="chip-title">AI TESTING &amp; LLM VERIFICATION</span>
+            <span class="chip-badge-tag">03 • GENAI</span>
+            <span class="chip-status-dot dot-ai"></span>
+          </div>
+          <div class="marquee-separator" aria-hidden="true"><span class="separator-diamond">◆</span></div>
+
+          <div class="service-ticker-chip chip-security" data-door-id="3" role="button" tabindex="0" title="Inspect Security & Auditing">
+            <span class="chip-icon-box">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                <circle cx="12" cy="16" r="1.5"></circle>
+              </svg>
+            </span>
+            <span class="chip-title">SECURITY &amp; AUDITING</span>
+            <span class="chip-badge-tag">04 • SEC</span>
+            <span class="chip-status-dot dot-sec"></span>
+          </div>
+          <div class="marquee-separator" aria-hidden="true"><span class="separator-diamond">◆</span></div>
+
+          <!-- SET 2 (Identical for seamless infinite marquee loop) -->
+          <div class="service-ticker-chip chip-manual" data-door-id="0" role="button" tabindex="0" title="Inspect Manual Testing">
+            <span class="chip-icon-box">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <polyline points="9 12 11 14 15 10"></polyline>
+              </svg>
+            </span>
+            <span class="chip-title">MANUAL TESTING</span>
+            <span class="chip-badge-tag">01 • QA</span>
+            <span class="chip-status-dot dot-manual"></span>
+          </div>
+          <div class="marquee-separator" aria-hidden="true"><span class="separator-diamond">◆</span></div>
+
+          <div class="service-ticker-chip chip-automation" data-door-id="1" role="button" tabindex="0" title="Inspect Automation Testing">
+            <span class="chip-icon-box">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polyline>
+              </svg>
+            </span>
+            <span class="chip-title">AUTOMATION TESTING</span>
+            <span class="chip-badge-tag">02 • CI/CD</span>
+            <span class="chip-status-dot dot-auto"></span>
+          </div>
+          <div class="marquee-separator" aria-hidden="true"><span class="separator-diamond">◆</span></div>
+
+          <div class="service-ticker-chip chip-ai" data-door-id="2" role="button" tabindex="0" title="Inspect AI Testing">
+            <span class="chip-icon-box">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"></path>
+                <circle cx="19" cy="5" r="1.5" fill="currentColor"></circle>
+              </svg>
+            </span>
+            <span class="chip-title">AI TESTING &amp; LLM VERIFICATION</span>
+            <span class="chip-badge-tag">03 • GENAI</span>
+            <span class="chip-status-dot dot-ai"></span>
+          </div>
+          <div class="marquee-separator" aria-hidden="true"><span class="separator-diamond">◆</span></div>
+
+          <div class="service-ticker-chip chip-security" data-door-id="3" role="button" tabindex="0" title="Inspect Security & Auditing">
+            <span class="chip-icon-box">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                <circle cx="12" cy="16" r="1.5"></circle>
+              </svg>
+            </span>
+            <span class="chip-title">SECURITY &amp; AUDITING</span>
+            <span class="chip-badge-tag">04 • SEC</span>
+            <span class="chip-status-dot dot-sec"></span>
+          </div>
+          <div class="marquee-separator" aria-hidden="true"><span class="separator-diamond">◆</span></div>
+        </div>
       </div>
+
     </div>
   </div>
 
   <!-- ========================================================================
-       CINEMATIC TESTING ROOMS (FULL-SCREEN IMMERSIVE ENVIRONMENTS)
+       UNIFIED HIGH-PERFORMANCE SERVICE ROOM (SINGLE REUSABLE DOM ELEMENT)
        ======================================================================== -->
-  <div class="testing-room-viewport" id="testing-room-viewport" aria-hidden="true">
-    
-    <!-- ROOM 1: MANUAL TESTING (BLUE THEME) -->
-    <div class="testing-room room-theme-blue" id="room-0" data-room-id="0">
-      <div class="room-ambient-aurora"></div>
-      <div class="room-inner-container">
-        
-        <!-- Room Top Bar: Back to Doors Button & Room Badge -->
-        <div class="room-top-bar">
-          <button class="room-back-btn" data-back-to-doors aria-label="Back to the Doors">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-            <span>BACK TO THE DOORS</span>
-          </button>
-          <div class="room-badge">
-            <span class="room-badge-dot"></span>
-            <span>DOOR 01 // MANUAL TESTING ENVIRONMENT</span>
-          </div>
-        </div>
+  <div class="unified-service-room" id="unified-service-room" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="room-ambient-aurora" id="room-ambient-aurora"></div>
+    <div class="room-content-wrapper">
+      
+      <!-- Room Navigation Top Bar -->
+      <div class="room-top-nav">
+        <button type="button" class="room-back-btn" id="room-back-btn" aria-label="Back to the doors">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>BACK TO THE DOORS</span>
+        </button>
 
-        <!-- Room Header -->
-        <div class="room-header">
-          <h2 class="room-title">Manual Testing</h2>
-          <div class="room-tagline">FROM FIRST SPECIFICATION TO ZERO-DEFECT SIGN-OFF</div>
-          <p class="room-desc">
+        <div class="room-badge-indicator">
+          <span class="room-pulse-dot" id="room-pulse-dot"></span>
+          <span class="room-service-num" id="room-service-num">01 // 04</span>
+        </div>
+      </div>
+
+      <!-- Room Main Content Grid -->
+      <div class="room-grid">
+        
+        <!-- Left Column: Service Details & Verified Blueprint -->
+        <div class="room-details-col">
+          <div class="room-category-pill" id="room-category-pill">SERVICE BLUEPRINT</div>
+          <h2 class="room-title" id="room-title">Manual Testing</h2>
+          <div class="room-tagline" id="room-tagline">FROM FIRST SPECIFICATION TO ZERO-DEFECT SIGN-OFF</div>
+          <p class="room-desc" id="room-desc">
             Exhaustive functional and exploratory defect hunting. Ensuring pixel-perfect design fidelity, bulletproof user journeys, and zero critical escapes across multi-browser responsive ecosystems.
           </p>
+
+          <div class="room-blueprint-header">VERIFIED QA BLUEPRINT</div>
+          <ul class="room-bullets-list" id="room-bullets-list">
+            <!-- 4 check bullets injected dynamically -->
+          </ul>
+
+          <div class="room-tags-container" id="room-tags-container">
+            <!-- Badges injected dynamically -->
+          </div>
+
+          <div class="room-action-ctas">
+            <button type="button" class="btn btn-primary room-consult-btn" data-open-consultation>
+              <span>Book a Testing Consultation</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <button type="button" class="btn btn-outline-pill-dark room-return-btn" id="room-return-btn">
+              <span>Return to Doors</span>
+            </button>
+          </div>
         </div>
 
-        <!-- Room Capabilities Grid (8 Cards) -->
-        <div class="room-capabilities-grid">
-          
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        <!-- Right Column: Live Test Run Card (Telemetry with sequential lines) -->
+        <div class="room-telemetry-col">
+          <div class="telemetry-terminal-card" id="telemetry-card">
+            <div class="terminal-header">
+              <div class="terminal-dots">
+                <span class="tdot red"></span>
+                <span class="tdot yellow"></span>
+                <span class="tdot green"></span>
+              </div>
+              <div class="terminal-title" id="terminal-title">LIVE TEST RUN &bull; CONSOLE</div>
+              <div class="terminal-badge" id="terminal-badge">STABLE</div>
             </div>
-            <h3 class="cap-title">Functional Testing</h3>
-            <p class="cap-desc">Complete end-to-end user journey verification, business logic validation, boundary value testing, and state transition auditing.</p>
-          </div>
-
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+            <div class="terminal-body" id="terminal-lines-container">
+              <!-- Sequential lines will appear one by one -->
             </div>
-            <h3 class="cap-title">UI/UX Testing</h3>
-            <p class="cap-desc">Design fidelity inspection, typography flow, layout alignment, contrast compliance, and micro-interaction verification against Figma specs.</p>
-          </div>
-
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+            <div class="terminal-footer">
+              <span class="terminal-footer-dot"></span>
+              <span class="terminal-footer-text" id="terminal-footer-text">EXECUTION COMPLETE &mdash; 0 FAILURES</span>
             </div>
-            <h3 class="cap-title">Regression Testing</h3>
-            <p class="cap-desc">Exhaustive pre-release regression passes ensuring new feature rollouts, bug fixes, or framework patches never compromise existing workflows.</p>
           </div>
-
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-            </div>
-            <h3 class="cap-title">Cross-Browser Testing</h3>
-            <p class="cap-desc">Full behavioral and visual validation across Chrome, Firefox, Safari, Microsoft Edge, and WebKit rendering engines.</p>
-          </div>
-
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
-            </div>
-            <h3 class="cap-title">Responsive Testing</h3>
-            <p class="cap-desc">Device matrix testing spanning 20+ viewport dimensions across modern Android builds, iOS handsets, tablets, and desktop displays.</p>
-          </div>
-
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            </div>
-            <h3 class="cap-title">Exploratory Testing</h3>
-            <p class="cap-desc">Creative, non-linear defect hunting to uncover elusive edge-case anomalies, memory leaks, and asynchronous state desynchronizations.</p>
-          </div>
-
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-            </div>
-            <h3 class="cap-title">Test Case Design</h3>
-            <p class="cap-desc">Structured, reusable test suites, equivalence partitioning, boundary value assertions, and requirement traceability matrices.</p>
-          </div>
-
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            </div>
-            <h3 class="cap-title">Bug Reporting and Documentation</h3>
-            <p class="cap-desc">Actionable Jira bug tickets with reproducible step-by-step traces, console outputs, network payloads, and video evidence.</p>
-          </div>
-
-        </div>
-
-        <!-- Room Actions -->
-        <div class="room-footer-actions">
-          <button class="btn btn-dark-pill" data-open-enquiry>
-            <span>Book Manual Testing Audit</span>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-          </button>
-          <button class="btn btn-outline-pill-dark" data-back-to-doors>
-            <span>← Back to the Doors</span>
-          </button>
         </div>
 
       </div>
+
     </div>
-
-    <!-- ROOM 2: AUTOMATION TESTING (DARK PURPLE THEME) -->
-    <div class="testing-room room-theme-purple" id="room-1" data-room-id="1">
-      <div class="room-ambient-aurora"></div>
-      <div class="room-inner-container">
-        
-        <div class="room-top-bar">
-          <button class="room-back-btn" data-back-to-doors aria-label="Back to the Doors">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-            <span>BACK TO THE DOORS</span>
-          </button>
-          <div class="room-badge">
-            <span class="room-badge-dot"></span>
-            <span>DOOR 02 // AUTOMATION TESTING ENVIRONMENT</span>
-          </div>
-        </div>
-
-        <div class="room-header">
-          <h2 class="room-title">Automation Testing</h2>
-          <div class="room-tagline">END-TO-END PIPELINES &amp; CONTINUOUS REGRESSION GATES</div>
-          <p class="room-desc">
-            Scalable, maintainable test automation frameworks delivering 85% continuous regression coverage. Slashing QA cycles from days to minutes with zero flaky failures.
-          </p>
-        </div>
-
-        <div class="room-capabilities-grid">
-          
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-            </div>
-            <h3 class="cap-title">Selenium Automation</h3>
-            <p class="cap-desc">Robust cross-browser WebDriver suites with modular Page Object Models, explicit synchronization, and cross-platform grid execution.</p>
-          </div>
-
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
-            </div>
-            <h3 class="cap-title">Java Automation</h3>
-            <p class="cap-desc">Enterprise-grade automation built on Java, TestNG, JUnit, and Maven with data-driven providers and parallel execution threads.</p>
-          </div>
-
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-            </div>
-            <h3 class="cap-title">Test Automation Frameworks</h3>
-            <p class="cap-desc">High-speed Playwright and Cypress architectures featuring resilient auto-waiting, network interceptors, and headless execution.</p>
-          </div>
-
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
-            </div>
-            <h3 class="cap-title">Regression Automation</h3>
-            <p class="cap-desc">Automated regression test packs integrated into GitHub Actions CI/CD to prevent regressions on every pull request and merge.</p>
-          </div>
-
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-            </div>
-            <h3 class="cap-title">Automated Test Execution</h3>
-            <p class="cap-desc">High-concurrency headless test runs with isolated browser contexts, dynamic test retries, and comprehensive trace logs.</p>
-          </div>
-
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
-            </div>
-            <h3 class="cap-title">Cross-Browser Automation</h3>
-            <p class="cap-desc">Simultaneous cross-platform test executions across Chromium, Firefox, and WebKit ensuring identical behavior everywhere.</p>
-          </div>
-
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-            </div>
-            <h3 class="cap-title">Test Reporting</h3>
-            <p class="cap-desc">Actionable Allure and HTML test reports with execution timelines, video artifacts, DOM snapshots, and error stack analyses.</p>
-          </div>
-
-        </div>
-
-        <div class="room-footer-actions">
-          <button class="btn btn-dark-pill" data-open-enquiry>
-            <span>Book Automation Architecture Session</span>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-          </button>
-          <button class="btn btn-outline-pill-dark" data-back-to-doors>
-            <span>← Back to the Doors</span>
-          </button>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- ROOM 3: AI TESTING (GREEN THEME) -->
-    <div class="testing-room room-theme-green" id="room-2" data-room-id="2">
-      <div class="room-ambient-aurora"></div>
-      <div class="room-inner-container">
-        
-        <div class="room-top-bar">
-          <button class="room-back-btn" data-back-to-doors aria-label="Back to the Doors">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-            <span>BACK TO THE DOORS</span>
-          </button>
-          <div class="room-badge">
-            <span class="room-badge-dot"></span>
-            <span>DOOR 03 // AI TESTING ENVIRONMENT</span>
-          </div>
-        </div>
-
-        <div class="room-header">
-          <h2 class="room-title">AI Testing &amp; LLM Verification</h2>
-          <div class="room-tagline">LLM DETERMINISM, ADVERSARIAL ATTACKS &amp; GUARDRAILS</div>
-          <p class="room-desc">
-            Next-generation QA auditing for artificial intelligence, LLM pipelines, and automated intelligence. Enforcing factual grounding, guardrail safety, and non-deterministic response tolerance.
-          </p>
-        </div>
-
-        <div class="room-capabilities-grid">
-          
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-            </div>
-            <h3 class="cap-title">AI-Assisted Testing</h3>
-            <p class="cap-desc">Leveraging intelligent LLM evaluation harnesses to autonomously generate edge-case inputs, stress parameters, and assertion heuristics.</p>
-          </div>
-
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
-            </div>
-            <h3 class="cap-title">Test Case Generation</h3>
-            <p class="cap-desc">Synthesizing comprehensive test matrices from functional requirements, covering happy paths, negative boundaries, and adversarial vectors.</p>
-          </div>
-
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
-            </div>
-            <h3 class="cap-title">Intelligent Test Analysis</h3>
-            <p class="cap-desc">Defect pattern detection, flaky test classification, automated failure triage, and predictive risk scoring on core application areas.</p>
-          </div>
-
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-            </div>
-            <h3 class="cap-title">AI-Powered Test Workflows</h3>
-            <p class="cap-desc">Adaptive test suites that automatically heal broken DOM locators, analyze multimodal image outputs, and verify generative responses.</p>
-          </div>
-
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
-            </div>
-            <h3 class="cap-title">Test Data Assistance</h3>
-            <p class="cap-desc">Automated generation of production-realistic mock databases, internationalized string payloads, and privacy-compliant synthetic datasets.</p>
-          </div>
-
-        </div>
-
-        <div class="room-footer-actions">
-          <button class="btn btn-dark-pill" data-open-enquiry>
-            <span>Book AI Quality Audit</span>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-          </button>
-          <button class="btn btn-outline-pill-dark" data-back-to-doors>
-            <span>← Back to the Doors</span>
-          </button>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- ROOM 4: SECURITY & AUDITING (BROWN/AMBER THEME) -->
-    <div class="testing-room room-theme-brown" id="room-3" data-room-id="3">
-      <div class="room-ambient-aurora"></div>
-      <div class="room-inner-container">
-        
-        <div class="room-top-bar">
-          <button class="room-back-btn" data-back-to-doors aria-label="Back to the Doors">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-            <span>BACK TO THE DOORS</span>
-          </button>
-          <div class="room-badge">
-            <span class="room-badge-dot"></span>
-            <span>DOOR 04 // SECURITY &amp; AUDITING ENVIRONMENT</span>
-          </div>
-        </div>
-
-        <div class="room-header">
-          <h2 class="room-title">Security &amp; Vulnerability Auditing</h2>
-          <div class="room-tagline">ZERO-TRUST ACCESS, OWASP TOP 10 DEFENSE &amp; LOAD RESILIENCE</div>
-          <p class="room-desc">
-            Rigorous penetration audits, role-based authorization verification, and data encryption testing protecting production infrastructure against critical security exploits.
-          </p>
-        </div>
-
-        <div class="room-capabilities-grid">
-          
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-            </div>
-            <h3 class="cap-title">Authentication Testing</h3>
-            <p class="cap-desc">Multi-factor authentication (MFA) validation, brute-force mitigation, password policy enforcement, and secure OAuth2 token exchange.</p>
-          </div>
-
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-            </div>
-            <h3 class="cap-title">Authorization Testing</h3>
-            <p class="cap-desc">Role-Based Access Control (RBAC) verification, IDOR (Insecure Direct Object Reference) prevention, and vertical/horizontal privilege escalation checks.</p>
-          </div>
-
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-            </div>
-            <h3 class="cap-title">Session Management</h3>
-            <p class="cap-desc">Cookie security flags (HttpOnly, Secure, SameSite), session fixation tests, idle timeouts, and token invalidation on logout.</p>
-          </div>
-
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" y1="20" x2="15" y2="20"></line><line x1="12" y1="4" x2="12" y2="20"></line></svg>
-            </div>
-            <h3 class="cap-title">Input Validation</h3>
-            <p class="cap-desc">Sanitization defenses against SQL Injection (SQLi), Cross-Site Scripting (XSS), command execution, and malicious boundary payloads.</p>
-          </div>
-
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
-            </div>
-            <h3 class="cap-title">API Security Testing</h3>
-            <p class="cap-desc">JWT signature tampering validation, REST endpoint rate-limiting, CORS policy validation, and unauthorized payload leakage audits.</p>
-          </div>
-
-          <div class="capability-card">
-            <div class="cap-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            </div>
-            <h3 class="cap-title">Vulnerability Assessment</h3>
-            <p class="cap-desc">Structured OWASP Top 10 auditing, dependency CVE auditing, network transit TLS enforcement, and executive security sign-off reports.</p>
-          </div>
-
-        </div>
-
-        <div class="room-footer-actions">
-          <button class="btn btn-dark-pill" data-open-enquiry>
-            <span>Book Security &amp; Vulnerability Audit</span>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-          </button>
-          <button class="btn btn-outline-pill-dark" data-back-to-doors>
-            <span>← Back to the Doors</span>
-          </button>
-        </div>
-
-      </div>
-    </div>
-
   </div>
 </section>
 
@@ -835,12 +572,7 @@ include __DIR__ . '/includes/header.php';
     
     <div class="rishi-container work-header-container">
       <div class="work-header">
-        <h2 class="work-title">Software tested to bulletproof reliability.</h2>
-        <p class="work-subtitle">
-          Explore enterprise platforms, welfare mobile apps, and e-commerce ecosystems engineered by 
-          <a href="https://astrasoftwaresolutions.com/projects" target="_blank" rel="noopener noreferrer" class="astraz-link-highlight">Astraz Software Solutions</a> 
-          and rigorously verified by Ranjith C V.
-        </p>
+        <h2 class="work-title">Featured QA Projects</h2>
       </div>
 
       <!-- Live Category Filter Chips & Manual Horizontal Controls -->
@@ -888,22 +620,26 @@ include __DIR__ . '/includes/header.php';
         <!-- 1. LENSFED App -->
         <div class="astraz-project-card card-style-lensfed" data-category="mobile" tabindex="0" role="article" aria-label="LENSFED Members Welfare App">
           <div class="card-primary-col">
+          <!-- Spiral Notebook 14 Capsule Binder Rings (7x22px, sticking up 14px) -->
+          <div class="card-spiral-rings" aria-hidden="true">
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+          </div>
           <div class="card-image-wrap">
-            <div class="card-visual-art">
-              <div class="visual-ambient-glow"></div>
-              <div class="visual-device-mockup">
-                <svg width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <rect x="5" y="2" width="14" height="20" rx="3" ry="3"></rect>
-                  <circle cx="12" cy="11" r="3.5"></circle>
-                  <path d="M9 18h6"></path>
-                  <line x1="12" y1="5" x2="12.01" y2="5" stroke-width="2.5"></line>
-                </svg>
-              </div>
-            </div>
-            <div class="card-banner-badges">
-              <span class="card-category-badge">Mobile // Welfare</span>
-              <span class="card-number-tag">01 // 14</span>
-            </div>
+            <img src="assets/images/projects/lensfed-app.jpg" alt="LENSFED Members Welfare App" class="card-project-cover-img" loading="lazy">
+            <div class="card-image-overlay"></div>
           </div>
           <div class="card-primary-body">
             <div class="card-client-meta">Licensed Engineers &amp; Supervisors Federation</div>
@@ -917,7 +653,6 @@ include __DIR__ . '/includes/header.php';
           </div>
           <div class="card-expandable-drawer">
             <div class="drawer-inner-content">
-              <div class="p-qa-status-pill">QA SIGN-OFF: 100%</div>
               <div class="p-qa-scope">
                 <div class="qa-scope-heading">VERIFIED QA BLUEPRINT</div>
                 <div class="qa-bullet"><span class="qmark">✓</span> Member authentication &amp; biometric login validation</div>
@@ -937,22 +672,26 @@ include __DIR__ . '/includes/header.php';
         <!-- 2. Asraya KVVES App -->
         <div class="astraz-project-card card-style-asraya" data-category="mobile" tabindex="0" role="article" aria-label="Asraya KVVES Kannur App">
           <div class="card-primary-col">
+          <!-- Spiral Notebook 14 Capsule Binder Rings (7x22px, sticking up 14px) -->
+          <div class="card-spiral-rings" aria-hidden="true">
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+          </div>
           <div class="card-image-wrap">
-            <div class="card-visual-art">
-              <div class="visual-ambient-glow"></div>
-              <div class="visual-device-mockup">
-                <svg width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <rect x="3" y="3" width="18" height="18" rx="2"></rect>
-                  <line x1="3" y1="9" x2="21" y2="9"></line>
-                  <line x1="9" y1="21" x2="9" y2="9"></line>
-                  <circle cx="15" cy="15" r="2"></circle>
-                </svg>
-              </div>
-            </div>
-            <div class="card-banner-badges">
-              <span class="card-category-badge">Mobile // Family Welfare</span>
-              <span class="card-number-tag">02 // 14</span>
-            </div>
+            <img src="assets/images/projects/asraya-kvves.jpg" alt="Asraya KVVES Kannur App" class="card-project-cover-img" loading="lazy">
+            <div class="card-image-overlay"></div>
           </div>
           <div class="card-primary-body">
             <div class="card-client-meta">Kerala Vyapari Vyavasayi Ekopana Samithi</div>
@@ -966,7 +705,6 @@ include __DIR__ . '/includes/header.php';
           </div>
           <div class="card-expandable-drawer">
             <div class="drawer-inner-content">
-              <div class="p-qa-status-pill">ZERO DEFECT ESCAPES</div>
               <div class="p-qa-scope">
                 <div class="qa-scope-heading">VERIFIED QA BLUEPRINT</div>
                 <div class="qa-bullet"><span class="qmark">✓</span> Financial calculation precision &amp; benefit tier assertions</div>
@@ -986,20 +724,26 @@ include __DIR__ . '/includes/header.php';
         <!-- 3. AAWK App -->
         <div class="astraz-project-card card-style-aawk" data-category="mobile" tabindex="0" role="article" aria-label="AAWK Mobile App & Life Line">
           <div class="card-primary-col">
+          <!-- Spiral Notebook 14 Capsule Binder Rings (7x22px, sticking up 14px) -->
+          <div class="card-spiral-rings" aria-hidden="true">
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+          </div>
           <div class="card-image-wrap">
-            <div class="card-visual-art">
-              <div class="visual-ambient-glow"></div>
-              <div class="visual-device-mockup">
-                <svg width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
-                  <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-              </div>
-            </div>
-            <div class="card-banner-badges">
-              <span class="card-category-badge">Mobile // Workshop Network</span>
-              <span class="card-number-tag">03 // 14</span>
-            </div>
+            <img src="assets/images/projects/aawk-mobile.jpg" alt="AAWK Mobile App &amp; Life Line" class="card-project-cover-img" loading="lazy">
+            <div class="card-image-overlay"></div>
           </div>
           <div class="card-primary-body">
             <div class="card-client-meta">Association of Automobile Workshops Kerala</div>
@@ -1013,7 +757,6 @@ include __DIR__ . '/includes/header.php';
           </div>
           <div class="card-expandable-drawer">
             <div class="drawer-inner-content">
-              <div class="p-qa-status-pill">VERIFIED RELEASE</div>
               <div class="p-qa-scope">
                 <div class="qa-scope-heading">VERIFIED QA BLUEPRINT</div>
                 <div class="qa-bullet"><span class="qmark">✓</span> Geolocation breakdown dispatch algorithm testing</div>
@@ -1033,23 +776,26 @@ include __DIR__ . '/includes/header.php';
         <!-- 4. Hote Restaurant App -->
         <div class="astraz-project-card card-style-hote" data-category="mobile" tabindex="0" role="article" aria-label="Hote Restaurant Staff App">
           <div class="card-primary-col">
+          <!-- Spiral Notebook 14 Capsule Binder Rings (7x22px, sticking up 14px) -->
+          <div class="card-spiral-rings" aria-hidden="true">
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+          </div>
           <div class="card-image-wrap">
-            <div class="card-visual-art">
-              <div class="visual-ambient-glow"></div>
-              <div class="visual-device-mockup">
-                <svg width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
-                  <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
-                  <line x1="6" y1="1" x2="6" y2="4"></line>
-                  <line x1="10" y1="1" x2="10" y2="4"></line>
-                  <line x1="14" y1="1" x2="14" y2="4"></line>
-                </svg>
-              </div>
-            </div>
-            <div class="card-banner-badges">
-              <span class="card-category-badge">Mobile // Hospitality</span>
-              <span class="card-number-tag">04 // 14</span>
-            </div>
+            <img src="assets/images/projects/hote-restaurant.jpg" alt="Hote Restaurant Staff App" class="card-project-cover-img" loading="lazy">
+            <div class="card-image-overlay"></div>
           </div>
           <div class="card-primary-body">
             <div class="card-client-meta">Hospitality Operations &amp; Dining</div>
@@ -1063,7 +809,6 @@ include __DIR__ . '/includes/header.php';
           </div>
           <div class="card-expandable-drawer">
             <div class="drawer-inner-content">
-              <div class="p-qa-status-pill">CONCURRENCY PASSED</div>
               <div class="p-qa-scope">
                 <div class="qa-scope-heading">VERIFIED QA BLUEPRINT</div>
                 <div class="qa-bullet"><span class="qmark">✓</span> Real-time WebSocket sync between waitstaff and kitchen</div>
@@ -1083,27 +828,31 @@ include __DIR__ . '/includes/header.php';
         <!-- 5. SL Logistics -->
         <div class="astraz-project-card card-style-sl" data-category="web" tabindex="0" role="article" aria-label="SL Logistics Management System">
           <div class="card-primary-col">
+          <!-- Spiral Notebook 14 Capsule Binder Rings (7x22px, sticking up 14px) -->
+          <div class="card-spiral-rings" aria-hidden="true">
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+          </div>
           <div class="card-image-wrap">
-            <div class="card-visual-art">
-              <div class="visual-ambient-glow"></div>
-              <div class="visual-device-mockup">
-                <svg width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <rect x="1" y="3" width="15" height="13"></rect>
-                  <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
-                  <circle cx="5.5" cy="18.5" r="2.5"></circle>
-                  <circle cx="18.5" cy="18.5" r="2.5"></circle>
-                </svg>
-              </div>
-            </div>
-            <div class="card-banner-badges">
-              <span class="card-category-badge">Web // Enterprise SaaS</span>
-              <span class="card-number-tag">05 // 14</span>
-            </div>
+            <img src="assets/images/projects/granite-udyog.jpg" alt="Granite Udyog Digital Showcase" class="card-project-cover-img" loading="lazy">
+            <div class="card-image-overlay"></div>
           </div>
           <div class="card-primary-body">
-            <div class="card-client-meta">Freight &amp; Supply Chain Logistics</div>
-            <h3 class="p-title">SL Logistics Management System</h3>
-            <p class="p-desc">End-to-end cloud logistics platform managing multimodal shipment consignments, fleet dispatches, automated tariff billing, and multi-hub warehouse inventories.</p>
+            <div class="card-client-meta">Premium Granite &amp; Marble Solutions</div>
+            <h3 class="p-title">Granite Udyog Digital Showcase</h3>
+            <p class="p-desc">Architectural stone and marble presentation platform showcasing 3D slab collections, dimensional specifications, finish variants, and global supply logistics.</p>
             <div class="card-reveal-prompt">
               <span>View QA Scope &amp; Tech Stack</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -1112,7 +861,6 @@ include __DIR__ . '/includes/header.php';
           </div>
           <div class="card-expandable-drawer">
             <div class="drawer-inner-content">
-              <div class="p-qa-status-pill">PLAYWRIGHT AUTOMATED</div>
               <div class="p-qa-scope">
                 <div class="qa-scope-heading">VERIFIED QA BLUEPRINT</div>
                 <div class="qa-bullet"><span class="qmark">✓</span> Playwright automated regression pipeline across all user roles</div>
@@ -1132,20 +880,26 @@ include __DIR__ . '/includes/header.php';
         <!-- 6. Lyfvo Platform -->
         <div class="astraz-project-card card-style-lyfvo" data-category="web" tabindex="0" role="article" aria-label="Lyfvo Coaching & Growth Platform">
           <div class="card-primary-col">
+          <!-- Spiral Notebook 14 Capsule Binder Rings (7x22px, sticking up 14px) -->
+          <div class="card-spiral-rings" aria-hidden="true">
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+          </div>
           <div class="card-image-wrap">
-            <div class="card-visual-art">
-              <div class="visual-ambient-glow"></div>
-              <div class="visual-device-mockup">
-                <svg width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <polygon points="23 7 16 12 23 17 23 7"></polygon>
-                  <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
-                </svg>
-              </div>
-            </div>
-            <div class="card-banner-badges">
-              <span class="card-category-badge">Web // EdTech &amp; Coaching</span>
-              <span class="card-number-tag">06 // 14</span>
-            </div>
+            <img src="assets/images/projects/lyfvo-platform.jpg" alt="Lyfvo Coaching &amp; Growth Platform" class="card-project-cover-img" loading="lazy">
+            <div class="card-image-overlay"></div>
           </div>
           <div class="card-primary-body">
             <div class="card-client-meta">Online Mentorship &amp; EdTech</div>
@@ -1159,7 +913,6 @@ include __DIR__ . '/includes/header.php';
           </div>
           <div class="card-expandable-drawer">
             <div class="drawer-inner-content">
-              <div class="p-qa-status-pill">ZERO ESCAPES</div>
               <div class="p-qa-scope">
                 <div class="qa-scope-heading">VERIFIED QA BLUEPRINT</div>
                 <div class="qa-bullet"><span class="qmark">✓</span> Video room WebRTC handshake &amp; bandwidth throttle testing</div>
@@ -1179,21 +932,26 @@ include __DIR__ . '/includes/header.php';
         <!-- 7. IBNCC Web Application -->
         <div class="astraz-project-card card-style-ibncc" data-category="web" tabindex="0" role="article" aria-label="IBNCC Catholic Congress Business Network">
           <div class="card-primary-col">
+          <!-- Spiral Notebook 14 Capsule Binder Rings (7x22px, sticking up 14px) -->
+          <div class="card-spiral-rings" aria-hidden="true">
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+          </div>
           <div class="card-image-wrap">
-            <div class="card-visual-art">
-              <div class="visual-ambient-glow"></div>
-              <div class="visual-device-mockup">
-                <svg width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="2" y1="12" x2="22" y2="12"></line>
-                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                </svg>
-              </div>
-            </div>
-            <div class="card-banner-badges">
-              <span class="card-category-badge">Web // Global Directory</span>
-              <span class="card-number-tag">07 // 14</span>
-            </div>
+            <img src="assets/images/projects/ibncc-network.jpg" alt="IBNCC Catholic Congress Business Network" class="card-project-cover-img" loading="lazy">
+            <div class="card-image-overlay"></div>
           </div>
           <div class="card-primary-body">
             <div class="card-client-meta">International Business Network</div>
@@ -1207,7 +965,6 @@ include __DIR__ . '/includes/header.php';
           </div>
           <div class="card-expandable-drawer">
             <div class="drawer-inner-content">
-              <div class="p-qa-status-pill">OWASP AUDITED</div>
               <div class="p-qa-scope">
                 <div class="qa-scope-heading">VERIFIED QA BLUEPRINT</div>
                 <div class="qa-bullet"><span class="qmark">✓</span> Directory database indexing &amp; multifaceted category search</div>
@@ -1227,22 +984,26 @@ include __DIR__ . '/includes/header.php';
         <!-- 8. Vajra Gold & Diamonds -->
         <div class="astraz-project-card card-style-vajra" data-category="ecommerce" tabindex="0" role="article" aria-label="Vajra Gold & Diamonds E-Store">
           <div class="card-primary-col">
+          <!-- Spiral Notebook 14 Capsule Binder Rings (7x22px, sticking up 14px) -->
+          <div class="card-spiral-rings" aria-hidden="true">
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+          </div>
           <div class="card-image-wrap">
-            <div class="card-visual-art">
-              <div class="visual-ambient-glow"></div>
-              <div class="visual-device-mockup">
-                <svg width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <polygon points="6 3 18 3 22 9 12 22 2 9"></polygon>
-                  <line x1="2" y1="9" x2="22" y2="9"></line>
-                  <line x1="12" y1="22" x2="7" y2="9"></line>
-                  <line x1="12" y1="22" x2="17" y2="9"></line>
-                </svg>
-              </div>
-            </div>
-            <div class="card-banner-badges">
-              <span class="card-category-badge">E-Commerce // Luxury</span>
-              <span class="card-number-tag">08 // 14</span>
-            </div>
+            <img src="assets/images/projects/vajra-jewellery.jpg" alt="Vajra Gold &amp; Diamonds E-Store" class="card-project-cover-img" loading="lazy">
+            <div class="card-image-overlay"></div>
           </div>
           <div class="card-primary-body">
             <div class="card-client-meta">Luxury Fine Jewellery Retail</div>
@@ -1256,7 +1017,6 @@ include __DIR__ . '/includes/header.php';
           </div>
           <div class="card-expandable-drawer">
             <div class="drawer-inner-content">
-              <div class="p-qa-status-pill">ZERO CALCULATION ERROR</div>
               <div class="p-qa-scope">
                 <div class="qa-scope-heading">VERIFIED QA BLUEPRINT</div>
                 <div class="qa-bullet"><span class="qmark">✓</span> Live market gold rate API dynamic pricing formula assertions</div>
@@ -1276,22 +1036,26 @@ include __DIR__ . '/includes/header.php';
         <!-- 9. Cruise Kerala -->
         <div class="astraz-project-card card-style-cruise" data-category="ecommerce" tabindex="0" role="article" aria-label="Cruise Kerala Houseboat Booking">
           <div class="card-primary-col">
+          <!-- Spiral Notebook 14 Capsule Binder Rings (7x22px, sticking up 14px) -->
+          <div class="card-spiral-rings" aria-hidden="true">
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+          </div>
           <div class="card-image-wrap">
-            <div class="card-visual-art">
-              <div class="visual-ambient-glow"></div>
-              <div class="visual-device-mockup">
-                <svg width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <path d="M2 20a2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1"></path>
-                  <path d="M4 18L3 12h18l-1 6"></path>
-                  <path d="M12 4v8"></path>
-                  <path d="M8 8l4-4 4 4"></path>
-                </svg>
-              </div>
-            </div>
-            <div class="card-banner-badges">
-              <span class="card-category-badge">E-Commerce // Tourism</span>
-              <span class="card-number-tag">09 // 14</span>
-            </div>
+            <img src="assets/images/projects/cruise-kerala.jpg" alt="Cruise Kerala Houseboat Booking" class="card-project-cover-img" loading="lazy">
+            <div class="card-image-overlay"></div>
           </div>
           <div class="card-primary-body">
             <div class="card-client-meta">Backwater Tourism &amp; Luxury Houseboats</div>
@@ -1305,7 +1069,6 @@ include __DIR__ . '/includes/header.php';
           </div>
           <div class="card-expandable-drawer">
             <div class="drawer-inner-content">
-              <div class="p-qa-status-pill">DATE CONCURRENCY PASSED</div>
               <div class="p-qa-scope">
                 <div class="qa-scope-heading">VERIFIED QA BLUEPRINT</div>
                 <div class="qa-bullet"><span class="qmark">✓</span> Calendar date locking to prevent double-booking collisions</div>
@@ -1325,21 +1088,26 @@ include __DIR__ . '/includes/header.php';
         <!-- 10. Kripa Pickles -->
         <div class="astraz-project-card card-style-kripa" data-category="ecommerce" tabindex="0" role="article" aria-label="Kripa Pickles E-Commerce Store">
           <div class="card-primary-col">
+          <!-- Spiral Notebook 14 Capsule Binder Rings (7x22px, sticking up 14px) -->
+          <div class="card-spiral-rings" aria-hidden="true">
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+          </div>
           <div class="card-image-wrap">
-            <div class="card-visual-art">
-              <div class="visual-ambient-glow"></div>
-              <div class="visual-device-mockup">
-                <svg width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <path d="M6 2h12v4H6z"></path>
-                  <path d="M5 6h14a1 1 0 0 1 1 1v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a1 1 0 0 1 1-1z"></path>
-                  <circle cx="12" cy="14" r="3"></circle>
-                </svg>
-              </div>
-            </div>
-            <div class="card-banner-badges">
-              <span class="card-category-badge">E-Commerce // FMCG D2C</span>
-              <span class="card-number-tag">10 // 14</span>
-            </div>
+            <img src="assets/images/projects/kripa-pickles.jpg" alt="Kripa Pickles E-Commerce Store" class="card-project-cover-img" loading="lazy">
+            <div class="card-image-overlay"></div>
           </div>
           <div class="card-primary-body">
             <div class="card-client-meta">Traditional Homemade Food Products</div>
@@ -1353,7 +1121,6 @@ include __DIR__ . '/includes/header.php';
           </div>
           <div class="card-expandable-drawer">
             <div class="drawer-inner-content">
-              <div class="p-qa-status-pill">100% REGRESSION PASS</div>
               <div class="p-qa-scope">
                 <div class="qa-scope-heading">VERIFIED QA BLUEPRINT</div>
                 <div class="qa-bullet"><span class="qmark">✓</span> Multi-tier coupon discount algorithm &amp; shipping fee calculations</div>
@@ -1373,20 +1140,26 @@ include __DIR__ . '/includes/header.php';
         <!-- 11. Skin Tone Aesthetic Clinic -->
         <div class="astraz-project-card card-style-skintone" data-category="corporate" tabindex="0" role="article" aria-label="Skin Tone Aesthetic Clinic Portal">
           <div class="card-primary-col">
+          <!-- Spiral Notebook 14 Capsule Binder Rings (7x22px, sticking up 14px) -->
+          <div class="card-spiral-rings" aria-hidden="true">
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+          </div>
           <div class="card-image-wrap">
-            <div class="card-visual-art">
-              <div class="visual-ambient-glow"></div>
-              <div class="visual-device-mockup">
-                <svg width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                  <circle cx="12" cy="11" r="3"></circle>
-                </svg>
-              </div>
-            </div>
-            <div class="card-banner-badges">
-              <span class="card-category-badge">Corporate // Health &amp; Beauty</span>
-              <span class="card-number-tag">11 // 14</span>
-            </div>
+            <img src="assets/images/projects/skintone-clinic.jpg" alt="Skin Tone Aesthetic Clinic Portal" class="card-project-cover-img" loading="lazy">
+            <div class="card-image-overlay"></div>
           </div>
           <div class="card-primary-body">
             <div class="card-client-meta">Aesthetic Clinic &amp; Skincare Center</div>
@@ -1400,7 +1173,6 @@ include __DIR__ . '/includes/header.php';
           </div>
           <div class="card-expandable-drawer">
             <div class="drawer-inner-content">
-              <div class="p-qa-status-pill">UI/UX AUDITED</div>
               <div class="p-qa-scope">
                 <div class="qa-scope-heading">VERIFIED QA BLUEPRINT</div>
                 <div class="qa-bullet"><span class="qmark">✓</span> Clinical consultation appointment scheduling flow verification</div>
@@ -1420,22 +1192,26 @@ include __DIR__ . '/includes/header.php';
         <!-- 12. UK Granite Co. -->
         <div class="astraz-project-card card-style-granite" data-category="corporate" tabindex="0" role="article" aria-label="UK Granite Co. Architectural Stone">
           <div class="card-primary-col">
+          <!-- Spiral Notebook 14 Capsule Binder Rings (7x22px, sticking up 14px) -->
+          <div class="card-spiral-rings" aria-hidden="true">
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+          </div>
           <div class="card-image-wrap">
-            <div class="card-visual-art">
-              <div class="visual-ambient-glow"></div>
-              <div class="visual-device-mockup">
-                <svg width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <rect x="2" y="3" width="20" height="14" rx="2"></rect>
-                  <line x1="8" y1="21" x2="16" y2="21"></line>
-                  <line x1="12" y1="17" x2="12" y2="21"></line>
-                  <polyline points="7 9 10 12 17 6"></polyline>
-                </svg>
-              </div>
-            </div>
-            <div class="card-banner-badges">
-              <span class="card-category-badge">Corporate // Manufacturing</span>
-              <span class="card-number-tag">12 // 14</span>
-            </div>
+            <img src="assets/images/projects/uk-granite.jpg" alt="UK Granite Co. Architectural Stone" class="card-project-cover-img" loading="lazy">
+            <div class="card-image-overlay"></div>
           </div>
           <div class="card-primary-body">
             <div class="card-client-meta">Granite Manufacturing &amp; Global Export</div>
@@ -1449,7 +1225,6 @@ include __DIR__ . '/includes/header.php';
           </div>
           <div class="card-expandable-drawer">
             <div class="drawer-inner-content">
-              <div class="p-qa-status-pill">PERFORMANCE AUDITED</div>
               <div class="p-qa-scope">
                 <div class="qa-scope-heading">VERIFIED QA BLUEPRINT</div>
                 <div class="qa-bullet"><span class="qmark">✓</span> High-resolution slab image gallery lazy loading &amp; CDN cache audit</div>
@@ -1469,20 +1244,26 @@ include __DIR__ . '/includes/header.php';
         <!-- 13. Lazzaro Academy -->
         <div class="astraz-project-card card-style-lazzaro" data-category="corporate" tabindex="0" role="article" aria-label="Lazzaro Academy Training Portal">
           <div class="card-primary-col">
+          <!-- Spiral Notebook 14 Capsule Binder Rings (7x22px, sticking up 14px) -->
+          <div class="card-spiral-rings" aria-hidden="true">
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+          </div>
           <div class="card-image-wrap">
-            <div class="card-visual-art">
-              <div class="visual-ambient-glow"></div>
-              <div class="visual-device-mockup">
-                <svg width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                  <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path>
-                </svg>
-              </div>
-            </div>
-            <div class="card-banner-badges">
-              <span class="card-category-badge">Corporate // Education</span>
-              <span class="card-number-tag">13 // 14</span>
-            </div>
+            <img src="assets/images/projects/lazzaro-academy.jpg" alt="Lazzaro Academy Training Portal" class="card-project-cover-img" loading="lazy">
+            <div class="card-image-overlay"></div>
           </div>
           <div class="card-primary-body">
             <div class="card-client-meta">Vocational Training &amp; Professional Education</div>
@@ -1496,7 +1277,6 @@ include __DIR__ . '/includes/header.php';
           </div>
           <div class="card-expandable-drawer">
             <div class="drawer-inner-content">
-              <div class="p-qa-status-pill">ACCESSIBILITY AUDITED</div>
               <div class="p-qa-scope">
                 <div class="qa-scope-heading">VERIFIED QA BLUEPRINT</div>
                 <div class="qa-bullet"><span class="qmark">✓</span> Student admission multi-step application form validation</div>
@@ -1516,22 +1296,26 @@ include __DIR__ . '/includes/header.php';
         <!-- 14. MK Tiles & Bathware -->
         <div class="astraz-project-card card-style-mktiles" data-category="corporate" tabindex="0" role="article" aria-label="MK Tiles & Bathware Showcase">
           <div class="card-primary-col">
+          <!-- Spiral Notebook 14 Capsule Binder Rings (7x22px, sticking up 14px) -->
+          <div class="card-spiral-rings" aria-hidden="true">
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+            <span class="card-ring"></span>
+          </div>
           <div class="card-image-wrap">
-            <div class="card-visual-art">
-              <div class="visual-ambient-glow"></div>
-              <div class="visual-device-mockup">
-                <svg width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <rect x="3" y="3" width="7" height="7"></rect>
-                  <rect x="14" y="3" width="7" height="7"></rect>
-                  <rect x="14" y="14" width="7" height="7"></rect>
-                  <rect x="3" y="14" width="7" height="7"></rect>
-                </svg>
-              </div>
-            </div>
-            <div class="card-banner-badges">
-              <span class="card-category-badge">Corporate // Building Materials</span>
-              <span class="card-number-tag">14 // 14</span>
-            </div>
+            <img src="assets/images/projects/mktiles-bathware.jpg" alt="MK Tiles &amp; Bathware Showcase" class="card-project-cover-img" loading="lazy">
+            <div class="card-image-overlay"></div>
           </div>
           <div class="card-primary-body">
             <div class="card-client-meta">Architectural Ceramic Tiles &amp; Sanitaryware</div>
@@ -1545,7 +1329,6 @@ include __DIR__ . '/includes/header.php';
           </div>
           <div class="card-expandable-drawer">
             <div class="drawer-inner-content">
-              <div class="p-qa-status-pill">QA VERIFIED</div>
               <div class="p-qa-scope">
                 <div class="qa-scope-heading">VERIFIED QA BLUEPRINT</div>
                 <div class="qa-bullet"><span class="qmark">✓</span> Multi-parameter catalog filtering (finish, dimensions, materials)</div>
@@ -1565,26 +1348,6 @@ include __DIR__ . '/includes/header.php';
       </div>
     </div>
 
-    <!-- Pinned Gallery Bottom Navigation & Consultation Action -->
-    <div class="rishi-container">
-      <div class="work-footer-actions">
-        <a href="#doors-section" class="btn btn-outline-pill-dark">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <line x1="19" y1="12" x2="5" y2="12"></line>
-            <polyline points="12 19 5 12 12 5"></polyline>
-          </svg>
-          <span>Back to the doors</span>
-        </a>
-        <button class="btn btn-dark-pill" data-open-enquiry>
-          <span>Book a Testing Consultation</span>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </button>
-      </div>
-    </div>
-
   </div>
 </section>
 
@@ -1597,10 +1360,6 @@ include __DIR__ . '/includes/header.php';
   <div class="rishi-container">
     
     <div class="contact-cta-wrapper">
-      <div class="contact-status-pill">
-        <span class="status-dot-pulse"></span>
-        <span>AVAILABLE FOR NEW WORK</span>
-      </div>
 
       <h2 class="contact-giant-headline">
         Got a project?<br>

@@ -1,0 +1,564 @@
+/* ==========================================================================
+   DEDICATED HERO SECTION STYLES
+   Matches Reference: ref1_light_theme, ref2_dark_spotlight, ref3_dark_cursor
+   Clean 2-Column layout, 3D Spiral Notebook flip, Dark Mode Cursor Spotlight
+   ========================================================================== */
+
+:root {
+  --hero-bg-light: #F4F4F6;
+  --hero-bg-dark: #0F1419;
+  --hero-text-light: #0B0D13;
+  --hero-text-dark: #FFFFFF;
+  --hero-muted-light: #6B7280;
+  --hero-muted-dark: #9CA3AF;
+  --hero-border-light: rgba(0, 0, 0, 0.08);
+  --hero-border-dark: rgba(255, 255, 255, 0.08);
+}
+
+/* Master Hero Section Container - Vertically Centered Full Viewport */
+.ref-hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--hero-bg-light);
+  color: var(--hero-text-light);
+  overflow: hidden;
+  transition: background-color 0.5s ease, color 0.5s ease;
+  box-sizing: border-box;
+  padding: clamp(2rem, 4vh, 4rem) 0;
+}
+
+/* Dark Theme State */
+body.dark-theme .ref-hero-section,
+.ref-hero-section.theme-dark {
+  background-color: var(--hero-bg-dark);
+  color: var(--hero-text-dark);
+}
+
+/* ==========================================================================
+   HERO MAIN 2-COLUMN GRID
+   ========================================================================== */
+.hero-body-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 4vw, 3.5rem);
+  box-sizing: border-box;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.95fr;
+  align-items: center;
+  gap: clamp(2rem, 3.5vw, 4.5rem);
+  width: 100%;
+}
+
+/* Left Column Content */
+.hero-col-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 10;
+}
+
+/* Small label above heading */
+.hero-badge-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--hero-muted-light);
+  letter-spacing: 0.03em;
+  margin-bottom: 0.85rem;
+}
+
+body.dark-theme .hero-badge-label,
+.ref-hero-section.theme-dark .hero-badge-label {
+  color: var(--hero-muted-dark);
+}
+
+.badge-dot {
+  width: 6.5px;
+  height: 6.5px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+}
+
+/* Large Bold Greeting Heading */
+.hero-greeting-heading {
+  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-size: clamp(3rem, 5.4vw, 4.75rem);
+  font-weight: 800;
+  color: var(--hero-text-light);
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+  margin: 0;
+  transition: color 0.5s ease;
+}
+
+body.dark-theme .hero-greeting-heading,
+.ref-hero-section.theme-dark .hero-greeting-heading {
+  color: var(--hero-text-dark);
+}
+
+/* "I am a" subhead in lighter grey */
+.hero-iam-subhead {
+  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
+  font-weight: 600;
+  color: #9CA3AF;
+  line-height: 1.1;
+  margin-top: 0.35rem;
+  margin-bottom: 1.1rem;
+  letter-spacing: -0.025em;
+  transition: color 0.5s ease;
+}
+
+body.dark-theme .hero-iam-subhead,
+.ref-hero-section.theme-dark .hero-iam-subhead {
+  color: #64748B;
+}
+
+/* ==========================================================================
+   WHITE SPIRAL NOTEBOOK CARD (WIRE RINGS + 3D PAGE FLIP)
+   ========================================================================== */
+.hero-notebook-card {
+  position: relative;
+  background: #FFFFFF;
+  border-radius: 18px 18px 24px 24px;
+  padding: 1.65rem 2.2rem 1.45rem 2.2rem;
+  max-width: 580px;
+  width: 100%;
+  transform: rotate(-1.5deg);
+  box-shadow: 0 4px 0 #E2E4E9, 0 8px 0 #D4D6DC, 0 20px 42px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2.25rem;
+  box-sizing: border-box;
+  transition: transform 0.35s ease, box-shadow 0.5s ease;
+}
+
+body.dark-theme .hero-notebook-card,
+.ref-hero-section.theme-dark .hero-notebook-card {
+  background: #FFFFFF;
+  box-shadow: 0 4px 0 #1E232B, 0 8px 0 #14181E, 0 24px 50px rgba(0, 0, 0, 0.65);
+}
+
+.hero-notebook-card:hover {
+  transform: rotate(-0.5deg) translateY(-2px);
+}
+
+/* 14 Metallic Wire Binding Rings Across Top Edge */
+.hero-notebook-rings {
+  position: absolute;
+  top: -14px;
+  left: 22px;
+  right: 22px;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.nb-ring {
+  width: 7.5px;
+  height: 25px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #E5E7EB 0%, #9CA3AF 45%, #4B5563 75%, #1F2937 100%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.28);
+}
+
+/* Notebook Inner Body */
+.hero-notebook-body {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+}
+
+.hero-role-stage {
+  perspective: 700px;
+  transform-style: preserve-3d;
+  flex: 1;
+  overflow: hidden;
+  padding: 4px 0;
+}
+
+.hero-role-text {
+  display: inline-block;
+  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-size: clamp(1.4rem, 2.3vw, 2.05rem);
+  font-weight: 700;
+  color: #0F1115;
+  letter-spacing: -0.025em;
+  transform-origin: top center;
+  backface-visibility: hidden;
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.45s ease;
+}
+
+/* 3D Page Flip Transitions */
+.hero-role-text.flip-out {
+  transform: rotateX(-90deg);
+  opacity: 0;
+}
+
+.hero-role-text.flip-in {
+  transform: rotateX(90deg);
+  opacity: 0;
+}
+
+/* Counter at bottom-right ("01 / 05") */
+.hero-role-counter {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #9CA3AF;
+  letter-spacing: 0.08em;
+  margin-left: 1rem;
+  align-self: flex-end;
+  margin-bottom: 2px;
+}
+
+/* ==========================================================================
+   CTA BUTTONS SIDE BY SIDE
+   ========================================================================== */
+.hero-cta-group {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Primary "START A PROJECT ->" Pill Button */
+.hero-btn-start-project {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: #0B0D13;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 999px;
+  padding: 0.95rem 1.85rem;
+  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(11, 13, 19, 0.22);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hero-btn-start-project:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(11, 13, 19, 0.32);
+}
+
+.hero-btn-start-project:active {
+  transform: scale(0.97);
+}
+
+.btn-arrow-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease;
+}
+
+.hero-btn-start-project:hover .btn-arrow-badge {
+  transform: translateX(3px);
+}
+
+/* Dark Theme variant of "START A PROJECT ->": White pill with black circle arrow */
+body.dark-theme .hero-btn-start-project,
+.ref-hero-section.theme-dark .hero-btn-start-project {
+  background: #FFFFFF;
+  color: #0B0D13;
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.16);
+  padding: 0.75rem 1.6rem 0.75rem 1.85rem;
+}
+
+body.dark-theme .hero-btn-start-project .btn-arrow-badge,
+.ref-hero-section.theme-dark .hero-btn-start-project .btn-arrow-badge {
+  background: #0B0D13;
+  color: #FFFFFF;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+/* Secondary "VIEW MY WORK" Text Button with Subtle Underline */
+.hero-btn-view-work {
+  display: inline-block;
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  padding: 0.85rem 0.4rem;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.25s ease;
+}
+
+.hero-btn-view-work::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.hero-btn-view-work:hover::after {
+  transform: scaleX(1);
+}
+
+/* ==========================================================================
+   RIGHT COLUMN: CUT-OUT PHOTO & DARK MODE SPOTLIGHT & 3D TILT
+   ========================================================================== */
+.hero-col-right {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100%;
+  min-height: 520px;
+}
+
+.hero-photo-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 580px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+/* Floor Shadow under desk */
+.hero-desk-shadow {
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  width: 80%;
+  height: 38px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.38) 0%, transparent 72%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-photo-container {
+  position: relative;
+  width: 100%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.hero-photo-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: clamp(500px, 72vh, 660px);
+  object-fit: contain;
+  object-position: bottom center;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Base Photo Layer */
+.hero-photo-base {
+  position: relative;
+  z-index: 2;
+  filter: brightness(1) contrast(1.02);
+  transition: filter 0.5s ease;
+}
+
+/* Dimmed Base in Dark Theme */
+body.dark-theme .hero-photo-base,
+.ref-hero-section.theme-dark .hero-photo-base {
+  filter: brightness(0.4) saturate(0.85);
+}
+
+/* Spotlight Layer (Revealed only in Dark Mode by cursor position) */
+.hero-photo-spotlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  filter: brightness(1.06) contrast(1.05);
+  opacity: 0;
+  pointer-events: none;
+  mask-image: radial-gradient(circle 180px at var(--spot-x, 50%) var(--spot-y, 40%), black 0%, black 50%, transparent 100%);
+  -webkit-mask-image: radial-gradient(circle 180px at var(--spot-x, 50%) var(--spot-y, 40%), black 0%, black 50%, transparent 100%);
+  transition: opacity 0.35s ease;
+}
+
+body.dark-theme .hero-photo-spotlight.active,
+.ref-hero-section.theme-dark .hero-photo-spotlight.active {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   ENTRANCE STAGGER LOAD ANIMATIONS
+   ========================================================================== */
+.hero-anim-item {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--anim-order, 0) * 0.1s);
+}
+
+.ref-hero-section.hero-loaded .hero-anim-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (< 900px)
+   Order: Greeting -> "I am a" -> Notebook Card -> Portrait Image -> CTAs
+   ========================================================================== */
+@media (max-width: 900px) {
+  .ref-hero-section {
+    padding: 2.5rem 1.25rem 2rem 1.25rem;
+    min-height: auto;
+  }
+
+  .hero-body-container {
+    padding: 0;
+  }
+
+  .hero-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    text-align: center !important;
+  }
+
+  .hero-col-left {
+    display: contents !important; /* Unwraps children directly into .hero-grid flex container */
+  }
+
+  .hero-badge-label {
+    order: 1 !important;
+    margin-bottom: 0.25rem !important;
+    justify-content: center !important;
+  }
+
+  .hero-greeting-heading {
+    order: 2 !important;
+    margin-bottom: 0.25rem !important;
+    font-size: clamp(2.4rem, 7.5vw, 3.2rem) !important;
+  }
+
+  .hero-iam-subhead {
+    order: 3 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0.5rem !important;
+    font-size: clamp(1.6rem, 4.5vw, 2.2rem) !important;
+  }
+
+  .hero-notebook-card {
+    order: 4 !important;
+    transform: rotate(0deg) !important;
+    max-width: 440px !important;
+    width: 100% !important;
+    margin: 0 auto 0.75rem auto !important;
+    padding: 1.2rem 1.4rem !important;
+  }
+
+  .hero-col-right {
+    order: 5 !important; /* Image placed directly BELOW the notebook card & ABOVE CTAs */
+    width: 100% !important;
+    min-height: auto !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin: 0.25rem auto 1rem auto !important;
+  }
+
+  .hero-photo-wrapper {
+    max-width: 310px !important;
+    height: clamp(280px, 42vh, 360px) !important;
+    margin: 0 auto !important;
+  }
+
+  .hero-cta-group {
+    order: 6 !important; /* CTAs placed directly BELOW the portrait image */
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 1rem !important;
+    margin-top: 0.25rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-greeting-heading {
+    font-size: clamp(2.1rem, 7vw, 2.5rem) !important;
+  }
+
+  .hero-iam-subhead {
+    font-size: clamp(1.4rem, 4.2vw, 1.7rem) !important;
+  }
+
+  .hero-notebook-card {
+    padding: 1rem 1rem !important;
+  }
+
+  .hero-role-text {
+    font-size: clamp(1.05rem, 4vw, 1.25rem) !important;
+  }
+
+  .hero-photo-wrapper {
+    max-width: 280px !important;
+    height: 300px !important;
+  }
+
+  .hero-cta-group {
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+  }
+
+  .hero-btn-start-project {
+    width: 100% !important;
+    max-width: 320px !important;
+    justify-content: center !important;
+  }
+
+  .hero-btn-view-work {
+    width: 100% !important;
+    max-width: 320px !important;
+    text-align: center !important;
+  }
+}
+
+/* Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+  .ref-hero-section,
+  .hero-photo-container,
+  .hero-anim-item,
+  .hero-role-text {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}

@@ -9,95 +9,237 @@
   }
 
   .rishi-hero-grid {
-    grid-template-columns: 1fr;
-    gap: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    text-align: center;
+  }
+
+  .rishi-hero-left {
+    display: contents; /* Unwraps children so image can sit between position and CTAs */
+  }
+
+  .rishi-hero-greeting {
+    order: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .rishi-hero-subhead {
+    order: 2;
+    margin-bottom: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
   }
 
   .rishi-hero-right {
-    order: -1;
+    order: 3; /* Image placed at bottom of position and top of START A PROJECT */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0.5rem 0 1.25rem 0;
   }
 
   .rishi-portrait-wrapper {
-    max-width: 380px;
-    height: 440px;
+    max-width: 360px;
+    height: clamp(340px, 48vh, 440px);
+    margin: 0 auto;
+  }
+
+  .rishi-hero-cta-row {
+    order: 4; /* START A PROJECT & VIEW MY WORK placed below image */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.25rem;
   }
 
   .doors-row {
     gap: 1.25rem;
   }
 
+  .work-header {
+    text-align: center !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  .work-title {
+    font-size: clamp(1.85rem, 6.5vw, 2.45rem) !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  .gallery-controls-bar {
+    justify-content: center !important;
+    gap: 1rem !important;
+    margin-top: 1.25rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .gallery-category-chips {
+    justify-content: center !important;
+  }
+
   .projects-horizontal-pin-wrapper {
-    min-height: auto;
-    padding: 3.5rem 0 2rem 0;
+    min-height: auto !important;
+    padding: 2rem 0 1.5rem 0 !important;
+    overflow: hidden !important;
   }
 
   .projects-horizontal-viewport {
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    padding: 1rem 1.25rem 2rem 1.25rem;
-    scrollbar-width: none;
+    width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-snap-type: x mandatory !important;
+    scroll-behavior: smooth !important;
+    padding: 1.25rem 0 2rem 0 !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+    overscroll-behavior-x: contain !important;
   }
 
   .projects-horizontal-viewport::-webkit-scrollbar {
-    display: none;
+    display: none !important;
   }
 
   .projects-horizontal-track {
-    padding: 0 1rem;
-    gap: 1.25rem;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    width: max-content !important;
+    box-sizing: border-box !important;
+    transform: none !important;
   }
 
+  /* Notebook Project Cards: Touch-Friendly 1-Card-at-a-time Mobile Swipe */
   .astraz-project-card {
-    flex: 0 0 85vw !important;
-    width: 85vw !important;
-    min-width: 0 !important;
-    max-width: 380px !important;
+    flex: 0 0 calc(100vw - 40px) !important;
+    width: calc(100vw - 40px) !important;
+    min-width: calc(100vw - 40px) !important;
+    max-width: 350px !important;
     height: auto !important;
-    min-height: 480px;
+    min-height: auto !important;
     flex-direction: column !important;
-    scroll-snap-align: center;
+    align-items: stretch !important;
+    scroll-snap-align: center !important;
+    scroll-snap-stop: always !important; /* CRITICAL: exactly one card per swipe, no skipping */
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease !important;
   }
 
   .astraz-project-card:hover,
   .astraz-project-card.is-expanded {
-    flex: 0 0 85vw !important;
-    width: 85vw !important;
-    min-width: 0 !important;
+    flex: 0 0 calc(100vw - 40px) !important;
+    width: calc(100vw - 40px) !important;
+    min-width: calc(100vw - 40px) !important;
+    max-width: 350px !important;
+    transform: none !important;
   }
 
   .card-primary-col {
-    flex: 1 1 auto !important;
+    flex: 0 0 auto !important;
     width: 100% !important;
-    min-width: 0 !important;
-    max-width: none !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
     height: auto !important;
+    border-radius: 20px !important;
+    transition: border-radius 0.25s ease !important;
+    box-sizing: border-box !important;
   }
 
+  .astraz-project-card.is-expanded .card-primary-col {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-bottom-color: transparent !important;
+  }
+
+  /* Seamless Accordion Dropdown for Scope & Tech Stack */
   .card-expandable-drawer {
     flex: 0 0 auto !important;
     width: 100% !important;
-    min-width: 0 !important;
-    max-width: none !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
     height: auto !important;
-    max-height: 0;
-    transform: translateY(10px) !important;
-    border-left: none !important;
-    border-top: 1px solid transparent;
+    max-height: 0 !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+    transform: none !important;
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+    border: 1px solid var(--border-card, #E1E1E5) !important;
+    border-top: 1px dashed var(--border-card, #E1E1E5) !important;
+    border-radius: 0 0 20px 20px !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08) !important;
+    transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease !important;
+    box-sizing: border-box !important;
+  }
+
+  .astraz-project-card:not(.is-expanded):hover .card-expandable-drawer {
+    max-height: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 100% !important;
+    transform: none !important;
   }
 
   .astraz-project-card.is-expanded .card-expandable-drawer {
-    max-height: 380px !important;
+    max-height: 700px !important;
     opacity: 1 !important;
-    transform: translateY(0) !important;
-    border-top-color: rgba(0, 0, 0, 0.08) !important;
+    pointer-events: auto !important;
+    transform: none !important;
   }
 
   .drawer-inner-content {
     width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
     height: auto !important;
-    padding: 1.25rem 1.4rem !important;
+    padding: 1.15rem 1.25rem 1.35rem 1.25rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.85rem !important;
+    box-sizing: border-box !important;
+  }
+
+  .p-qa-scope {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 0.85rem 1rem !important;
+    border-radius: 14px !important;
+  }
+
+  .p-tags-row {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 0.4rem !important;
+  }
+
+  .card-reveal-prompt svg {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  .astraz-project-card.is-expanded .card-reveal-prompt svg {
+    transform: rotate(180deg) !important;
+  }
+
+  .dark-theme .card-expandable-drawer {
+    background: #11141E !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    border-top-color: rgba(255, 255, 255, 0.08) !important;
   }
 
   .rishi-footer-nav-grid {
@@ -108,14 +250,161 @@
 
 @media (max-width: 768px) {
   .rishi-hero-section {
-    padding-top: 2.5rem;
-    padding-bottom: 3.5rem;
+    padding-top: 1.25rem; /* Reduced hero top space on mobile */
+    padding-bottom: 2.5rem;
+  }
+
+  /* Responsive Consultation Modal Card */
+  .enquiry-modal {
+    align-items: flex-start;
+    padding: 18px 10px 30px 10px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .modal-card {
-    padding: 1.75rem 1.25rem;
-    max-height: 90vh;
-    overflow-y: auto;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    margin: 14px auto 28px auto !important;
+    padding: 26px 16px 22px 16px !important;
+    border-radius: 20px !important;
+    box-shadow: 0 3px 0 #E9E9ED, 0 4px 0 #D8D8DD, 4px 6px 0 #111216 !important;
+  }
+
+  .modal-spiral-rings {
+    left: 12px !important;
+    right: 12px !important;
+    top: -10px !important;
+  }
+
+  .modal-ring {
+    width: 5px !important;
+    height: 18px !important;
+  }
+
+  .modal-header {
+    padding-bottom: 14px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .modal-title {
+    font-size: 1.18rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .modal-close-btn {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+  }
+
+  .modal-close-btn svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .form-group {
+    margin-bottom: 12px !important;
+    width: 100% !important;
+  }
+
+  .form-label {
+    font-size: 12px !important;
+    letter-spacing: 0.04em !important;
+    margin-bottom: 5px !important;
+  }
+
+  .form-control {
+    height: 50px !important;
+    min-height: 50px !important;
+    border-radius: 12px !important;
+    padding: 0 14px !important;
+    font-size: 14px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .custom-dropdown-wrap {
+    width: 100% !important;
+  }
+
+  .custom-dropdown-trigger {
+    height: 50px !important;
+    min-height: 50px !important;
+    border-radius: 12px !important;
+    padding: 0 14px !important;
+    font-size: 14px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .custom-dropdown-popover {
+    max-height: 230px !important;
+    border-radius: 14px !important;
+    width: 100% !important;
+  }
+
+  .dropdown-option {
+    padding: 9px 12px !important;
+    gap: 10px !important;
+  }
+
+  .option-icon {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    font-size: 10px !important;
+  }
+
+  .option-title {
+    font-size: 13.5px !important;
+  }
+
+  .option-desc {
+    font-size: 11.5px !important;
+  }
+
+  .modal-textarea {
+    height: auto !important;
+    min-height: 90px !important;
+    padding: 10px 14px !important;
+    font-size: 14px !important;
+    border-radius: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .modal-submit-btn {
+    height: 56px !important;
+    min-height: 56px !important;
+    font-size: 14.5px !important;
+    border-radius: 35px !important;
+    width: 100% !important;
+  }
+
+  .work-footer-actions {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 0.85rem !important;
+    padding: 0 1rem !important;
+  }
+
+  .work-footer-actions .btn,
+  .work-footer-actions .btn-back-doors {
+    width: 100% !important;
+    max-width: 340px !important;
+    justify-content: center !important;
+    text-align: center !important;
   }
 
   .astraz-projects-grid {
@@ -156,30 +445,9 @@
     height: 380px;
   }
 
+  /* Obsolete legacy doors rules neutralized for new 3D Doors Engine in style.css */
   .doors-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.25rem;
-  }
-
-  .door-frame {
-    flex: 0 1 calc(50% - 0.75rem);
-    width: calc(50% - 0.75rem);
-    max-width: 200px;
-    height: 340px;
-    min-height: 340px;
-    border-radius: 68px 68px 8px 8px;
-  }
-
-  .door-leaf {
-    border-radius: 64px 64px 6px 6px;
-  }
-
-  .door-plate {
-    font-size: 0.625rem;
-    padding: 0.35rem 0.55rem;
-    margin-bottom: 1.5rem;
+    display: none;
   }
 
   .room-capabilities-grid {

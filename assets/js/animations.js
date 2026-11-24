@@ -84,24 +84,10 @@
     const portraitWrapper = document.querySelector('.rishi-portrait-wrapper');
     if (!portraitWrapper) return;
 
-    // Reset if already animating
+    // Gentle bounce without filter shifts or flash overlays (zero image flicker)
     portraitWrapper.classList.remove('animating-pop');
-    void portraitWrapper.offsetWidth; // Force reflow
+    void portraitWrapper.offsetWidth;
     portraitWrapper.classList.add('animating-pop');
-
-    // Add studio camera flash spotlight over portrait
-    const existingFlash = portraitWrapper.querySelector('.portrait-flash-overlay');
-    if (existingFlash) existingFlash.remove();
-    const flash = document.createElement('div');
-    flash.className = 'portrait-flash-overlay';
-    portraitWrapper.appendChild(flash);
-
-    // Add glowing halo ring
-    const existingHalo = portraitWrapper.querySelector('.portrait-pulse-halo');
-    if (existingHalo) existingHalo.remove();
-    const halo = document.createElement('div');
-    halo.className = 'portrait-pulse-halo';
-    portraitWrapper.appendChild(halo);
 
     // Synchronize ability card hop
     const abilityCard = portraitWrapper.querySelector('.ability-card-pill');
@@ -114,9 +100,7 @@
 
     setTimeout(() => {
       portraitWrapper.classList.remove('animating-pop');
-      flash.remove();
-      halo.remove();
-    }, 700);
+    }, 600);
   }
 
   // Make globally available
@@ -167,28 +151,15 @@
         cord.classList.remove('springing');
         cord.classList.add('pulling');
 
-        // 3. Cinematic studio flash light overlay
-        let flash = document.querySelector('.studio-light-flash');
-        if (!flash) {
-          flash = document.createElement('div');
-          flash.className = 'studio-light-flash';
-          document.body.appendChild(flash);
-        }
-
         const isCurrentlyDark = document.body.classList.contains('dark-theme');
         const willBeDark = !isCurrentlyDark;
 
-        flash.style.background = willBeDark 
-          ? 'radial-gradient(circle at 90% 10%, rgba(201, 154, 65, 0.4), rgba(11, 13, 19, 0.9))' 
-          : 'radial-gradient(circle at 90% 10%, rgba(255, 255, 255, 0.85), rgba(247, 248, 249, 0.95))';
-        flash.style.opacity = '1';
-
         setTimeout(() => {
-          // 4. Elastic spring release on cord
+          // 3. Elastic spring release on cord
           cord.classList.remove('pulling');
           cord.classList.add('springing');
 
-          // 5. Toggle website colour theme with style
+          // 4. Smoothly toggle website colour theme with zero image flicker
           if (willBeDark) {
             document.body.classList.add('dark-theme');
             try { localStorage.setItem('portfolio-theme', 'dark'); } catch(e) {}
@@ -197,13 +168,6 @@
             try { localStorage.setItem('portfolio-theme', 'light'); } catch(e) {}
           }
 
-          // 6. Animate Ranjith's portrait image with studio flash and spring pop
-          triggerPortraitAnimation();
-
-          setTimeout(() => {
-            flash.style.opacity = '0';
-          }, 80);
-
           setTimeout(() => {
             cord.classList.remove('springing');
           }, 650);
@@ -211,7 +175,7 @@
       });
     }
 
-    // Also allow clicking directly on Ranjith's portrait to trigger the portrait bounce
+    // Also allow clicking directly on Ranjith's portrait to trigger the subtle portrait bounce
     if (portraitWrapper) {
       portraitWrapper.style.cursor = 'pointer';
       portraitWrapper.setAttribute('title', 'Click to animate portrait');
@@ -308,403 +272,337 @@
   }
 
   /* ----------------------------------------------------
-     4. CINEMATIC 3D DOOR ENTRY EXPERIENCE & TESTING ROOMS
-     (Unified High-Performance GSAP Timeline Architecture)
+     4. CINEMATIC 3D ARCHED DOORS ENGINE
+     Zero-lag GPU enter/exit transitions & unified room
      ---------------------------------------------------- */
   function initArchedDoors() {
-    const doors = document.querySelectorAll('.door-frame');
-    const cameraRig = document.getElementById('doors-camera-rig');
-    const roomViewport = document.getElementById('testing-room-viewport');
-    const rooms = document.querySelectorAll('.testing-room');
-    const backBtns = document.querySelectorAll('[data-back-to-doors]');
+    const doors = document.querySelectorAll('.door-btn');
+    const stage = document.getElementById('doors-stage');
+    const room = document.getElementById('unified-service-room');
+    if (!doors.length || !stage || !room) return;
 
-    if (!doors.length || !cameraRig || !roomViewport) return;
+    const SERVICES_DATA = [
+      {
+        num: '01 // 04',
+        themeClass: 'room-theme-0',
+        title: 'Manual Testing',
+        tagline: 'FROM FIRST SPECIFICATION TO ZERO-DEFECT SIGN-OFF',
+        desc: 'Exhaustive functional and exploratory defect hunting. Ensuring pixel-perfect design fidelity, bulletproof user journeys, and zero critical escapes across multi-browser responsive ecosystems.',
+        bullets: [
+          'Pixel-perfect Figma-to-DOM visual inspection & typography alignment',
+          'Complex end-to-end user journeys & state transition validation',
+          'Multi-browser compatibility matrix (Chrome, Safari, Edge, WebKit)',
+          'Actionable Jira defect reporting with video proof & network payloads'
+        ],
+        tags: ['Functional QA', 'UI/UX Auditing', 'Cross-Browser', 'Exploratory', 'Regression Matrix'],
+        telemetryTitle: 'MANUAL QA & EXPLORATORY AUDIT',
+        telemetryBadge: 'VERIFIED',
+        telemetryStatus: 'ALL 24 VIEWPORTS VALIDATED — 0 ESCAPES',
+        lines: [
+          { time: '09:14:02', text: 'Initializing test session across Chrome v122, Safari v17.4, Edge v122...', pass: false },
+          { time: '09:14:03', text: 'Inspecting auth session tokens and secure cookie flags...', pass: true },
+          { time: '09:14:05', text: 'Verifying 24 responsive breakpoints (320px to 2560px)...', pass: true },
+          { time: '09:14:07', text: 'Executing exploratory edge-case checkout & payment flows...', pass: true },
+          { time: '09:14:09', text: 'Cumulative Layout Shift CLS < 0.01 & WCAG 2.1 AA audit...', pass: true },
+          { time: '09:14:10', text: 'Acceptance criteria 100% met. Sign-off ready for release.', pass: true }
+        ]
+      },
+      {
+        num: '02 // 04',
+        themeClass: 'room-theme-1',
+        title: 'Automation Testing',
+        tagline: 'END-TO-END PIPELINES & CONTINUOUS REGRESSION GATES',
+        desc: 'Scalable, maintainable test automation frameworks delivering 85% continuous regression coverage. Slashing QA cycles from days to minutes with zero flaky failures.',
+        bullets: [
+          'Modular Page Object Model (POM) architectures in Playwright & Cypress',
+          'Java + TestNG/JUnit parallelized test grids with Maven orchestration',
+          'GitHub Actions CI/CD automated gates blocking regressions on every PR',
+          'Allure & HTML visual reporting with DOM snapshots & execution traces'
+        ],
+        tags: ['Playwright', 'Selenium WebDriver', 'Java / TestNG', 'Cypress', 'CI/CD Pipelines'],
+        telemetryTitle: 'PARALLEL CI/CD AUTOMATION RUN',
+        telemetryBadge: 'STABLE',
+        telemetryStatus: '142 OF 142 SCENARIOS PASSED (12.4s)',
+        lines: [
+          { time: '14:20:00', text: 'Spawned 8 parallel Playwright workers on GitHub Actions runner...', pass: false },
+          { time: '14:20:02', text: 'Running 142 automated specs across Chromium, WebKit & Firefox...', pass: false },
+          { time: '14:20:05', text: 'REST API contract mocks validated against Swagger schema...', pass: true },
+          { time: '14:20:08', text: 'Database transactional rollback & authentication state reuse...', pass: true },
+          { time: '14:20:11', text: '142 of 142 end-to-end scenarios completed with 0 flakes...', pass: true },
+          { time: '14:20:12', text: 'Allure artifacts generated. Pipeline green across all platforms.', pass: true }
+        ]
+      },
+      {
+        num: '03 // 04',
+        themeClass: 'room-theme-2',
+        title: 'AI Testing & LLM Verification',
+        tagline: 'LLM DETERMINISM, ADVERSARIAL ATTACKS & GUARDRAILS',
+        desc: 'Next-generation QA auditing for artificial intelligence, LLM pipelines, and automated workflows. Enforcing factual grounding, guardrail safety, and non-deterministic response tolerance.',
+        bullets: [
+          'Prompt injection, jailbreak resistance & adversarial stress testing',
+          'RAG context retrieval relevance, hallucination detection & BLEU scoring',
+          'Semantic deterministic assertion harnesses & token latency benchmarking',
+          'Self-healing DOM test selectors & automated synthetic test data synthesis'
+        ],
+        tags: ['LLM Evaluation', 'Guardrail Audits', 'Prompt Injection Defense', 'RAG Verification', 'Self-Healing Tests'],
+        telemetryTitle: 'LLM HARNESS & GUARDRAIL BENCHMARK',
+        telemetryBadge: 'SECURE',
+        telemetryStatus: '0 INJECTIONS ESCAPED — 100% GUARDRAIL COMPLIANT',
+        lines: [
+          { time: '18:02:11', text: 'Probing LLM endpoint with 85 adversarial jailbreak vectors...', pass: false },
+          { time: '18:02:13', text: 'Guardrail validation: 100% of malicious prompt injections intercepted.', pass: true },
+          { time: '18:02:15', text: 'RAG semantic grounding score: 0.985 / 1.0 (Zero hallucinations)...', pass: true },
+          { time: '18:02:17', text: 'Token latency P99 benchmark: 480ms (Within 600ms SLA)...', pass: true },
+          { time: '18:02:19', text: 'Output schema enforcement: JSON payload strictly verified...', pass: true },
+          { time: '18:02:20', text: 'Model safety & alignment certified for production deployment.', pass: true }
+        ]
+      },
+      {
+        num: '04 // 04',
+        themeClass: 'room-theme-3',
+        title: 'Security & Vulnerability Auditing',
+        tagline: 'ZERO-TRUST ACCESS, OWASP TOP 10 DEFENSE & LOAD RESILIENCE',
+        desc: 'Rigorous penetration audits, role-based authorization verification, and data encryption testing protecting production infrastructure against critical security exploits.',
+        bullets: [
+          'OWASP Top 10 vulnerability sweeps (SQLi, XSS, CSRF, SSRF, IDOR)',
+          'Role-Based Access Control (RBAC) & privilege escalation attack checks',
+          'Cookie security flags, JWT signature tampering & session fixation tests',
+          'REST API rate-limiting, CORS origin policy & data leakage auditing'
+        ],
+        tags: ['OWASP Top 10', 'Penetration Audits', 'RBAC Security', 'JWT Tampering', 'API Security'],
+        telemetryTitle: 'ZERO-TRUST SECURITY PEN-TEST AUDIT',
+        telemetryBadge: 'ZERO CVE',
+        telemetryStatus: 'ALL GATES CLEARED — PRODUCTION SIGN-OFF APPROVED',
+        lines: [
+          { time: '22:45:10', text: 'Executing OWASP Top 10 automated vulnerability sweep...', pass: false },
+          { time: '22:45:12', text: 'SQL Injection & XSS payload injection: 0 vulnerabilities found.', pass: true },
+          { time: '22:45:14', text: 'Testing RBAC / IDOR authorization boundaries across roles...', pass: true },
+          { time: '22:45:16', text: 'Token expiration & refresh rotation strictly enforced...', pass: true },
+          { time: '22:45:18', text: 'Transport Layer Security: TLS 1.3 enforced, HSTS active...', pass: true },
+          { time: '22:45:19', text: 'Security sign-off approved: Zero critical or high CVEs detected.', pass: true }
+        ]
+      }
+    ];
 
-    let isAnimating = false;
+    let isBusy = false;
     let activeDoor = null;
-    let activeRoomId = null;
-    let currentMasterTl = null;
-    let cachedAudioCtx = null;
+    let activeDoorIndex = null;
+    let telemetryTimers = [];
 
-    // Fast, non-blocking audio feedback (Reuses single AudioContext to eliminate UI freeze)
-    function playDoorSound() {
-      try {
-        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-        if (!AudioContextClass) return;
-        if (!cachedAudioCtx) {
-          cachedAudioCtx = new AudioContextClass();
-        }
-        if (cachedAudioCtx.state === 'suspended') {
-          cachedAudioCtx.resume();
-        }
-        const osc = cachedAudioCtx.createOscillator();
-        const gain = cachedAudioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(140, cachedAudioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(55, cachedAudioCtx.currentTime + 0.3);
-        gain.gain.setValueAtTime(0.12, cachedAudioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, cachedAudioCtx.currentTime + 0.3);
-        osc.connect(gain);
-        gain.connect(cachedAudioCtx.destination);
-        osc.start();
-        osc.stop(cachedAudioCtx.currentTime + 0.31);
-      } catch (e) {}
+    function clearTelemetryTimers() {
+      telemetryTimers.forEach(t => clearTimeout(t));
+      telemetryTimers = [];
     }
 
-    // Function to physically enter selected door in 5 distinct cinematic phases
-    function enterDoor(door) {
-      if (isAnimating) return;
-      isAnimating = true;
-      activeDoor = door;
-      const doorId = door.getAttribute('data-door-id');
-      activeRoomId = doorId;
+    function populateRoom(serviceIndex) {
+      const data = SERVICES_DATA[serviceIndex];
+      if (!data) return;
 
-      const doorLeaf = door.querySelector('.door-leaf');
-      const doorGlow = door.querySelector('.door-portal-glow');
-      const otherDoors = Array.from(doors).filter(d => d !== door);
-      const activeRoom = document.getElementById(`room-${doorId}`);
+      room.className = 'unified-service-room ' + data.themeClass;
+      const numEl = document.getElementById('room-service-num');
+      if (numEl) numEl.textContent = data.num;
+      const titleEl = document.getElementById('room-title');
+      if (titleEl) titleEl.textContent = data.title;
+      const tagEl = document.getElementById('room-tagline');
+      if (tagEl) tagEl.textContent = data.tagline;
+      const descEl = document.getElementById('room-desc');
+      if (descEl) descEl.textContent = data.desc;
 
-      // Compute transform-origin centered directly on the clicked door
-      const doorRect = door.getBoundingClientRect();
-      const rigRect = cameraRig.getBoundingClientRect();
-      const originX = ((doorRect.left + doorRect.width * 0.5) - rigRect.left) / rigRect.width * 100;
-      const originY = ((doorRect.top + doorRect.height * 0.5) - rigRect.top) / rigRect.height * 100;
-      cameraRig.style.transformOrigin = `${originX.toFixed(2)}% ${originY.toFixed(2)}%`;
+      // Check Bullets
+      const bulletsList = document.getElementById('room-bullets-list');
+      if (bulletsList) {
+        bulletsList.innerHTML = data.bullets.map(b => `
+          <li class="room-bullet-item">
+            <span class="room-check-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </span>
+            <span>${b}</span>
+          </li>
+        `).join('');
+      }
 
-      playDoorSound();
+      // Tags
+      const tagsContainer = document.getElementById('room-tags-container');
+      if (tagsContainer) {
+        tagsContainer.innerHTML = data.tags.map(t => `<span class="room-tag-pill">${t}</span>`).join('');
+      }
 
-      if (typeof gsap !== 'undefined') {
-        if (currentMasterTl) {
-          currentMasterTl.kill();
-        }
+      // Telemetry Card
+      const termTitle = document.getElementById('terminal-title');
+      if (termTitle) termTitle.innerHTML = `${data.telemetryTitle} &bull; CONSOLE`;
+      const termBadge = document.getElementById('terminal-badge');
+      if (termBadge) termBadge.textContent = data.telemetryBadge;
+      const termFoot = document.getElementById('terminal-footer-text');
+      if (termFoot) termFoot.textContent = data.telemetryStatus;
 
-        // Pre-activate room display so it's ready in the DOM before fade-in
-        roomViewport.classList.add('active');
-        roomViewport.scrollTop = 0;
-        rooms.forEach((r) => {
-          if (r.getAttribute('data-room-id') === doorId) {
-            r.classList.add('active');
-            gsap.set(r, { opacity: 0 });
-          } else {
-            r.classList.remove('active');
-          }
-        });
-        document.body.style.overflow = 'hidden';
-
-        // Unified Master GSAP Timeline (Zero thread competing, pure GPU transforms)
-        const masterTl = gsap.timeline({
-          onComplete: () => {
-            gsap.set([cameraRig, doorLeaf, roomViewport], { clearProps: 'willChange' });
-            isAnimating = false;
-          }
-        });
-        currentMasterTl = masterTl;
-
-        // GPU Layer promotion during transition
-        gsap.set([cameraRig, doorLeaf, roomViewport], { willChange: 'transform, opacity' });
-
-        // PHASE 1: Immediate visual feedback (0ms)
-        masterTl.to(door, {
-          scale: 1.03,
-          duration: 0.22,
-          ease: 'power2.out',
-          onStart: () => {
-            door.classList.add('is-selected');
-            otherDoors.forEach(d => d.classList.add('is-dimmed'));
-          }
-        }, 0);
-
-        masterTl.to(otherDoors, {
-          opacity: 0.18,
-          scale: 0.95,
-          duration: 0.3,
-          ease: 'power2.out'
-        }, 0);
-
-        // PHASE 2: Controlled Camera Zoom (approx 800ms)
-        masterTl.to(cameraRig, {
-          scale: 2.6,
-          z: 320,
-          duration: 0.8,
-          ease: 'power2.inOut'
-        }, 0.05);
-
-        // PHASE 3: Realistic Door Opening around left hinge (approx 600ms)
-        if (doorLeaf) {
-          masterTl.to(doorLeaf, {
-            rotateY: -84,
-            duration: 0.62,
-            ease: 'power2.out'
-          }, 0.32);
-        }
-
-        if (doorGlow) {
-          masterTl.to(doorGlow, {
-            opacity: 1,
-            duration: 0.45,
-            ease: 'power1.out'
-          }, 0.32);
-        }
-
-        // PHASE 4: Enter the Room through the doorway (approx 550ms)
-        masterTl.to(cameraRig, {
-          scale: 4.8,
-          z: 700,
-          opacity: 0,
-          duration: 0.52,
-          ease: 'power2.in'
-        }, 0.72);
-
-        masterTl.to(roomViewport, {
-          opacity: 1,
-          duration: 0.45,
-          ease: 'power2.out'
-        }, 0.82);
-
-        if (activeRoom) {
-          masterTl.to(activeRoom, {
-            opacity: 1,
-            duration: 0.45,
-            ease: 'power2.out'
-          }, 0.82);
-
-          // PHASE 5: Content Reveal (staggered, approx 450-550ms)
-          const roomTop = activeRoom.querySelector('.room-top-bar');
-          const roomHeader = activeRoom.querySelector('.room-header');
-          const cards = activeRoom.querySelectorAll('.capability-card');
-          const roomFooter = activeRoom.querySelector('.room-footer-actions');
-
-          if (roomTop) {
-            masterTl.fromTo(roomTop, 
-              { opacity: 0, y: -16 },
-              { opacity: 1, y: 0, duration: 0.38, ease: 'power3.out' },
-              0.95
-            );
-          }
-
-          if (roomHeader) {
-            masterTl.fromTo(roomHeader, 
-              { opacity: 0, y: 22 },
-              { opacity: 1, y: 0, duration: 0.42, ease: 'power3.out' },
-              1.0
-            );
-          }
-
-          if (cards && cards.length) {
-            masterTl.fromTo(cards, 
-              { opacity: 0, y: 22, scale: 0.98 },
-              { opacity: 1, y: 0, scale: 1, stagger: 0.035, duration: 0.42, ease: 'power2.out' },
-              1.05
-            );
-          }
-
-          if (roomFooter) {
-            masterTl.fromTo(roomFooter, 
-              { opacity: 0, y: 16 },
-              { opacity: 1, y: 0, duration: 0.38, ease: 'power3.out' },
-              1.15
-            );
-          }
-        }
-
-      } else {
-        // High-performance fallback without GSAP
-        door.classList.add('is-opened');
-        setTimeout(() => {
-          roomViewport.classList.add('active');
-          document.body.style.overflow = 'hidden';
-          rooms.forEach((r) => {
-            if (r.getAttribute('data-room-id') === doorId) {
-              r.classList.add('active');
-            } else {
-              r.classList.remove('active');
-            }
-          });
-          isAnimating = false;
-        }, 600);
+      const linesContainer = document.getElementById('terminal-lines-container');
+      if (linesContainer) {
+        linesContainer.innerHTML = data.lines.map((l, idx) => `
+          <div class="terminal-line" id="term-line-${idx}">
+            <span class="t-time">[${l.time}]</span>
+            <span>${l.text}</span>
+            ${l.pass ? '<span class="t-pass">PASS</span>' : ''}
+          </div>
+        `).join('');
       }
     }
 
-    // Function to return from room back to the 4 doors (Ultra-fast, zero-lag 60fps return)
-    function backToDoors() {
-      if (isAnimating) return;
-      isAnimating = true;
-
-      const activeRoom = roomViewport.querySelector('.testing-room.active');
-      const doorLeaf = activeDoor ? activeDoor.querySelector('.door-leaf') : null;
-      const doorGlow = activeDoor ? activeDoor.querySelector('.door-portal-glow') : null;
-      const otherDoors = Array.from(doors).filter(d => d !== activeDoor);
-
-      // Instant scroll-reset to prevent reflow stutter
-      roomViewport.scrollTop = 0;
-      cameraRig.style.willChange = 'transform, opacity';
-      if (doorLeaf) doorLeaf.style.willChange = 'transform';
-      roomViewport.style.willChange = 'opacity';
-
-      if (typeof gsap !== 'undefined') {
-        if (currentMasterTl) {
-          currentMasterTl.kill();
-        }
-
-        const exitTl = gsap.timeline({
-          onComplete: () => {
-            roomViewport.classList.remove('active');
-            gsap.set(roomViewport, { opacity: 0, clearProps: 'all' });
-            rooms.forEach(r => {
-              r.classList.remove('active');
-              gsap.set(r, { clearProps: 'all' });
-            });
-            document.body.style.overflow = '';
-
-            doors.forEach((d) => {
-              d.classList.remove('is-dimmed', 'is-selected', 'is-opened');
-              gsap.set(d, { clearProps: 'all' });
-              const leaf = d.querySelector('.door-leaf');
-              if (leaf) gsap.set(leaf, { clearProps: 'all' });
-              const glow = d.querySelector('.door-portal-glow');
-              if (glow) gsap.set(glow, { clearProps: 'all' });
-            });
-
-            gsap.set(cameraRig, { clearProps: 'all' });
-            cameraRig.style.transformOrigin = '';
-            cameraRig.style.willChange = '';
-            if (doorLeaf) doorLeaf.style.willChange = '';
-            roomViewport.style.willChange = '';
-
-            activeDoor = null;
-            activeRoomId = null;
-            currentMasterTl = null;
-            isAnimating = false;
-          }
-        });
-        currentMasterTl = exitTl;
-
-        // 1. Immediately and swiftly fade out room viewport (240ms, power2.out)
-        exitTl.to(roomViewport, {
-          opacity: 0,
-          duration: 0.24,
-          ease: 'power2.out'
-        }, 0);
-
-        if (activeRoom) {
-          exitTl.to(activeRoom, {
-            opacity: 0,
-            duration: 0.2,
-            ease: 'power2.out'
-          }, 0);
-        }
-
-        // 2. Camera rig zooms back out smoothly with physical ease-in-out (500ms)
-        exitTl.to(cameraRig, {
-          scale: 1,
-          z: 0,
-          opacity: 1,
-          duration: 0.5,
-          ease: 'power2.inOut'
-        }, 0.08);
-
-        // 3. Selected door leaf hinges shut naturally (440ms)
-        if (doorLeaf) {
-          exitTl.to(doorLeaf, {
-            rotateY: 0,
-            duration: 0.44,
-            ease: 'power2.inOut'
-          }, 0.12);
-        }
-
-        if (doorGlow) {
-          exitTl.to(doorGlow, {
-            opacity: 0,
-            duration: 0.3,
-            ease: 'power1.out'
-          }, 0.12);
-        }
-
-        // 4. Restore active door and other doors with zero lag (380ms)
-        if (activeDoor) {
-          exitTl.to(activeDoor, {
-            scale: 1,
-            duration: 0.38,
-            ease: 'power2.out'
-          }, 0.16);
-        }
-        exitTl.to(otherDoors, {
-          opacity: 1,
-          scale: 1,
-          duration: 0.4,
-          ease: 'power2.out'
-        }, 0.16);
-
-      } else {
-        // Fallback without GSAP
-        roomViewport.classList.remove('active');
-        rooms.forEach((r) => r.classList.remove('active'));
-        document.body.style.overflow = '';
-        if (activeDoor) {
-          activeDoor.classList.remove('is-opened');
-        }
-        doors.forEach((d) => {
-          d.classList.remove('is-dimmed', 'is-selected');
-        });
-        cameraRig.style.transform = '';
-        cameraRig.style.transformOrigin = '';
-        isAnimating = false;
-      }
-    }
-
-    // Click listener on each door
-    doors.forEach((door) => {
-      door.addEventListener('click', function () {
-        enterDoor(this);
+    function revealTelemetryLines() {
+      clearTelemetryTimers();
+      const lines = room.querySelectorAll('.terminal-line');
+      lines.forEach((line, idx) => {
+        const timer = setTimeout(() => {
+          line.classList.add('revealed');
+        }, 160 + idx * 140);
+        telemetryTimers.push(timer);
       });
-      // Keyboard Accessibility (Enter or Space)
-      door.addEventListener('keydown', function (e) {
+    }
+
+    // Exact Enter Timing
+    function enterDoor(doorBtn) {
+      if (isBusy) return;
+      isBusy = true;
+      activeDoor = doorBtn;
+      activeDoorIndex = parseInt(doorBtn.getAttribute('data-door-id'), 10) || 0;
+
+      // Add .open immediately to trigger door leaf animation
+      doorBtn.classList.add('open');
+
+      // Compute transform-origin centered directly on clicked door
+      const doorRect = doorBtn.getBoundingClientRect();
+      const stageRect = stage.getBoundingClientRect();
+      const originX = ((doorRect.left + doorRect.width * 0.5) - stageRect.left) / stageRect.width * 100;
+      const originY = ((doorRect.top + doorRect.height * 0.5) - stageRect.top) / stageRect.height * 100;
+      stage.style.transformOrigin = `${originX.toFixed(2)}% ${originY.toFixed(2)}%`;
+
+      // Apply will-change only while transition runs
+      stage.style.willChange = 'transform, opacity';
+
+      // at 450ms: zoom whole section toward door center and fade out
+      setTimeout(() => {
+        stage.classList.add('zoomed-in');
+      }, 450);
+
+      // at 1000ms: fade in full-screen room in door's colors
+      setTimeout(() => {
+        populateRoom(activeDoorIndex);
+        room.scrollTop = 0;
+        document.body.style.overflow = 'hidden';
+        room.classList.add('active');
+        stage.style.willChange = '';
+        revealTelemetryLines();
+        isBusy = false;
+      }, 1000);
+    }
+
+    // Exact Exit Timing
+    function exitDoor() {
+      if (isBusy) return;
+      isBusy = true;
+
+      clearTelemetryTimers();
+
+      // Fade out room immediately
+      room.classList.remove('active');
+      stage.style.willChange = 'transform, opacity';
+
+      // at 250ms: zoom section back
+      setTimeout(() => {
+        document.body.style.overflow = '';
+        stage.classList.remove('zoomed-in');
+      }, 250);
+
+      // at 650ms: close the door
+      setTimeout(() => {
+        if (activeDoor) {
+          activeDoor.classList.remove('open');
+        }
+      }, 650);
+
+      // at 1350ms: clean up and return focus to the door
+      setTimeout(() => {
+        stage.style.willChange = '';
+        stage.style.transformOrigin = '';
+        if (activeDoor) {
+          try { activeDoor.focus(); } catch (e) {}
+        }
+        activeDoor = null;
+        activeDoorIndex = null;
+        isBusy = false;
+      }, 1350);
+    }
+
+    // Event Listeners for Doors
+    doors.forEach(doorBtn => {
+      doorBtn.addEventListener('click', () => enterDoor(doorBtn));
+      doorBtn.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          enterDoor(this);
+          enterDoor(doorBtn);
         }
       });
     });
 
-    // Back to Doors buttons
-    backBtns.forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        backToDoors();
+    // Event Listeners for Interactive Service Ticker Chips
+    const tickerChips = document.querySelectorAll('.service-ticker-chip');
+    tickerChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        const doorId = chip.getAttribute('data-door-id');
+        const targetDoor = document.getElementById('door-btn-' + doorId);
+        if (targetDoor) {
+          targetDoor.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setTimeout(() => {
+            enterDoor(targetDoor);
+          }, 300);
+        }
+      });
+      chip.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          chip.click();
+        }
       });
     });
 
-    // Close room on Escape key
+    const backBtn = document.getElementById('room-back-btn');
+    if (backBtn) backBtn.addEventListener('click', exitDoor);
+
+    const returnBtn = document.getElementById('room-return-btn');
+    if (returnBtn) returnBtn.addEventListener('click', exitDoor);
+
+    // Esc key also exits
     window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && roomViewport.classList.contains('active')) {
-        backToDoors();
+      if (e.key === 'Escape' && room.classList.contains('active')) {
+        exitDoor();
       }
     });
 
-    // Global window helper
-    window.enterDoorGlobal = function (id) {
-      const targetDoor = document.getElementById(`door-${id}`);
-      if (targetDoor) enterDoor(targetDoor);
+    // Global helper & footer link support
+    window.enterDoorGlobal = function(id) {
+      const targetDoor = document.getElementById(`door-btn-${id}`);
+      if (targetDoor) {
+        const section = document.getElementById('doors-section');
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth' });
+          setTimeout(() => enterDoor(targetDoor), 400);
+        } else {
+          enterDoor(targetDoor);
+        }
+      }
     };
 
-    function playDoorSound() {
-      try {
-        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-        if (!AudioContextClass) return;
-        const ctx = new AudioContextClass();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(160, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(60, ctx.currentTime + 0.35);
-        gain.gain.setValueAtTime(0.15, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.36);
-      } catch (e) {}
-    }
+    document.querySelectorAll('[data-door]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const id = link.getAttribute('data-door');
+        const targetDoor = document.getElementById(`door-btn-${id}`);
+        if (targetDoor) {
+          e.preventDefault();
+          window.enterDoorGlobal(id);
+        }
+      });
+    });
   }
 
   /* ----------------------------------------------------
@@ -770,15 +668,11 @@
       const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
       heroTl
-        .from('.rishi-status-pill', { opacity: 0, y: -20, duration: 0.6 })
-        .from('.rishi-hero-greeting', { opacity: 0, y: 35, duration: 0.8 }, '-=0.35')
+        .from('.rishi-hero-greeting', { opacity: 0, y: 35, duration: 0.8 })
         .from('.rishi-hero-subhead', { opacity: 0, y: 30, duration: 0.8 }, '-=0.55')
         .from('.spiral-notebook-card', { opacity: 0, scale: 0.9, y: 15, duration: 0.65, ease: 'back.out(1.5)' }, '-=0.5')
-        .from('.rishi-hero-desc', { opacity: 0, y: 25, duration: 0.7 }, '-=0.45')
         .from('.rishi-hero-cta-row', { opacity: 0, y: 20, duration: 0.6 }, '-=0.35')
-        .from('.rishi-portrait-wrapper', { opacity: 0, scale: 0.92, y: 35, duration: 1.0, ease: 'power2.out' }, '-=0.85')
-        .from('.ability-card-pill', { opacity: 0, scale: 0.7, duration: 0.6, ease: 'back.out(1.8)' }, '-=0.45')
-        .from('.rishi-hero-bottom-bar', { opacity: 0, y: 20, duration: 0.7 }, '-=0.4');
+        .from('.rishi-portrait-wrapper', { opacity: 0, scale: 0.92, y: 35, duration: 1.0, ease: 'power2.out' }, '-=0.85');
     }
 
     if (typeof ScrollTrigger === 'undefined') return;
@@ -857,21 +751,6 @@
         ease: 'power3.out',
         clearProps: 'transform,opacity'
       });
-
-      // Hint Reveal
-      gsap.from('.doors-hint', {
-        scrollTrigger: {
-          trigger: '.doors-cinema-stage',
-          start: 'top 85%',
-          once: true
-        },
-        opacity: 0,
-        y: 20,
-        duration: 0.8,
-        delay: 0.35,
-        ease: 'power3.out',
-        clearProps: 'transform,opacity'
-      });
     }
 
     // ==========================================
@@ -880,35 +759,18 @@
     // ==========================================
     if (document.querySelector('.rishi-work-section')) {
       // Work Section Header Typography
-      gsap.from('.work-header-container > *', {
+      gsap.from('.work-header-container', {
         scrollTrigger: {
           trigger: '.rishi-work-section',
           start: 'top 85%',
           once: true
         },
         opacity: 0,
-        y: 35,
-        stagger: 0.12,
-        duration: 0.85,
+        y: 30,
+        duration: 0.8,
         ease: 'power3.out',
         clearProps: 'transform,opacity'
       });
-
-      // Gallery Controls Bar
-      if (document.querySelector('.gallery-controls-bar')) {
-        gsap.from('.gallery-controls-bar', {
-          scrollTrigger: {
-            trigger: '.gallery-controls-bar',
-            start: 'top 88%',
-            once: true
-          },
-          opacity: 0,
-          y: 20,
-          duration: 0.65,
-          ease: 'power3.out',
-          clearProps: 'transform,opacity'
-        });
-      }
 
       // Bottom Return-To-Doors & Prompt
       if (document.querySelector('.back-to-doors-wrap')) {
@@ -985,7 +847,6 @@
      ---------------------------------------------------- */
   function initHorizontalProjectGallery() {
     const section = document.querySelector('.rishi-work-section');
-    const pinWrapper = document.querySelector('.projects-horizontal-pin-wrapper');
     const viewport = document.querySelector('.projects-horizontal-viewport');
     const track = document.querySelector('.projects-horizontal-track');
     const projectCards = document.querySelectorAll('.astraz-project-card');
@@ -995,145 +856,270 @@
 
     if (!section || !track || !projectCards.length) return;
 
-    const CARD_STEP = 416; // 380px card + 36px gap
-    // Scrub distance: approx 3.2 cards, then release to scroll to bottom
-    const scrubDistance = Math.min(track.scrollWidth - window.innerWidth + 80, CARD_STEP * 3.2);
+    // Measurement & state
+    let currentX = 0;
+    let isHovered = false;
+    let isDragging = false;
+    let autoPlayTimer = null;
+    let isMobile = window.innerWidth < 992;
 
-    let manualOffset = 0;
-    const getMaxScroll = () => Math.max(0, track.scrollWidth - window.innerWidth + 120);
+    const getCardStep = () => {
+      const visible = Array.from(projectCards).filter(c => c.style.display !== 'none');
+      if (visible.length >= 2) {
+        const step = Math.round(visible[1].getBoundingClientRect().left - visible[0].getBoundingClientRect().left);
+        if (step > 0) return step;
+      }
+      return 386; // 350px card + 36px gap fallback
+    };
 
-    // GSAP MatchMedia for responsive behavior
-    const mm = gsap.matchMedia();
+    const getMaxScroll = () => {
+      const visible = Array.from(projectCards).filter(c => c.style.display !== 'none');
+      if (!visible.length) return 0;
+      const totalWidth = visible.reduce((acc, c) => acc + c.offsetWidth + 36, 0);
+      return Math.max(0, totalWidth - window.innerWidth + 140);
+    };
 
-    // 1. DESKTOP PINNED SCROLL: Pan 3-4 cards on vertical scroll, then continue down
-    mm.add('(min-width: 992px)', () => {
-      const horizontalTween = gsap.to(track, {
-        x: () => -scrubDistance + manualOffset,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: pinWrapper || section,
-          pin: true,
-          scrub: 0.8,
-          start: 'top top',
-          end: () => '+=' + scrubDistance,
-          invalidateOnRefresh: true,
-          anticipatePin: 1
+    function updateArrowStates() {
+      if (isMobile) {
+        if (!viewport) return;
+        const sl = viewport.scrollLeft;
+        const maxSl = viewport.scrollWidth - viewport.clientWidth;
+        if (prevBtn) {
+          prevBtn.style.opacity = sl <= 8 ? '0.35' : '1';
+          prevBtn.style.pointerEvents = sl <= 8 ? 'none' : 'auto';
+        }
+        if (nextBtn) {
+          nextBtn.style.opacity = sl >= maxSl - 8 ? '0.35' : '1';
+          nextBtn.style.pointerEvents = sl >= maxSl - 8 ? 'none' : 'auto';
+        }
+      } else {
+        const maxScroll = getMaxScroll();
+        if (prevBtn) {
+          prevBtn.style.opacity = currentX >= 0 ? '0.35' : '1';
+          prevBtn.style.pointerEvents = currentX >= 0 ? 'none' : 'auto';
+        }
+        if (nextBtn) {
+          nextBtn.style.opacity = Math.abs(currentX) >= maxScroll - 5 ? '0.35' : '1';
+          nextBtn.style.pointerEvents = Math.abs(currentX) >= maxScroll - 5 ? 'none' : 'auto';
+        }
+      }
+    }
+
+    function slideTo(newX, duration = 0.65, ease = 'power2.out') {
+      if (isMobile) return;
+      const maxScroll = getMaxScroll();
+      currentX = Math.max(-maxScroll, Math.min(0, newX));
+      gsap.to(track, {
+        x: currentX,
+        duration: duration,
+        ease: ease,
+        overwrite: 'auto',
+        onUpdate: updateArrowStates,
+        onComplete: updateArrowStates
+      });
+    }
+
+    // Desktop Smooth Automatic Horizontal Project Carousel (Right to Left)
+    function startAutoPlay() {
+      stopAutoPlay();
+      if (isMobile) return;
+
+      autoPlayTimer = setInterval(() => {
+        if (isHovered || isDragging) return;
+        // Pause if any card is expanded (user reading tech stack blueprint)
+        const expandedCard = document.querySelector('.astraz-project-card.is-expanded');
+        if (expandedCard) return;
+
+        const maxScroll = getMaxScroll();
+        if (maxScroll <= 0) return;
+
+        const step = getCardStep();
+        if (Math.abs(currentX) >= maxScroll - 12) {
+          // Smoothly loop back to first project
+          slideTo(0, 1.0, 'power2.inOut');
+        } else {
+          // Advance right-to-left
+          slideTo(currentX - step, 0.75, 'power2.out');
+        }
+      }, 3600);
+    }
+
+    function stopAutoPlay() {
+      if (autoPlayTimer) {
+        clearInterval(autoPlayTimer);
+        autoPlayTimer = null;
+      }
+    }
+
+    // Pause automatic movement on hover, resume automatically on leave
+    if (viewport) {
+      viewport.addEventListener('mouseenter', () => {
+        isHovered = true;
+        stopAutoPlay();
+      });
+
+      viewport.addEventListener('mouseleave', () => {
+        isHovered = false;
+        startAutoPlay();
+      });
+    }
+
+    // Previous / Next Navigation Arrows
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (isMobile) {
+          const card = projectCards[0];
+          const step = (card ? card.offsetWidth : 320) + 16;
+          viewport.scrollBy({ left: step, behavior: 'smooth' });
+        } else {
+          slideTo(currentX - getCardStep());
+          startAutoPlay();
+        }
+      });
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (isMobile) {
+          const card = projectCards[0];
+          const step = (card ? card.offsetWidth : 320) + 16;
+          viewport.scrollBy({ left: -step, behavior: 'smooth' });
+        } else {
+          slideTo(currentX + getCardStep());
+          startAutoPlay();
+        }
+      });
+    }
+
+    // Mobile scroll listener for arrow states
+    if (viewport) {
+      viewport.addEventListener('scroll', () => {
+        if (isMobile) updateArrowStates();
+      }, { passive: true });
+    }
+
+    // Desktop Mouse Drag-to-pan
+    let startX = 0;
+    let startScrollX = 0;
+    let hasDragged = false;
+
+    if (viewport) {
+      viewport.addEventListener('mousedown', (e) => {
+        if (isMobile) return;
+        if (e.target.closest('a, button, input, textarea')) return;
+        isDragging = true;
+        hasDragged = false;
+        startX = e.pageX;
+        startScrollX = currentX;
+        viewport.style.cursor = 'grabbing';
+        track.style.userSelect = 'none';
+        stopAutoPlay();
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging || isMobile) return;
+        const diff = e.pageX - startX;
+        if (Math.abs(diff) > 5) hasDragged = true;
+        const maxScroll = getMaxScroll();
+        const proposed = startScrollX + diff;
+        currentX = Math.max(-maxScroll - 50, Math.min(50, proposed));
+        gsap.set(track, { x: currentX });
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (isDragging && !isMobile) {
+          isDragging = false;
+          viewport.style.cursor = '';
+          track.style.userSelect = '';
+          const maxScroll = getMaxScroll();
+          if (currentX > 0) slideTo(0, 0.3);
+          else if (Math.abs(currentX) > maxScroll) slideTo(-maxScroll, 0.3);
+          else updateArrowStates();
+          startAutoPlay();
         }
       });
 
-      // Manual navigation arrow buttons
-      function shiftManual(direction) {
-        const maxScroll = getMaxScroll();
-        manualOffset += direction * CARD_STEP;
-        // Clamp manual offset
-        manualOffset = Math.max(-maxScroll, Math.min(0, manualOffset));
-        gsap.to(track, {
-          x: manualOffset,
-          duration: 0.45,
-          ease: 'power2.out'
-        });
-      }
+      // Horizontal trackpad / wheel swipe
+      viewport.addEventListener('wheel', (e) => {
+        if (isMobile) return;
+        if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+          e.preventDefault();
+          stopAutoPlay();
+          slideTo(currentX - e.deltaX * 1.2, 0.2);
+          startAutoPlay();
+        }
+      }, { passive: false });
+    }
 
-      if (nextBtn) {
-        nextBtn.addEventListener('click', () => shiftManual(-1));
-      }
-      if (prevBtn) {
-        prevBtn.addEventListener('click', () => shiftManual(1));
-      }
-
-      // Mouse drag-to-scroll on horizontal track
-      let isDragging = false;
-      let startX = 0;
-      let startOffset = 0;
-
-      if (viewport) {
-        viewport.addEventListener('mousedown', (e) => {
-          if (e.target.closest('a, button, input')) return;
-          isDragging = true;
-          startX = e.pageX;
-          startOffset = manualOffset;
-          viewport.style.cursor = 'grabbing';
-          track.style.userSelect = 'none';
-        });
-
-        window.addEventListener('mousemove', (e) => {
-          if (!isDragging) return;
-          const diff = e.pageX - startX;
-          const maxScroll = getMaxScroll();
-          manualOffset = Math.max(-maxScroll, Math.min(0, startOffset + diff));
-          gsap.set(track, { x: manualOffset });
-        });
-
-        window.addEventListener('mouseup', () => {
-          if (isDragging) {
-            isDragging = false;
-            if (viewport) viewport.style.cursor = '';
-            track.style.userSelect = '';
-          }
-        });
-      }
-
-      return () => {
-        horizontalTween.kill();
-        gsap.set(track, { clearProps: 'transform,x' });
-      };
-    });
-
-    // 2. MOBILE & TABLET TOUCH HORIZONTAL SCROLL (<= 991px)
-    mm.add('(max-width: 991px)', () => {
-      // Tap on card to toggle expansion
-      projectCards.forEach((card) => {
-        card.addEventListener('click', (e) => {
-          if (e.target.closest('a, button')) return;
-          const wasExpanded = card.classList.contains('is-expanded');
-          projectCards.forEach((c) => c.classList.remove('is-expanded'));
-          if (!wasExpanded) {
-            card.classList.add('is-expanded');
-          }
-        });
+    // Card click toggle expansion
+    projectCards.forEach((card) => {
+      card.addEventListener('click', (e) => {
+        if (hasDragged) return;
+        if (e.target.closest('a, button')) return;
+        const wasExpanded = card.classList.contains('is-expanded');
+        projectCards.forEach((c) => c.classList.remove('is-expanded'));
+        if (!wasExpanded) {
+          card.classList.add('is-expanded');
+          stopAutoPlay(); // Pause while user explores
+        } else {
+          startAutoPlay();
+        }
       });
-
-      // Manual navigation buttons on tablet/mobile
-      if (nextBtn && viewport) {
-        nextBtn.addEventListener('click', () => {
-          viewport.scrollBy({ left: CARD_STEP, behavior: 'smooth' });
-        });
-      }
-      if (prevBtn && viewport) {
-        prevBtn.addEventListener('click', () => {
-          viewport.scrollBy({ left: -CARD_STEP, behavior: 'smooth' });
-        });
-      }
     });
 
-    // 3. CATEGORY FILTER CHIPS
+    // Category filter chips
     filterBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
         const filterCategory = btn.getAttribute('data-category') || 'all';
         filterBtns.forEach((b) => b.classList.remove('active'));
         btn.classList.add('active');
 
-        // Reset manual offset
-        manualOffset = 0;
-        gsap.to(track, { x: 0, duration: 0.35, ease: 'power2.out' });
+        // Reset scroll position to start
+        if (isMobile) {
+          if (viewport) viewport.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          slideTo(0, 0.35);
+        }
 
         projectCards.forEach((card) => {
           const cardCategory = card.getAttribute('data-category');
           if (filterCategory === 'all' || cardCategory === filterCategory) {
-            card.style.opacity = '1';
-            card.style.transform = 'scale(1)';
-            card.style.filter = 'none';
-            card.style.pointerEvents = 'auto';
             card.style.display = 'flex';
+            gsap.to(card, { opacity: 1, scale: 1, filter: 'none', duration: 0.35 });
           } else {
-            card.style.opacity = '0.15';
-            card.style.transform = 'scale(0.96)';
-            card.style.filter = 'grayscale(0.85)';
-            card.style.pointerEvents = 'none';
+            card.style.display = 'none';
           }
         });
+
+        setTimeout(updateArrowStates, 360);
       });
     });
+
+    // Handle viewport resize between desktop and mobile modes
+    window.addEventListener('resize', () => {
+      const newIsMobile = window.innerWidth < 992;
+      if (newIsMobile !== isMobile) {
+        isMobile = newIsMobile;
+        if (isMobile) {
+          stopAutoPlay();
+          gsap.set(track, { clearProps: 'transform' });
+          if (viewport) viewport.scrollLeft = 0;
+        } else {
+          currentX = 0;
+          slideTo(0, 0.2);
+          startAutoPlay();
+        }
+      }
+      updateArrowStates();
+    });
+
+    // Start auto carousel on desktop
+    if (!isMobile) {
+      startAutoPlay();
+    }
+    updateArrowStates();
   }
 
   /* ==========================================================================

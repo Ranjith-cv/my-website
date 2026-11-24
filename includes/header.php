@@ -45,15 +45,13 @@ $pageDesc  = isset($customDesc) ? $customDesc : 'Portfolio of Ranjith C V, Senio
   <link rel="stylesheet" href="assets/css/style.css?v=<?= file_exists(__DIR__ . '/../assets/css/style.css') ? filemtime(__DIR__ . '/../assets/css/style.css') : time() ?>">
   <link rel="stylesheet" href="assets/css/animations.css?v=<?= file_exists(__DIR__ . '/../assets/css/animations.css') ? filemtime(__DIR__ . '/../assets/css/animations.css') : time() ?>">
   <link rel="stylesheet" href="assets/css/responsive.css?v=<?= file_exists(__DIR__ . '/../assets/css/responsive.css') ? filemtime(__DIR__ . '/../assets/css/responsive.css') : time() ?>">
+  <link rel="stylesheet" href="assets/css/hero.css?v=<?= file_exists(__DIR__ . '/../assets/css/hero.css') ? filemtime(__DIR__ . '/../assets/css/hero.css') : time() ?>">
+  <link rel="stylesheet" href="assets/css/chatbot.css?v=<?= file_exists(__DIR__ . '/../assets/css/chatbot.css') ? filemtime(__DIR__ . '/../assets/css/chatbot.css') : time() ?>">
 
   <!-- Lucide Icons CDN (Fallback to SVG) -->
   <script src="https://unpkg.com/lucide@latest" defer></script>
 </head>
 <body>
-
-  <!-- Custom Magnetic Cursor -->
-  <div class="cursor-dot" aria-hidden="true"></div>
-  <div class="cursor-ring" aria-hidden="true"></div>
 
   <div class="site-content">
     <?php include __DIR__ . '/navigation.php'; ?>

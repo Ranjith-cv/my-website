@@ -1,0 +1,9 @@
+# Session data & cache
+data/sessions/
+data/sessions/*
+
+# IDE and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

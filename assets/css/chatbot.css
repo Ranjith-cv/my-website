@@ -1,0 +1,1090 @@
+/**
+ * RANJITH C V — AI ASSISTANT CHATBOT ANIMATION & POLISH ENGINE
+ * Rich, varied 60fps micro-interactions, spring physics, and robot animations
+ * Respects prefers-reduced-motion
+ */
+
+/* ==========================================================================
+   1. LAUNCHER BUTTON & FLOATING BADGES
+   ========================================================================== */
+.floating-shortcuts-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column !important;
+  align-items: center;
+  gap: 14px;
+  z-index: 10005; /* High z-index above standard page elements */
+}
+
+/* AI Chat on TOP */
+.floating-action-btn.aichat-btn {
+  order: 1 !important;
+  position: relative;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #101216 !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 28px -4px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  overflow: visible;
+  animation: launcherFloatingBob 3s ease-in-out infinite;
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.28s ease,
+              border-color 0.28s ease;
+  transform-origin: center center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* WhatsApp on BOTTOM */
+.floating-action-btn.whatsapp-btn {
+  order: 2 !important;
+}
+
+/* Idle Floating Bob */
+@keyframes launcherFloatingBob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+/* Hover State: Scale 1.08, subtle tilt, elevated shadow */
+.floating-action-btn.aichat-btn:hover {
+  transform: translateY(-3px) scale(1.08) rotate(2deg);
+  box-shadow: 0 14px 34px -4px rgba(0, 0, 0, 0.6), 0 0 16px rgba(34, 197, 94, 0.35);
+  border-color: rgba(34, 197, 94, 0.45);
+}
+
+/* Click Squish State: 0.92 -> 1.05 -> 1 */
+.floating-action-btn.aichat-btn.squishing {
+  animation: launcherSquish 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes launcherSquish {
+  0% { transform: scale(1); }
+  35% { transform: scale(0.92); }
+  75% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Launcher Icon Switching Container (Robot icon <-> Close X) */
+.launcher-icon-wrap {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.launcher-robot-icon,
+.launcher-close-icon {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.22s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.launcher-close-icon {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+  pointer-events: none;
+}
+
+/* When drawer is open, launcher button can stay visible or morph into floating close button */
+body.aichat-open .floating-action-btn.aichat-btn {
+  transform: scale(0.92);
+  background: #181920 !important;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+body.aichat-open .launcher-robot-icon {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.5);
+}
+
+body.aichat-open .launcher-close-icon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+/* Soft Pulsing Ring on Online Dot */
+.floating-status-dot {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #22C55E;
+  border: 2px solid #101216;
+  z-index: 2;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.8);
+}
+
+.floating-status-dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(34, 197, 94, 0.7);
+  animation: onlineDotPulse 2.2s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+}
+
+@keyframes onlineDotPulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.9;
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+  70% {
+    transform: scale(1.6);
+    opacity: 0;
+    box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+
+/* Speech Bubble Above Launcher ("Need help with QA? 👋") */
+.aichat-speech-bubble {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  right: 0;
+  background: #101216;
+  color: #FFFFFF;
+  padding: 8px 14px;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 550;
+  line-height: 1.35;
+  white-space: nowrap;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 10px 24px -4px rgba(0, 0, 0, 0.5), 0 0 12px rgba(34, 197, 94, 0.15);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px) scale(0.85);
+  transform-origin: bottom right;
+  transition: opacity 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              visibility 0.3s ease;
+  z-index: 10006;
+}
+
+.aichat-speech-bubble.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.aichat-speech-bubble .speech-bubble-tail {
+  position: absolute;
+  bottom: -6px;
+  right: 22px;
+  width: 10px;
+  height: 10px;
+  background: #101216;
+  border-right: 1px solid rgba(255, 255, 255, 0.14);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  transform: rotate(45deg);
+}
+
+/* Unread Counter Badge (Bouncing Number) */
+.aichat-unread-badge {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  background: #EF4444;
+  color: #FFFFFF;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 10px;
+  border: 2px solid #101216;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.6);
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.25s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.aichat-unread-badge.active {
+  opacity: 1;
+  transform: scale(1);
+  animation: unreadBadgeBounce 2.5s ease-in-out infinite;
+}
+
+@keyframes unreadBadgeBounce {
+  0%, 100% { transform: scale(1) translateY(0); }
+  15% { transform: scale(1.15) translateY(-3px); }
+  30% { transform: scale(0.95) translateY(1px); }
+  45% { transform: scale(1.05) translateY(-1px); }
+  60% { transform: scale(1) translateY(0); }
+}
+
+/* ==========================================================================
+   2. FRIENDLY ROBOT SVG ANIMATIONS
+   ========================================================================== */
+.friendly-robot-icon {
+  display: block;
+  overflow: visible;
+}
+
+/* Antenna Wiggle Keyframes: Runs every ~5s */
+.robot-antenna {
+  transform-origin: 24px 14px;
+  animation: robotAntennaWiggle 5s ease-in-out infinite;
+}
+
+@keyframes robotAntennaWiggle {
+  0%, 82%, 100% {
+    transform: rotate(0deg);
+  }
+  85% {
+    transform: rotate(-16deg);
+  }
+  88% {
+    transform: rotate(14deg);
+  }
+  91% {
+    transform: rotate(-8deg);
+  }
+  94% {
+    transform: rotate(6deg);
+  }
+  97% {
+    transform: rotate(0deg);
+  }
+}
+
+/* Eye Blink Keyframes: Runs every ~3.6s */
+.robot-eyes {
+  transform-origin: 24px 24.5px;
+  animation: robotEyeBlink 3.6s ease-in-out infinite;
+  transition: transform 0.15s ease-out;
+}
+
+@keyframes robotEyeBlink {
+  0%, 93%, 97%, 100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+/* Dynamic Cursor Look (Eyes translate following mouse coordinates via CSS variables) */
+.aichat-btn:hover .robot-eyes,
+.aichat-header:hover .robot-eyes {
+  transform: translate(calc(var(--look-x, 0) * 2.2px), calc(var(--look-y, 0) * 1.8px));
+}
+
+/* ==========================================================================
+   3. CHAT DRAWER PANEL OPEN / CLOSE & STAGGERED REVEALS
+   ========================================================================== */
+.aichat-drawer {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: clamp(380px, 32vw, 440px);
+  max-width: calc(100vw - 32px);
+  height: min(600px, calc(100vh - 120px));
+  max-height: calc(100vh - 120px);
+  min-height: 400px;
+  background: #FFFFFF;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 20px;
+  box-shadow: 0 24px 60px -12px rgba(15, 23, 42, 0.28), 0 0 0 1px rgba(15, 23, 42, 0.05);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+  z-index: 10010; /* High z-index sitting above all elements and cord */
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.2) translate(100px, 100px);
+  transform-origin: bottom right;
+  transition: opacity 0.22s ease-in,
+              transform 0.22s cubic-bezier(0.4, 0, 1, 1),
+              visibility 0.22s ease;
+  will-change: transform, opacity;
+}
+
+/* Open State with Spring Overshoot */
+.aichat-drawer.open {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1) translate(0, 0);
+  transition: opacity 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.44s cubic-bezier(0.34, 1.35, 0.64, 1),
+              visibility 0.38s ease;
+}
+
+/* Parallax gradient layer inside drawer */
+.aichat-drawer::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(circle 320px at calc(50% + var(--panel-gx, 0px)) calc(40% + var(--panel-gy, 0px)), rgba(56, 189, 248, 0.06), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  transition: transform 0.15s ease-out;
+}
+
+/* Content Elements Sequence Reveals (stagger 80ms) */
+.aichat-header,
+.chat-bubble.bot:first-child,
+.aichat-chips-shelf,
+.aichat-input-bar {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.aichat-drawer.open .aichat-header {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.04s;
+}
+
+.aichat-drawer.open .chat-bubble.bot:first-child {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.12s;
+}
+
+.aichat-drawer.open .aichat-chips-shelf {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.20s;
+}
+
+.aichat-drawer.open .aichat-input-bar {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.28s;
+}
+
+/* ==========================================================================
+   4. CHAT HEADER POLISH
+   ========================================================================== */
+.aichat-header {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 18px;
+  border-bottom: 1px solid #E2E8F0;
+  background: #FFFFFF;
+  position: relative;
+  z-index: 2;
+}
+
+.bot-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #101216;
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  color: #22C55E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  animation: botAvatarBreathe 4s ease-in-out infinite;
+}
+
+@keyframes botAvatarBreathe {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.2), 0 2px 8px rgba(0, 0, 0, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 12px 2px rgba(34, 197, 94, 0.45), 0 4px 14px rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* Header Buttons Animations */
+.aichat-header-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid #E2E8F0;
+  background: #FFFFFF;
+  color: #64748B;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Reset button 360deg spin */
+.aichat-header-btn#btn-reset-aichat svg {
+  transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.aichat-header-btn#btn-reset-aichat:active svg,
+.aichat-header-btn#btn-reset-aichat.spinning svg {
+  transform: rotate(360deg);
+}
+
+/* Close button 90deg rotation on hover */
+.aichat-header-btn#btn-close-aichat svg {
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.aichat-header-btn#btn-close-aichat:hover svg {
+  transform: rotate(90deg);
+}
+
+/* ==========================================================================
+   5. MESSAGES BOX & TYPEWRITER WORD STREAMING
+   ========================================================================== */
+.aichat-messages-box {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 16px 18px 12px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #F8FAFC;
+  position: relative;
+  z-index: 1;
+}
+
+/* Message Bubble Slide & Scale Spring */
+.chat-bubble {
+  max-width: 88%;
+  padding: 0.85rem 1.05rem;
+  font-size: 0.84375rem;
+  line-height: 1.6;
+  word-break: break-word;
+  box-sizing: border-box;
+  position: relative;
+  will-change: transform, opacity;
+}
+
+/* User Message: Slide in from right with spring */
+.chat-bubble.user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px 18px 4px 18px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.16);
+  animation: userBubbleSlideIn 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes userBubbleSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(24px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* Delivered tick under user message */
+.msg-delivered-tick {
+  display: block;
+  font-size: 0.7rem;
+  font-family: var(--font-body);
+  color: rgba(255, 255, 255, 0.7);
+  text-align: right;
+  margin-top: 4px;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  animation: tickFadeIn 0.4s ease 0.2s forwards;
+}
+
+@keyframes tickFadeIn {
+  to { opacity: 1; }
+}
+
+/* Bot Message: Slide in from left with spring */
+.chat-bubble.bot {
+  align-self: flex-start;
+  background: #FFFFFF;
+  color: #1E293B;
+  border: 1px solid #E2E8F0;
+  border-radius: 18px 18px 18px 4px;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+  animation: botBubbleSlideIn 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  cursor: default;
+}
+
+@keyframes botBubbleSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-24px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* Typewriter Word-by-Word Streaming Fade */
+.word-fade {
+  display: inline;
+  opacity: 0;
+  animation: wordFadeIn 0.14s ease-out forwards;
+}
+
+@keyframes wordFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 3-Dot Typing Wave Indicator */
+.chat-bubble.bot.typing {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0.75rem 1rem;
+  min-width: 58px;
+}
+
+.chat-bubble.bot.typing .typing-dot {
+  width: 7px;
+  height: 7px;
+  background: #059669;
+  border-radius: 50%;
+  display: inline-block;
+  animation: typingWave 1.4s ease-in-out infinite;
+}
+
+.chat-bubble.bot.typing .typing-dot:nth-child(2) {
+  animation-delay: 0.18s;
+  background: #10B981;
+}
+
+.chat-bubble.bot.typing .typing-dot:nth-child(3) {
+  animation-delay: 0.36s;
+  background: #34D399;
+}
+
+@keyframes typingWave {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   6. QUICK-REPLY CHIPS WITH UNIQUE ICON WIGGLES & RIPPLE
+   ========================================================================== */
+.aichat-chips-shelf {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  background: #FFFFFF;
+  border-top: 1px solid #F1F5F9;
+  position: relative;
+  z-index: 2;
+  /* Soft fade mask on right edge so last chip is hinted cleanly */
+  mask-image: linear-gradient(to right, black 86%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, black 86%, transparent 100%);
+}
+
+.aichat-chips-shelf::-webkit-scrollbar {
+  display: none;
+}
+
+.chat-chip {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: 0.78125rem;
+  font-weight: 550;
+  background: #F8FAFC;
+  color: #334155;
+  border: 1px solid #E2E8F0;
+  border-radius: 999px;
+  padding: 0.42rem 0.9rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.22s ease,
+              background-color 0.2s ease,
+              color 0.2s ease,
+              border-color 0.2s ease,
+              opacity 0.25s ease;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Pop in one-by-one with staggered spring */
+.aichat-drawer.open .chat-chip {
+  animation: chipStaggerPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.aichat-drawer.open .chat-chip:nth-child(1) { animation-delay: 0.18s; }
+.aichat-drawer.open .chat-chip:nth-child(2) { animation-delay: 0.24s; }
+.aichat-drawer.open .chat-chip:nth-child(3) { animation-delay: 0.30s; }
+.aichat-drawer.open .chat-chip:nth-child(4) { animation-delay: 0.36s; }
+.aichat-drawer.open .chat-chip:nth-child(5) { animation-delay: 0.42s; }
+.aichat-drawer.open .chat-chip:nth-child(6) { animation-delay: 0.48s; }
+
+@keyframes chipStaggerPop {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Hover: Lift 2px + subtle shadow */
+.chat-chip:hover {
+  background: #0F172A;
+  color: #FFFFFF;
+  border-color: #0F172A;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 14px rgba(15, 23, 42, 0.18);
+}
+
+/* Unique Icon Wiggles on Hover */
+.chat-chip .chip-icon {
+  font-size: 0.9rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 1. Target Spins for Manual QA */
+.chat-chip[data-chip="Manual Testing"]:hover .chip-icon {
+  animation: targetSpin 0.65s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes targetSpin {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.25); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* 2. Lightning Flashes for Automation & CI/CD */
+.chat-chip[data-chip="Automation Frameworks"]:hover .chip-icon {
+  animation: lightningFlash 0.5s ease-in-out;
+}
+
+@keyframes lightningFlash {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.3) rotate(-8deg); filter: brightness(1.7) drop-shadow(0 0 6px #F59E0B); }
+}
+
+/* 3. Robot Nods for AI Testing */
+.chat-chip[data-chip="AI Workflows"]:hover .chip-icon {
+  animation: robotNod 0.55s ease-in-out;
+}
+
+@keyframes robotNod {
+  0%, 100% { transform: translateY(0); }
+  35% { transform: translateY(-3px) rotate(-6deg); }
+  70% { transform: translateY(1.5px) rotate(4deg); }
+}
+
+/* Click Ripple Effect */
+.chip-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  transform: scale(0);
+  animation: chipRippleAnimation 0.5s linear;
+  pointer-events: none;
+}
+
+@keyframes chipRippleAnimation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Chip Flying Animation on Click */
+.chat-chip.flying {
+  animation: chipFlyIntoChat 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+@keyframes chipFlyIntoChat {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-16px) scale(1.04);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-40px) scale(0.9);
+    opacity: 0;
+  }
+}
+
+.chat-chip.fading-out {
+  opacity: 0 !important;
+  transform: scale(0.92) !important;
+  transition: opacity 0.25s ease, transform 0.25s ease !important;
+}
+
+/* ==========================================================================
+   7. INPUT BAR, GLOWING BORDER & FLYING SEND PLANE
+   ========================================================================== */
+.aichat-input-bar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px;
+  border-top: 1px solid #E2E8F0;
+  background: #FFFFFF;
+  position: relative;
+  z-index: 2;
+}
+
+.aichat-input-wrap {
+  flex: 1 1 auto;
+  position: relative;
+  border-radius: 999px;
+  background: #F1F5F9;
+  border: 1.5px solid transparent;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Focus Border Glow & Color Transition */
+.aichat-input-wrap:focus-within {
+  background: #FFFFFF;
+  border-color: #0284C7;
+  box-shadow: 0 0 0 3.5px rgba(2, 132, 199, 0.16), 0 2px 8px rgba(2, 132, 199, 0.1);
+}
+
+.aichat-input {
+  width: 100%;
+  padding: 0.6rem 1.1rem;
+  border: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 0.84375rem;
+  color: #0F172A;
+  outline: none;
+  box-sizing: border-box;
+  transition: transform 0.2s ease;
+}
+
+/* Placeholder Cycling with Soft Fade */
+.aichat-input::placeholder {
+  color: #94A3B8;
+  transition: opacity 0.22s ease-in-out, transform 0.22s ease-in-out;
+}
+
+.aichat-input.placeholder-fading::placeholder {
+  opacity: 0;
+  transform: translateY(-3px);
+}
+
+/* Send Button State */
+.aichat-send-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: #E2E8F0;
+  color: #94A3B8;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: not-allowed;
+  flex-shrink: 0;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: visible;
+  position: relative;
+}
+
+/* Active Pop when input has text */
+.aichat-send-btn.has-text {
+  background: #0F172A;
+  color: #FFFFFF;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.22);
+  animation: sendBtnPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes sendBtnPop {
+  0% { transform: scale(0.85); }
+  60% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+.aichat-send-btn.has-text:hover {
+  background: #0284C7;
+  transform: scale(1.06);
+  box-shadow: 0 6px 16px rgba(2, 132, 199, 0.35);
+}
+
+/* Flying Paper Plane Animation */
+.aichat-send-btn .send-icon {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+}
+
+.aichat-send-btn.launching .send-icon {
+  animation: planeFlyOut 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes planeFlyOut {
+  0% {
+    transform: translate(0, 0) scale(1) rotate(0);
+    opacity: 1;
+  }
+  45% {
+    transform: translate(16px, -16px) scale(0.6) rotate(15deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-14px, 14px) scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0, 0) scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   8. DARK THEME HARMONY
+   ========================================================================== */
+.dark-theme .aichat-drawer {
+  background: #11141E;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.dark-theme .aichat-header {
+  background: #141824;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark-theme .bot-name {
+  color: #F8FAFC;
+}
+
+.dark-theme .aichat-header-btn {
+  background: #1E2333;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #94A3B8;
+}
+
+.dark-theme .aichat-header-btn:hover {
+  background: #283046;
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.dark-theme .aichat-messages-box {
+  background: #0E1018;
+}
+
+.dark-theme .chat-bubble.bot {
+  background: #191E2D;
+  color: #F8FAFC;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+.dark-theme .chat-bubble.bot strong {
+  color: #7DD3FC;
+}
+
+.dark-theme .chat-bubble.user {
+  background: #2563EB;
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.dark-theme .aichat-chips-shelf {
+  background: #141824;
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark-theme .chat-chip {
+  background: #1C2132;
+  color: #CBD5E1;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.dark-theme .chat-chip:hover {
+  background: #38BDF8;
+  color: #0F172A;
+  border-color: #38BDF8;
+}
+
+.dark-theme .aichat-input-bar {
+  background: #141824;
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark-theme .aichat-input-wrap {
+  background: #0E1018;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-theme .aichat-input-wrap:focus-within {
+  background: #11141E;
+  border-color: #38BDF8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+}
+
+.dark-theme .aichat-input {
+  color: #F8FAFC;
+}
+
+.dark-theme .aichat-input::placeholder {
+  color: #64748B;
+}
+
+.dark-theme .aichat-send-btn {
+  background: #1E2333;
+  color: #64748B;
+}
+
+.dark-theme .aichat-send-btn.has-text {
+  background: #38BDF8;
+  color: #0F172A;
+}
+
+.dark-theme .aichat-send-btn.has-text:hover {
+  background: #7DD3FC;
+}
+
+/* ==========================================================================
+   9. MOBILE RESPONSIVE BOTTOM SHEET (< 640px)
+   ========================================================================== */
+@media (max-width: 640px) {
+  .aichat-drawer {
+    bottom: 0 !important;
+    right: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: min(84vh, 620px) !important;
+    max-height: 84vh !important;
+    border-radius: 24px 24px 0 0 !important;
+    border-bottom: none !important;
+    transform: translateY(100%);
+    transform-origin: bottom center;
+    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  .aichat-drawer.open {
+    transform: translateY(0) !important;
+  }
+
+  /* Mobile Pull Notch Handle */
+  .aichat-header::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 4px;
+    background: #CBD5E1;
+    border-radius: 2px;
+  }
+
+  .dark-theme .aichat-header::before {
+    background: #475569;
+  }
+
+  .floating-shortcuts-container {
+    bottom: 18px;
+    right: 18px;
+  }
+}
+
+/* ==========================================================================
+   10. REDUCED MOTION SUPPORT
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .floating-action-btn.aichat-btn,
+  .robot-antenna,
+  .robot-eyes,
+  .bot-icon,
+  .aichat-unread-badge,
+  .chat-chip .chip-icon,
+  .floating-status-dot::after {
+    animation: none !important;
+  }
+
+  .aichat-drawer,
+  .chat-bubble.bot,
+  .chat-bubble.user,
+  .chat-chip,
+  .aichat-speech-bubble,
+  .word-fade {
+    transition: opacity 0.15s ease !important;
+    transform: none !important;
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}

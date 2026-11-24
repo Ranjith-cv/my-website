@@ -16,22 +16,50 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // 2. "BOOK YOUR TESTING" Modal Logic
+  // 2. "BOOK YOUR TESTING" Modal Logic (Notebook Restyle)
   const enquiryModal = document.getElementById('enquiry-modal');
   const btnOpenEnquiry = document.getElementById('btn-open-enquiry');
   const btnCloseEnquiry = document.getElementById('btn-close-enquiry');
+  const btnSuccessClose = document.getElementById('btn-success-close');
 
   function openEnquiryModal() {
     if (enquiryModal) {
-      enquiryModal.classList.add('open');
+      enquiryModal.classList.add('open', 'active');
+      enquiryModal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
     }
   }
 
   function closeEnquiryModal() {
     if (enquiryModal) {
-      enquiryModal.classList.remove('open');
+      enquiryModal.classList.remove('open', 'active');
+      enquiryModal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
+
+      // Close dropdown if open
+      const dropdownWrap = document.getElementById('modal-scope-dropdown');
+      if (dropdownWrap) dropdownWrap.classList.remove('open');
+
+      // Reset success view / form after modal fades out
+      setTimeout(() => {
+        const successView = document.getElementById('modal-success-view');
+        const modalForm = document.getElementById('modal-enquiry-form');
+        const feedback = document.getElementById('modal-form-feedback');
+        if (successView && modalForm && successView.style.display !== 'none') {
+          successView.style.display = 'none';
+          modalForm.style.display = 'block';
+          modalForm.reset();
+          if (typeof window.resetCustomDropdown === 'function') {
+            window.resetCustomDropdown();
+          }
+          const charCount = document.getElementById('char-count');
+          if (charCount) charCount.textContent = '0';
+        }
+        if (feedback) {
+          feedback.style.display = 'none';
+          feedback.innerHTML = '';
+        }
+      }, 400);
     }
   }
 
@@ -43,7 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
     btnCloseEnquiry.addEventListener('click', closeEnquiryModal);
   }
 
-  // Also close modal if clicking on background overlay
+  if (btnSuccessClose) {
+    btnSuccessClose.addEventListener('click', closeEnquiryModal);
+  }
+
+  // Close modal if clicking on background overlay (backdrop click)
   if (enquiryModal) {
     enquiryModal.addEventListener('click', (e) => {
       if (e.target === enquiryModal) {
@@ -51,6 +83,23 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // Close on Escape key (dropdown first if open, then modal)
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && enquiryModal && enquiryModal.classList.contains('open')) {
+      const dropdownWrap = document.getElementById('modal-scope-dropdown');
+      if (dropdownWrap && dropdownWrap.classList.contains('open')) {
+        dropdownWrap.classList.remove('open');
+        const trigger = document.getElementById('modal-dropdown-trigger');
+        if (trigger) {
+          trigger.setAttribute('aria-expanded', 'false');
+          trigger.focus();
+        }
+        return;
+      }
+      closeEnquiryModal();
+    }
+  });
 
   // Global triggers with data-open-enquiry
   document.querySelectorAll('[data-open-enquiry]').forEach(el => {
@@ -60,7 +109,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 3. AI QA Chatbot Drawer Logic
+  // 3. AI QA Chatbot Engine (delegated to assets/js/chatbot.js)
+  // Legacy chat handlers bypassed to prevent duplicate listener bindings
+  if (false) {
   const aichatDrawer = document.getElementById('aichat-drawer');
   const btnToggleAichat = document.getElementById('btn-toggle-aichat');
   const btnCloseAichat = document.getElementById('btn-close-aichat');
@@ -414,12 +465,24 @@ Would you like to explore any of these topics, or schedule a direct consultation
       handleAiQuery(val);
     });
   }
+  } // End legacy chatbot handlers bypassed
 
   // Close modals on Escape key
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      if (enquiryModal?.classList.contains('open')) closeEnquiryModal();
-      if (aichatDrawer?.classList.contains('open')) closeAiChat();
+      const modalEl = document.getElementById('enquiry-modal');
+      const chatEl = document.getElementById('aichat-drawer');
+      if (modalEl && modalEl.classList.contains('open') && typeof closeEnquiryModal === 'function') {
+        closeEnquiryModal();
+      }
+      if (chatEl && chatEl.classList.contains('open')) {
+        if (typeof window.closeAiChat === 'function') {
+          window.closeAiChat();
+        } else {
+          chatEl.classList.remove('open');
+          document.body.classList.remove('aichat-open');
+        }
+      }
     }
   });
 
@@ -531,7 +594,7 @@ Would you like to explore any of these topics, or schedule a direct consultation
       }
 
       // 4. Service / Dropdown Selection
-      if (field.tagName === 'SELECT') {
+      if (field.tagName === 'SELECT' || name === 'service' || field.id === 'modal-service') {
         if (!val || val === '') return 'Please select a testing scope.';
         return null;
       }
@@ -631,6 +694,41 @@ Would you like to explore any of these topics, or schedule a direct consultation
         }
       });
 
+      // Also validate Custom Dropdown Service if present
+      const serviceHidden = form.querySelector('[name="service"]');
+      if (serviceHidden && serviceHidden.hasAttribute('required')) {
+        const serviceErr = validateField(serviceHidden);
+        const triggerBtn = form.querySelector('.custom-dropdown-trigger');
+        const errServiceEl = form.querySelector('#error-modal-service');
+        if (serviceErr) {
+          hasErrors = true;
+          if (triggerBtn) {
+            triggerBtn.classList.add('is-invalid');
+            triggerBtn.classList.remove('modalInputShake');
+            void triggerBtn.offsetWidth;
+            triggerBtn.classList.add('modalInputShake');
+            if (!firstInvalidField) firstInvalidField = triggerBtn;
+          }
+          if (errServiceEl) {
+            errServiceEl.innerHTML = `
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <span>${serviceErr}</span>
+            `;
+            errServiceEl.classList.add('visible');
+          }
+        } else {
+          if (triggerBtn) triggerBtn.classList.remove('is-invalid');
+          if (errServiceEl) {
+            errServiceEl.classList.remove('visible');
+            errServiceEl.innerHTML = '';
+          }
+        }
+      }
+
       if (hasErrors) {
         // Tactile shake animation
         const modalCard = form.closest('.modal-card') || form;
@@ -655,11 +753,8 @@ Would you like to explore any of these topics, or schedule a direct consultation
       if (btn) {
         btn.disabled = true;
         btn.innerHTML = `
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="spin-icon" style="animation: spin 0.8s linear infinite;">
-            <circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle>
-            <path d="M12 2a10 10 0 0 1 10 10"></path>
-          </svg>
-          <span style="margin-left: 0.5rem;">Transmitting Request...</span>
+          <span class="btn-spinner" style="margin-right: 10px;"></span>
+          <span>Transmitting Request...</span>
         `;
       }
 
@@ -675,7 +770,15 @@ Would you like to explore any of these topics, or schedule a direct consultation
         const result = await response.json();
 
         if (response.ok && result.success) {
-          if (feedback) {
+          const successView = document.getElementById('modal-success-view');
+          if (formId === 'modal-enquiry-form' && successView) {
+            form.style.display = 'none';
+            successView.style.display = 'block';
+            const ticketEl = document.getElementById('success-ticket-id');
+            if (ticketEl && result.ticket_id) {
+              ticketEl.innerHTML = `Confirmation Ticket: <strong>${result.ticket_id}</strong>`;
+            }
+          } else if (feedback) {
             feedback.className = 'form-feedback success';
             feedback.style.display = 'block';
             feedback.innerHTML = `
@@ -684,8 +787,12 @@ Would you like to explore any of these topics, or schedule a direct consultation
               <small style="opacity:0.85;">Confirmation Ticket: <strong>${result.ticket_id}</strong></small>
             `;
           }
+
           form.reset();
           fields.forEach(f => f.classList.remove('is-valid'));
+          if (typeof window.resetCustomDropdown === 'function') {
+            window.resetCustomDropdown();
+          }
 
           if (result.new_csrf) {
             document.querySelectorAll('input[name="csrf_token"]').forEach(input => {
@@ -693,15 +800,11 @@ Would you like to explore any of these topics, or schedule a direct consultation
             });
           }
 
-          // Auto-close modal smoothly after 3 seconds
-          setTimeout(() => {
-            const modal = form.closest('.enquiry-modal');
-            if (modal) {
-              modal.classList.remove('open', 'active');
+          if (formId !== 'modal-enquiry-form') {
+            setTimeout(() => {
               if (feedback) feedback.style.display = 'none';
-            }
-          }, 3200);
-
+            }, 4500);
+          }
         } else {
           if (feedback) {
             feedback.className = 'form-feedback error';
@@ -733,6 +836,200 @@ Would you like to explore any of these topics, or schedule a direct consultation
       }
     });
   }
+
+  // 7. Custom Dropdown Controller (ARIA, Keyboard Navigation, Option Stagger)
+  function initModalCustomDropdown() {
+    const dropdownWrap = document.getElementById('modal-scope-dropdown');
+    if (!dropdownWrap) return;
+
+    const trigger = document.getElementById('modal-dropdown-trigger');
+    const popover = document.getElementById('modal-dropdown-popover');
+    const hiddenInput = document.getElementById('modal-service');
+    const options = Array.from(popover.querySelectorAll('.dropdown-option'));
+    const selectedLabel = trigger.querySelector('.dropdown-selected-label');
+    let focusedIndex = -1;
+
+    function openDropdown() {
+      dropdownWrap.classList.add('open');
+      const row = dropdownWrap.closest('.form-row');
+      if (row) row.classList.add('dropdown-open');
+      const item = dropdownWrap.closest('.modal-form-item');
+      if (item) item.classList.add('has-dropdown');
+      trigger.setAttribute('aria-expanded', 'true');
+      const selectedOpt = popover.querySelector('.dropdown-option.is-selected');
+      if (selectedOpt) {
+        focusedIndex = options.indexOf(selectedOpt);
+      } else {
+        focusedIndex = 0;
+      }
+      updateFocusedOption(focusedIndex);
+    }
+
+    function closeDropdown(refocusTrigger = true) {
+      dropdownWrap.classList.remove('open');
+      const row = dropdownWrap.closest('.form-row');
+      if (row) row.classList.remove('dropdown-open');
+      const item = dropdownWrap.closest('.modal-form-item');
+      if (item) item.classList.remove('has-dropdown');
+      trigger.setAttribute('aria-expanded', 'false');
+      options.forEach(opt => opt.classList.remove('is-focused'));
+      focusedIndex = -1;
+      if (refocusTrigger) trigger.focus();
+    }
+
+    function toggleDropdown() {
+      if (dropdownWrap.classList.contains('open')) {
+        closeDropdown(false);
+      } else {
+        openDropdown();
+      }
+    }
+
+    function selectOption(option) {
+      const val = option.getAttribute('data-value');
+      const code = option.getAttribute('data-code');
+      const title = option.getAttribute('data-title');
+      const iconSpan = option.querySelector('.option-icon');
+      const iconClass = iconSpan ? iconSpan.className : 'option-icon';
+
+      hiddenInput.value = val;
+      hiddenInput.dispatchEvent(new Event('change', { bubbles: true }));
+
+      // Update trigger label with colored rounded badge + title
+      selectedLabel.innerHTML = `
+        <span class="trigger-badge-icon ${iconClass}">${code}</span>
+        <span>${title}</span>
+      `;
+
+      // Update selection status
+      options.forEach(opt => {
+        const isCur = opt === option;
+        opt.classList.toggle('is-selected', isCur);
+        opt.setAttribute('aria-selected', isCur ? 'true' : 'false');
+      });
+
+      // Clear error on trigger
+      trigger.classList.remove('is-invalid');
+      const errEl = document.getElementById('error-modal-service');
+      if (errEl) {
+        errEl.classList.remove('visible');
+        errEl.innerHTML = '';
+      }
+
+      closeDropdown(true);
+    }
+
+    function updateFocusedOption(index) {
+      if (index < 0) index = 0;
+      if (index >= options.length) index = options.length - 1;
+      focusedIndex = index;
+      options.forEach((opt, i) => {
+        opt.classList.toggle('is-focused', i === index);
+        if (i === index) {
+          opt.scrollIntoView({ block: 'nearest' });
+        }
+      });
+    }
+
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      toggleDropdown();
+    });
+
+    // Keyboard navigation on trigger button
+    trigger.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (!dropdownWrap.classList.contains('open')) {
+          openDropdown();
+        } else {
+          if (e.key === 'ArrowDown') updateFocusedOption(focusedIndex + 1);
+          if (e.key === 'ArrowUp') updateFocusedOption(focusedIndex - 1);
+          if (e.key === 'Enter' || e.key === ' ') {
+            if (focusedIndex >= 0 && options[focusedIndex]) {
+              selectOption(options[focusedIndex]);
+            }
+          }
+        }
+      } else if (e.key === 'Escape' && dropdownWrap.classList.contains('open')) {
+        e.preventDefault();
+        closeDropdown(true);
+      }
+    });
+
+    // Option interaction
+    options.forEach((opt, idx) => {
+      opt.addEventListener('click', (e) => {
+        e.stopPropagation();
+        selectOption(opt);
+      });
+      opt.addEventListener('mouseenter', () => {
+        updateFocusedOption(idx);
+      });
+    });
+
+    // Popover keyboard navigation
+    popover.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        updateFocusedOption((focusedIndex + 1) % options.length);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        updateFocusedOption((focusedIndex - 1 + options.length) % options.length);
+      } else if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (focusedIndex >= 0 && options[focusedIndex]) {
+          selectOption(options[focusedIndex]);
+        }
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        closeDropdown(true);
+      }
+    });
+
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+      if (!dropdownWrap.contains(e.target)) {
+        dropdownWrap.classList.remove('open');
+        const row = dropdownWrap.closest('.form-row');
+        if (row) row.classList.remove('dropdown-open');
+        const item = dropdownWrap.closest('.modal-form-item');
+        if (item) item.classList.remove('has-dropdown');
+        trigger.setAttribute('aria-expanded', 'false');
+        options.forEach(opt => opt.classList.remove('is-focused'));
+      }
+    });
+
+    window.resetCustomDropdown = function () {
+      hiddenInput.value = '';
+      dropdownWrap.classList.remove('open');
+      const row = dropdownWrap.closest('.form-row');
+      if (row) row.classList.remove('dropdown-open');
+      const item = dropdownWrap.closest('.modal-form-item');
+      if (item) item.classList.remove('has-dropdown');
+      selectedLabel.innerHTML = '<span class="dropdown-placeholder">Select scope of testing...</span>';
+      options.forEach(opt => {
+        opt.classList.remove('is-selected', 'is-focused');
+        opt.setAttribute('aria-selected', 'false');
+      });
+      trigger.classList.remove('is-invalid');
+    };
+  }
+
+  // 8. Textarea Character Counter (0 / 500)
+  function initModalTextareaCounter() {
+    const textarea = document.getElementById('modal-details');
+    const counter = document.getElementById('char-count');
+    if (!textarea || !counter) return;
+
+    textarea.addEventListener('input', function () {
+      counter.textContent = this.value.length;
+    });
+  }
+
+  // Initialize interactive features
+  initModalCustomDropdown();
+  initModalTextareaCounter();
 
   // Initialize validation for both modal and standalone contact form
   setupFormValidation('portfolio-contact-form', 'form-feedback', 'contact-submit-btn');
