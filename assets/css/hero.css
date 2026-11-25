@@ -544,6 +544,11 @@ body.dark-theme .hero-photo-spotlight.active,
     margin: 0 auto !important;
   }
 
+  .hero-photo-spotlight {
+    mask-image: radial-gradient(circle 140px at var(--spot-x, 50%) var(--spot-y, 40%), black 0%, black 50%, transparent 100%) !important;
+    -webkit-mask-image: radial-gradient(circle 140px at var(--spot-x, 50%) var(--spot-y, 40%), black 0%, black 50%, transparent 100%) !important;
+  }
+
   .hero-cta-group {
     order: 6 !important; /* CTAs placed directly BELOW the portrait image */
     width: 100% !important;
@@ -586,6 +591,11 @@ body.dark-theme .hero-photo-spotlight.active,
   .hero-photo-wrapper {
     max-width: 280px !important;
     height: 300px !important;
+  }
+
+  .hero-photo-spotlight {
+    mask-image: radial-gradient(circle 120px at var(--spot-x, 50%) var(--spot-y, 40%), black 0%, black 50%, transparent 100%) !important;
+    -webkit-mask-image: radial-gradient(circle 120px at var(--spot-x, 50%) var(--spot-y, 40%), black 0%, black 50%, transparent 100%) !important;
   }
 
   .hero-cta-group {

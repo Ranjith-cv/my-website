@@ -213,7 +213,8 @@
   }
 
   /* ----------------------------------------------------
-     3. INTERACTIVE 3D MOUSE PARALLAX & TILT ON HERO IMAGE
+     3. INTERACTIVE 3D MOUSE & TOUCH PARALLAX / SPOTLIGHT ON HERO IMAGE
+     (Desktop cursor tracking + Mobile touch tracking, gyroscope & dark theme ambient beam)
      ---------------------------------------------------- */
   function initPhotoSpotlightAndTilt(heroSection) {
     const photoWrap = document.getElementById('hero-photo-wrap');
@@ -223,9 +224,8 @@
 
     if (!photoWrap || !photoContainer) return;
 
-    // Check pointer fine / hover support
     const canHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    if (!canHover) return;
+    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
     let targetX = 50;
     let targetY = 40;
@@ -244,15 +244,45 @@
 
     let isHoveringPhoto = false;
     let isMouseNearHero = false;
+    let isTouching = false;
+    let ambientTime = 0;
     let rafId = null;
+
+    function isDarkTheme() {
+      return document.body.classList.contains('dark-theme') || heroSection.classList.contains('theme-dark');
+    }
 
     function lerp(start, end, factor) {
       return start + (end - start) * factor;
     }
 
     function renderLoop() {
-      currentX = lerp(currentX, targetX, 0.12);
-      currentY = lerp(currentY, targetY, 0.12);
+      const dark = isDarkTheme();
+
+      // On mobile or in dark mode when idle: generate smooth, natural ambient spotlight sweep & subtle 3D breathing
+      if (dark || isTouchDevice) {
+        ambientTime += 0.022;
+        if (!isTouching && !isMouseNearHero) {
+          // Organic Lissajous figure sweep across portrait face and chest
+          const ambX = 50 + Math.sin(ambientTime * 0.75) * 22;
+          const ambY = 38 + Math.cos(ambientTime * 0.95) * 16;
+          targetX = ambX;
+          targetY = ambY;
+
+          // Subtle organic 3D breathing tilt
+          tiltTargetX = Math.sin(ambientTime * 0.5) * 2.5;
+          tiltTargetY = Math.cos(ambientTime * 0.6) * 3.0;
+          transTargetX = Math.cos(ambientTime * 0.6) * 4;
+          transTargetY = Math.sin(ambientTime * 0.5) * 3;
+
+          if (dark && spotlightImg) {
+            spotlightImg.classList.add('active');
+          }
+        }
+      }
+
+      currentX = lerp(currentX, targetX, 0.1);
+      currentY = lerp(currentY, targetY, 0.1);
 
       tiltCurrentX = lerp(tiltCurrentX, tiltTargetX, 0.08);
       tiltCurrentY = lerp(tiltCurrentY, tiltTargetY, 0.08);
@@ -265,16 +295,16 @@
         spotlightImg.style.setProperty('--spot-y', `${currentY.toFixed(2)}%`);
       }
 
-      const scaleVal = isHoveringPhoto ? 1.025 : 1;
+      const scaleVal = isHoveringPhoto || isTouching ? 1.025 : 1;
       photoContainer.style.transform = `perspective(1000px) rotateX(${tiltCurrentX.toFixed(2)}deg) rotateY(${tiltCurrentY.toFixed(2)}deg) translate3d(${transCurrentX.toFixed(2)}px, ${transCurrentY.toFixed(2)}px, 12px) scale(${scaleVal})`;
 
       if (deskShadow) {
         deskShadow.style.transform = `translateX(${(-transCurrentX * 0.45).toFixed(2)}px) scale(${1 - Math.abs(tiltCurrentX) * 0.015})`;
       }
 
-      const isMoving = Math.abs(tiltCurrentX - tiltTargetX) > 0.02 || Math.abs(tiltCurrentY - tiltTargetY) > 0.02 || Math.abs(transCurrentX - transTargetX) > 0.05;
-
-      if (isMouseNearHero || isMoving) {
+      // Always keep animation alive if in dark theme, on touch devices, or moving
+      const isMoving = Math.abs(tiltCurrentX - tiltTargetX) > 0.02 || Math.abs(transCurrentX - transTargetX) > 0.05;
+      if (dark || isTouchDevice || isMouseNearHero || isTouching || isMoving) {
         rafId = requestAnimationFrame(renderLoop);
       } else {
         rafId = null;
@@ -287,60 +317,133 @@
       }
     }
 
-    // Dynamic wide-range mouse tracking across Hero Section
-    heroSection.addEventListener('mousemove', (e) => {
-      isMouseNearHero = true;
-      const heroRect = heroSection.getBoundingClientRect();
+    // 1. Desktop Dynamic wide-range mouse tracking across Hero Section
+    if (canHover) {
+      heroSection.addEventListener('mousemove', (e) => {
+        isMouseNearHero = true;
+        const heroRect = heroSection.getBoundingClientRect();
+        const wrapRect = photoWrap.getBoundingClientRect();
+
+        const photoCenterX = wrapRect.left + wrapRect.width / 2;
+        const photoCenterY = wrapRect.top + wrapRect.height / 2;
+
+        const normX = Math.max(-1, Math.min(1, (e.clientX - photoCenterX) / (heroRect.width * 0.45)));
+        const normY = Math.max(-1, Math.min(1, (e.clientY - photoCenterY) / (heroRect.height * 0.45)));
+
+        tiltTargetX = -normY * 6.5;
+        tiltTargetY = normX * 7.5;
+        transTargetX = normX * 12;
+        transTargetY = normY * 8;
+
+        const xInPhoto = ((e.clientX - wrapRect.left) / wrapRect.width) * 100;
+        const yInPhoto = ((e.clientY - wrapRect.top) / wrapRect.height) * 100;
+        targetX = Math.max(0, Math.min(100, xInPhoto));
+        targetY = Math.max(0, Math.min(100, yInPhoto));
+
+        if (spotlightImg && isDarkTheme()) spotlightImg.classList.add('active');
+        startLoop();
+      });
+
+      heroSection.addEventListener('mouseleave', () => {
+        isMouseNearHero = false;
+        isHoveringPhoto = false;
+        if (!isDarkTheme() && spotlightImg) spotlightImg.classList.remove('active');
+
+        tiltTargetX = 0;
+        tiltTargetY = 0;
+        transTargetX = 0;
+        transTargetY = 0;
+        targetX = 50;
+        targetY = 40;
+        startLoop();
+      });
+
+      photoWrap.addEventListener('mouseenter', () => {
+        isHoveringPhoto = true;
+        if (spotlightImg) spotlightImg.classList.add('active');
+        startLoop();
+      });
+
+      photoWrap.addEventListener('mouseleave', () => {
+        isHoveringPhoto = false;
+        if (!isDarkTheme() && spotlightImg) spotlightImg.classList.remove('active');
+      });
+    }
+
+    // 2. Mobile Touch Interaction: Direct touchmove spotlight & 3D tilt tracking
+    function handleTouchMove(e) {
+      if (!e.touches || !e.touches[0]) return;
+      isTouching = true;
+      const touch = e.touches[0];
       const wrapRect = photoWrap.getBoundingClientRect();
+      const heroRect = heroSection.getBoundingClientRect();
 
-      // Relative to photo wrap center
-      const photoCenterX = wrapRect.left + wrapRect.width / 2;
-      const photoCenterY = wrapRect.top + wrapRect.height / 2;
-
-      const normX = Math.max(-1, Math.min(1, (e.clientX - photoCenterX) / (heroRect.width * 0.45)));
-      const normY = Math.max(-1, Math.min(1, (e.clientY - photoCenterY) / (heroRect.height * 0.45)));
-
-      // 3D Tilt: responsive angles
-      tiltTargetX = -normY * 6.5;
-      tiltTargetY = normX * 7.5;
-
-      // Parallax floating shift: smooth responsive translation
-      transTargetX = normX * 12;
-      transTargetY = normY * 8;
-
-      // Spotlight coordinates for dark mode
-      const xInPhoto = ((e.clientX - wrapRect.left) / wrapRect.width) * 100;
-      const yInPhoto = ((e.clientY - wrapRect.top) / wrapRect.height) * 100;
+      const xInPhoto = ((touch.clientX - wrapRect.left) / wrapRect.width) * 100;
+      const yInPhoto = ((touch.clientY - wrapRect.top) / wrapRect.height) * 100;
       targetX = Math.max(0, Math.min(100, xInPhoto));
       targetY = Math.max(0, Math.min(100, yInPhoto));
 
-      startLoop();
-    });
+      const photoCenterX = wrapRect.left + wrapRect.width / 2;
+      const photoCenterY = wrapRect.top + wrapRect.height / 2;
+      const normX = Math.max(-1, Math.min(1, (touch.clientX - photoCenterX) / (heroRect.width * 0.45)));
+      const normY = Math.max(-1, Math.min(1, (touch.clientY - photoCenterY) / (heroRect.height * 0.45)));
 
-    heroSection.addEventListener('mouseleave', () => {
-      isMouseNearHero = false;
-      isHoveringPhoto = false;
-      if (spotlightImg) spotlightImg.classList.remove('active');
+      tiltTargetX = -normY * 6.5;
+      tiltTargetY = normX * 7.5;
+      transTargetX = normX * 10;
+      transTargetY = normY * 7;
 
-      tiltTargetX = 0;
-      tiltTargetY = 0;
-      transTargetX = 0;
-      transTargetY = 0;
-      targetX = 50;
-      targetY = 40;
-      startLoop();
-    });
-
-    // Direct hover on photo wrapper for micro-interaction
-    photoWrap.addEventListener('mouseenter', () => {
-      isHoveringPhoto = true;
       if (spotlightImg) spotlightImg.classList.add('active');
       startLoop();
-    });
+    }
 
-    photoWrap.addEventListener('mouseleave', () => {
-      isHoveringPhoto = false;
+    heroSection.addEventListener('touchstart', handleTouchMove, { passive: true });
+    heroSection.addEventListener('touchmove', handleTouchMove, { passive: true });
+    heroSection.addEventListener('touchend', () => {
+      isTouching = false;
+      startLoop();
+    }, { passive: true });
+    heroSection.addEventListener('touchcancel', () => {
+      isTouching = false;
+      startLoop();
+    }, { passive: true });
+
+    // 3. Mobile Device Orientation / Gyroscope Tracking
+    if (window.DeviceOrientationEvent && isTouchDevice) {
+      window.addEventListener('deviceorientation', (e) => {
+        if (isTouching || isMouseNearHero) return;
+        if (e.gamma !== null && e.beta !== null) {
+          const clampGamma = Math.max(-30, Math.min(30, e.gamma));
+          const clampBeta = Math.max(15, Math.min(75, e.beta)) - 45;
+
+          targetX = 50 + (clampGamma / 30) * 35;
+          targetY = 40 + (clampBeta / 30) * 30;
+
+          tiltTargetY = (clampGamma / 30) * 5.5;
+          tiltTargetX = -(clampBeta / 30) * 4.5;
+
+          if (isDarkTheme() && spotlightImg) spotlightImg.classList.add('active');
+          startLoop();
+        }
+      }, { passive: true });
+    }
+
+    // 4. Observe Theme Toggles to instantly activate spotlight in dark mode
+    const themeObserver = new MutationObserver(() => {
+      if (isDarkTheme()) {
+        if (spotlightImg) spotlightImg.classList.add('active');
+        startLoop();
+      } else if (!isHoveringPhoto && !isMouseNearHero && !isTouching) {
+        if (spotlightImg) spotlightImg.classList.remove('active');
+      }
     });
+    themeObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+    // Initial activation if loaded in dark theme or mobile
+    if (isDarkTheme()) {
+      if (spotlightImg) spotlightImg.classList.add('active');
+    }
+    startLoop();
   }
 
   /* ----------------------------------------------------

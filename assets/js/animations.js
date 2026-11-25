@@ -947,17 +947,21 @@
 
         if (isMobile) {
           if (!viewport) return;
-          const card = projectCards[0];
+          const visibleCards = Array.from(projectCards).filter(c => c.style.display !== 'none');
+          if (!visibleCards.length) return;
+          const card = visibleCards[0];
           const step = (card ? card.offsetWidth : 320) + 16;
           const maxSl = viewport.scrollWidth - viewport.clientWidth;
-          if (maxSl <= 0) return;
+          if (maxSl <= 5) return;
 
-          if (viewport.scrollLeft >= maxSl - 20) {
+          const currentSl = viewport.scrollLeft;
+          if (currentSl >= maxSl - 20) {
             // Smoothly loop back to first project
             viewport.scrollTo({ left: 0, behavior: 'smooth' });
           } else {
-            // Advance by one card
-            viewport.scrollBy({ left: step, behavior: 'smooth' });
+            // Calculate exact snap step to avoid getting stuck in CSS scroll-snap
+            const nextTarget = Math.min(maxSl, Math.round((currentSl + step) / step) * step);
+            viewport.scrollTo({ left: nextTarget, behavior: 'smooth' });
           }
         } else {
           const maxScroll = getMaxScroll();
@@ -972,7 +976,7 @@
             slideTo(currentX - step, 0.75, 'power2.out');
           }
         }
-      }, 3600);
+      }, 3500);
     }
 
     function stopAutoPlay() {
@@ -982,32 +986,44 @@
       }
     }
 
-    // Pause automatic movement on hover or touch, resume automatically
+    // Pause automatic movement on hover (desktop fine pointer only) or touch (mobile)
+    const canHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
     if (viewport) {
-      viewport.addEventListener('mouseenter', () => {
-        isHovered = true;
-        stopAutoPlay();
-      });
+      if (canHover) {
+        viewport.addEventListener('mouseenter', () => {
+          isHovered = true;
+          stopAutoPlay();
+        });
 
-      viewport.addEventListener('mouseleave', () => {
-        isHovered = false;
-        startAutoPlay();
-      });
+        viewport.addEventListener('mouseleave', () => {
+          isHovered = false;
+          startAutoPlay();
+        });
+      }
 
-      // Mobile Touch Interaction: Pause on touch, resume after touch ends
+      // Mobile Touch Interaction: Pause on touch, resume smoothly after touch ends
       let touchResumeTimer = null;
       viewport.addEventListener('touchstart', () => {
-        isHovered = true;
+        isDragging = true;
         stopAutoPlay();
         if (touchResumeTimer) clearTimeout(touchResumeTimer);
       }, { passive: true });
 
       viewport.addEventListener('touchend', () => {
+        isDragging = false;
         if (touchResumeTimer) clearTimeout(touchResumeTimer);
         touchResumeTimer = setTimeout(() => {
-          isHovered = false;
           startAutoPlay();
-        }, 4000);
+        }, 3000);
+      }, { passive: true });
+
+      viewport.addEventListener('touchcancel', () => {
+        isDragging = false;
+        if (touchResumeTimer) clearTimeout(touchResumeTimer);
+        touchResumeTimer = setTimeout(() => {
+          startAutoPlay();
+        }, 3000);
       }, { passive: true });
     }
 
@@ -1016,9 +1032,12 @@
       nextBtn.addEventListener('click', (e) => {
         e.preventDefault();
         if (isMobile) {
-          const card = projectCards[0];
-          const step = (card ? card.offsetWidth : 320) + 16;
-          viewport.scrollBy({ left: step, behavior: 'smooth' });
+          const visibleCards = Array.from(projectCards).filter(c => c.style.display !== 'none');
+          const step = (visibleCards[0] ? visibleCards[0].offsetWidth : 320) + 16;
+          const maxSl = viewport.scrollWidth - viewport.clientWidth;
+          const currentSl = viewport.scrollLeft;
+          const nextTarget = Math.min(maxSl, Math.round((currentSl + step) / step) * step);
+          viewport.scrollTo({ left: nextTarget, behavior: 'smooth' });
         } else {
           slideTo(currentX - getCardStep());
           startAutoPlay();
@@ -1030,9 +1049,11 @@
       prevBtn.addEventListener('click', (e) => {
         e.preventDefault();
         if (isMobile) {
-          const card = projectCards[0];
-          const step = (card ? card.offsetWidth : 320) + 16;
-          viewport.scrollBy({ left: -step, behavior: 'smooth' });
+          const visibleCards = Array.from(projectCards).filter(c => c.style.display !== 'none');
+          const step = (visibleCards[0] ? visibleCards[0].offsetWidth : 320) + 16;
+          const currentSl = viewport.scrollLeft;
+          const nextTarget = Math.max(0, Math.round((currentSl - step) / step) * step);
+          viewport.scrollTo({ left: nextTarget, behavior: 'smooth' });
         } else {
           slideTo(currentX + getCardStep());
           startAutoPlay();
