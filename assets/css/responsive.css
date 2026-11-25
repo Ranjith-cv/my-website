@@ -121,7 +121,11 @@
   }
 
   /* Notebook Project Cards: Touch-Friendly 1-Card-at-a-time Mobile Swipe */
-  .astraz-project-card {
+  .astraz-project-card,
+  .astraz-project-card:hover,
+  .astraz-project-card.is-expanded,
+  .astraz-project-card:hover.is-expanded,
+  .astraz-project-card:active {
     flex: 0 0 calc(100vw - 40px) !important;
     width: calc(100vw - 40px) !important;
     min-width: calc(100vw - 40px) !important;
@@ -134,19 +138,14 @@
     scroll-snap-stop: always !important; /* CRITICAL: exactly one card per swipe, no skipping */
     box-sizing: border-box !important;
     margin: 0 !important;
+    transform: none !important;
+    box-shadow: 0 4px 18px rgba(25, 25, 28, 0.05) !important;
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease !important;
   }
 
-  .astraz-project-card:hover,
-  .astraz-project-card.is-expanded {
-    flex: 0 0 calc(100vw - 40px) !important;
-    width: calc(100vw - 40px) !important;
-    min-width: calc(100vw - 40px) !important;
-    max-width: 350px !important;
-    transform: none !important;
-  }
-
-  .card-primary-col {
+  .card-primary-col,
+  .astraz-project-card:hover .card-primary-col,
+  .astraz-project-card.is-expanded .card-primary-col {
     flex: 0 0 auto !important;
     width: 100% !important;
     min-width: 100% !important;
@@ -155,6 +154,7 @@
     border-radius: 20px !important;
     transition: border-radius 0.25s ease !important;
     box-sizing: border-box !important;
+    box-shadow: none !important;
   }
 
   .astraz-project-card.is-expanded .card-primary-col {
@@ -163,11 +163,39 @@
     border-bottom-color: transparent !important;
   }
 
-  /* Seamless Accordion Dropdown for Scope & Tech Stack */
-  .card-expandable-drawer {
-    flex: 0 0 auto !important;
+  .card-image-wrap {
     width: 100% !important;
     min-width: 100% !important;
+    max-width: 100% !important;
+    height: clamp(165px, 21vh, 195px) !important;
+    overflow: hidden !important;
+    border-top-left-radius: 19px !important;
+    border-top-right-radius: 19px !important;
+    box-sizing: border-box !important;
+  }
+
+  .card-project-cover-img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    position: absolute !important;
+    inset: 0 !important;
+  }
+
+  .card-primary-body {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Seamless Accordion Dropdown for Scope & Tech Stack (Strict Vertical Flow on Mobile) */
+  .card-expandable-drawer,
+  .astraz-project-card:not(.is-expanded) .card-expandable-drawer,
+  .astraz-project-card:not(.is-expanded):hover .card-expandable-drawer {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    min-width: 0 !important;
     max-width: 100% !important;
     height: auto !important;
     max-height: 0 !important;
@@ -178,7 +206,7 @@
     margin-left: 0 !important;
     padding-left: 0 !important;
     border: 1px solid var(--line, #DEDAD3) !important;
-    border-top: 1px dashed var(--line, #DEDAD3) !important;
+    border-top: none !important;
     border-radius: 0 0 20px 20px !important;
     background: var(--card, #FBFAF7) !important;
     box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08) !important;
@@ -186,19 +214,22 @@
     box-sizing: border-box !important;
   }
 
-  .astraz-project-card:not(.is-expanded):hover .card-expandable-drawer {
-    max-height: 0 !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
+  .astraz-project-card.is-expanded .card-expandable-drawer,
+  .astraz-project-card.is-expanded:hover .card-expandable-drawer {
+    flex: 0 0 auto !important;
     width: 100% !important;
-    transform: none !important;
-  }
-
-  .astraz-project-card.is-expanded .card-expandable-drawer {
-    max-height: 700px !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    max-height: 800px !important;
     opacity: 1 !important;
     pointer-events: auto !important;
     transform: none !important;
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+    border: 1px solid var(--line, #DEDAD3) !important;
+    border-top: none !important;
+    border-radius: 0 0 20px 20px !important;
+    background: var(--card, #FBFAF7) !important;
   }
 
   .drawer-inner-content {

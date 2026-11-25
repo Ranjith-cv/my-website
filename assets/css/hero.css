@@ -140,7 +140,7 @@ body.dark-theme .hero-iam-subhead,
 .notebook {
   position: relative;
   background: var(--card, #FBFAF7) !important;
-  border: 2px solid var(--ink, #1B1B1E);
+  border: 1px solid var(--line, #DEDAD3);
   border-radius: 16px;
   padding: 1.4rem 1.85rem 1.25rem 1.85rem;
   max-width: 600px;
@@ -512,7 +512,7 @@ body.dark-theme .hero-photo-spotlight.active,
     width: 100% !important;
     margin: 0 auto 0.75rem auto !important;
     padding: 1.15rem 1.35rem 1.05rem 1.35rem !important;
-    border: 2px solid var(--ink, #1B1B1E) !important;
+    border: 1px solid var(--line, #DEDAD3) !important;
     box-shadow:
       0 2px 0 #ECE9E3,
       0 3px 0 #D6D2CA,
@@ -567,7 +567,7 @@ body.dark-theme .hero-photo-spotlight.active,
   .hero-notebook-card {
     padding: 0.95rem 1.05rem 0.9rem 1.05rem !important;
     max-width: 100% !important;
-    border: 2px solid var(--ink, #1B1B1E) !important;
+    border: 1px solid var(--line, #DEDAD3) !important;
     box-shadow:
       0 2px 0 #ECE9E3,
       0 3px 0 #D6D2CA,
