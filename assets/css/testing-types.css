@@ -9,7 +9,7 @@
 .testing-types-section {
   position: relative;
   width: 100%;
-  background: #FFFFFF;
+  background: transparent;
   padding: clamp(45px, 6vh, 72px) 0;
   overflow: hidden;
   box-sizing: border-box;
@@ -36,7 +36,7 @@ body.dark-theme .testing-types-section {
   font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 800;
   font-size: clamp(26px, 3.6vw, 42px);
-  color: #0b4a52;
+  color: var(--ink, #1B1B1E);
   line-height: 1.15;
   letter-spacing: -0.025em;
   margin: 0 0 10px 0;
@@ -50,7 +50,7 @@ body.dark-theme .testing-types-heading {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 500;
   font-size: clamp(13px, 1.15vw, 15px);
-  color: #7a819c;
+  color: var(--muted, #6E6C68);
   line-height: 1.45;
   margin: 0;
 }
@@ -128,7 +128,8 @@ body.dark-theme .testing-types-subline {
 .testing-tile {
   width: 175px;
   border-radius: 22px;
-  background: #F7F8FF;
+  background: var(--bg-soft, #E9E6E0);
+  border: 1px solid var(--line, #DEDAD3);
   padding: 16px 12px 14px 12px;
   display: flex;
   flex-direction: column;
@@ -137,7 +138,6 @@ body.dark-theme .testing-types-subline {
   text-align: center;
   flex-shrink: 0;
   box-sizing: border-box;
-  border: 1px solid transparent;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, box-shadow 0.25s ease;
   cursor: pointer;
   position: relative;
@@ -181,12 +181,12 @@ body.dark-theme .testing-tile {
   flex-shrink: 0;
 }
 
-/* Type Name: Montserrat 700 13.5px, #1b2140 */
+/* Type Name: Montserrat 700 13.5px, #1B1B1E */
 .type-title {
   font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 700;
   font-size: 13.5px;
-  color: #1b2140;
+  color: var(--ink, #1B1B1E);
   line-height: 1.25;
   margin: 0 0 3px 0;
   transition: color 0.25s ease;
@@ -196,12 +196,12 @@ body.dark-theme .type-title {
   color: #F1F3F8;
 }
 
-/* Short Line: 500 11px, #7a819c */
+/* Short Line: 500 11px, #6E6C68 */
 .type-subline {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 500;
   font-size: 11px;
-  color: #7a819c;
+  color: var(--muted, #6E6C68);
   line-height: 1.35;
   margin: 0;
   transition: color 0.25s ease;
@@ -211,11 +211,11 @@ body.dark-theme .type-subline {
   color: #94A3B8;
 }
 
-/* Hover: tile lifts 5px, background tints to type's light color, badge scales 1.08 and rotates -4deg */
+/* Hover: tile lifts 5px, background tints to type's light color or card, badge scales 1.08 and rotates -4deg */
 .testing-tile:hover {
   transform: translateY(-5px);
-  background: var(--tile-tint, #FFFFFF);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  background: var(--card, #FBFAF7);
+  box-shadow: 0 12px 28px rgba(25, 25, 28, 0.1);
 }
 
 body.dark-theme .testing-tile:hover {

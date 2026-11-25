@@ -143,7 +143,7 @@
                   <div class="option-desc">Functional, UI/UX, regression and exploratory testing.</div>
                 </div>
                 <div class="option-check-icon" aria-hidden="true">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3DBE6A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
                 </div>
@@ -156,7 +156,7 @@
                   <div class="option-desc">Playwright, Cypress, Selenium CI/CD automated test suites.</div>
                 </div>
                 <div class="option-check-icon" aria-hidden="true">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3DBE6A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
                 </div>
@@ -169,7 +169,7 @@
                   <div class="option-desc">REST, GraphQL endpoints, schema validation &amp; contracts.</div>
                 </div>
                 <div class="option-check-icon" aria-hidden="true">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3DBE6A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
                 </div>
@@ -182,7 +182,7 @@
                   <div class="option-desc">JMeter load testing, high-traffic concurrency &amp; latency.</div>
                 </div>
                 <div class="option-check-icon" aria-hidden="true">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3DBE6A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
                 </div>
@@ -195,7 +195,7 @@
                   <div class="option-desc">Native iOS &amp; Android device testing, memory &amp; gestures.</div>
                 </div>
                 <div class="option-check-icon" aria-hidden="true">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3DBE6A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
                 </div>
@@ -208,7 +208,7 @@
                   <div class="option-desc">End-to-end QA architecture, release gating &amp; QA leadership.</div>
                 </div>
                 <div class="option-check-icon" aria-hidden="true">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3DBE6A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
                 </div>
@@ -274,17 +274,17 @@
   <div class="aichat-header">
     <div class="aichat-title-wrap">
       <div class="bot-icon" aria-hidden="true">
-        <svg class="friendly-robot-icon" width="24" height="24" viewBox="0 0 48 48" fill="none" stroke="#22C55E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="friendly-robot-icon" width="24" height="24" viewBox="0 0 48 48" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
           <g class="robot-antenna">
             <line x1="24" y1="14" x2="24" y2="8"></line>
-            <circle cx="24" cy="6" r="2.8" fill="#22C55E" stroke="none"></circle>
+            <circle cx="24" cy="6" r="2.8" fill="#FFFFFF" stroke="none"></circle>
           </g>
-          <rect x="6" y="23" width="3" height="7" rx="1.5" fill="#22C55E" opacity="0.8"></rect>
-          <rect x="39" y="23" width="3" height="7" rx="1.5" fill="#22C55E" opacity="0.8"></rect>
+          <rect x="6" y="23" width="3" height="7" rx="1.5" fill="#FFFFFF" opacity="0.8"></rect>
+          <rect x="39" y="23" width="3" height="7" rx="1.5" fill="#FFFFFF" opacity="0.8"></rect>
           <rect class="robot-head" x="9" y="14" width="30" height="25" rx="8"></rect>
           <g class="robot-eyes">
-            <ellipse class="robot-eye robot-eye-left" cx="18.5" cy="24.5" rx="2.6" ry="3" fill="#22C55E" stroke="none"></ellipse>
-            <ellipse class="robot-eye robot-eye-right" cx="29.5" cy="24.5" rx="2.6" ry="3" fill="#22C55E" stroke="none"></ellipse>
+            <ellipse class="robot-eye robot-eye-left" cx="18.5" cy="24.5" rx="2.6" ry="3" fill="#FFFFFF" stroke="none"></ellipse>
+            <ellipse class="robot-eye robot-eye-right" cx="29.5" cy="24.5" rx="2.6" ry="3" fill="#FFFFFF" stroke="none"></ellipse>
           </g>
           <path class="robot-mouth" d="M19 31.5 Q24 35 29 31.5" stroke-width="2.4" fill="none"></path>
           <circle cx="15" cy="28" r="1.3" fill="#22C55E" opacity="0.9" stroke="none"></circle>

@@ -1,17 +1,17 @@
 /* ==========================================================================
    DEDICATED HERO SECTION STYLES
-   Matches Reference: ref1_light_theme, ref2_dark_spotlight, ref3_dark_cursor
-   Clean 2-Column layout, 3D Spiral Notebook flip, Dark Mode Cursor Spotlight
+   Matches Reference: Rishi Thakor Light Theme & 3D Spiral Notebook Card
+   Warm Off-White Canvas, Paper Card Stack, Black Slab Base & Sleek Contrast
    ========================================================================== */
 
 :root {
-  --hero-bg-light: #F4F4F6;
+  --hero-bg-light: #F1EFEA;
   --hero-bg-dark: #0F1419;
-  --hero-text-light: #0B0D13;
+  --hero-text-light: #1B1B1E;
   --hero-text-dark: #FFFFFF;
-  --hero-muted-light: #6B7280;
+  --hero-muted-light: #6E6C68;
   --hero-muted-dark: #9CA3AF;
-  --hero-border-light: rgba(0, 0, 0, 0.08);
+  --hero-border-light: #DEDAD3;
   --hero-border-dark: rgba(255, 255, 255, 0.08);
 }
 
@@ -23,8 +23,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--hero-bg-light);
-  color: var(--hero-text-light);
+  background: linear-gradient(135deg, #ECE9E3 0%, #F1EFEA 45%, #F6F4F0 100%);
+  color: var(--ink, #1B1B1E);
   overflow: hidden;
   transition: background-color 0.5s ease, color 0.5s ease;
   box-sizing: border-box;
@@ -34,7 +34,7 @@
 /* Dark Theme State */
 body.dark-theme .ref-hero-section,
 .ref-hero-section.theme-dark {
-  background-color: var(--hero-bg-dark);
+  background: var(--hero-bg-dark);
   color: var(--hero-text-dark);
 }
 
@@ -70,10 +70,10 @@ body.dark-theme .ref-hero-section,
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-body, 'Inter', sans-serif);
+  font-family: var(--font-body, 'Onest', sans-serif);
   font-size: 0.82rem;
   font-weight: 600;
-  color: var(--hero-muted-light);
+  color: var(--muted, #6E6C68);
   letter-spacing: 0.03em;
   margin-bottom: 0.85rem;
 }
@@ -93,10 +93,10 @@ body.dark-theme .hero-badge-label,
 
 /* Large Bold Greeting Heading */
 .hero-greeting-heading {
-  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-family: var(--font-heading, 'Onest', sans-serif);
   font-size: clamp(3rem, 5.4vw, 4.75rem);
   font-weight: 800;
-  color: var(--hero-text-light);
+  color: var(--ink, #1B1B1E);
   letter-spacing: -0.04em;
   line-height: 1.04;
   margin: 0;
@@ -110,10 +110,10 @@ body.dark-theme .hero-greeting-heading,
 
 /* "I am a" subhead in lighter grey */
 .hero-iam-subhead {
-  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-family: var(--font-heading, 'Onest', sans-serif);
   font-size: clamp(2rem, 3.8vw, 3.2rem);
   font-weight: 600;
-  color: #9CA3AF;
+  color: var(--ink-grey, #A9A6A0);
   line-height: 1.1;
   margin-top: 0.35rem;
   margin-bottom: 1.1rem;
@@ -127,48 +127,65 @@ body.dark-theme .hero-iam-subhead,
 }
 
 /* ==========================================================================
-   WHITE SPIRAL NOTEBOOK CARD (WIRE RINGS + 3D PAGE FLIP)
+   NOTEBOOK CARD (THICK PAPER PAD ON BLACK SLAB)
+   Matches Rishi Thakor Reference:
+   - Paper card in --card (#FBFAF7)
+   - Stacked pages under card
+   - Thick black slab (::after) on bottom & offset to right
+   - 14 binder rings (8x22px, sticking up 14px, #8d8d95 to grey)
+   - Bold dark role text (--ink), 14px mono counter bottom-right (--ink-grey)
+   - Hover: straightens (rotate 0), slab grows over .35s
    ========================================================================== */
-.hero-notebook-card {
+.hero-notebook-card,
+.notebook {
   position: relative;
-  background: #FFFFFF;
-  border-radius: 18px 18px 24px 24px;
-  padding: 1.65rem 2.2rem 1.45rem 2.2rem;
-  max-width: 580px;
+  background: var(--card, #FBFAF7) !important;
+  border: 2px solid var(--ink, #1B1B1E);
+  border-radius: 16px;
+  padding: 1.4rem 1.85rem 1.25rem 1.85rem;
+  max-width: 600px;
   width: 100%;
-  transform: rotate(-1.5deg);
-  box-shadow: 0 4px 0 #E2E4E9, 0 8px 0 #D4D6DC, 0 20px 42px rgba(0, 0, 0, 0.08);
+  transform: rotate(-1.2deg);
+  /* stacked pages under the card + 3D solid black slab on bottom & right */
+  box-shadow:
+    0 2px 0 #ECE9E3,
+    0 4px 0 #D6D2CA,
+    0 6px 0 #F7F5F1,
+    0 8px 0 #CBC7BF,
+    7px 14px 0px 0px var(--shadow-dark, #19191C);
   margin-bottom: 2.25rem;
   box-sizing: border-box;
-  transition: transform 0.35s ease, box-shadow 0.5s ease;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-body.dark-theme .hero-notebook-card,
-.ref-hero-section.theme-dark .hero-notebook-card {
-  background: #FFFFFF;
-  box-shadow: 0 4px 0 #1E232B, 0 8px 0 #14181E, 0 24px 50px rgba(0, 0, 0, 0.65);
+.hero-notebook-card:hover,
+.notebook:hover {
+  transform: rotate(0deg) translateY(-2px);
+  box-shadow:
+    0 3px 0 #ECE9E3,
+    0 5px 0 #D6D2CA,
+    0 7px 0 #F7F5F1,
+    0 9px 0 #CBC7BF,
+    9px 18px 0px 0px var(--shadow-dark, #19191C);
 }
 
-.hero-notebook-card:hover {
-  transform: rotate(-0.5deg) translateY(-2px);
-}
-
-/* 14 Metallic Wire Binding Rings Across Top Edge */
+/* 14 Metallic Wire Binding Rings Across Top Edge (8x22px, sticking up 14px) */
 .hero-notebook-rings {
   position: absolute;
   top: -14px;
-  left: 22px;
-  right: 22px;
+  left: 20px;
+  right: 20px;
   display: flex;
   justify-content: space-between;
   pointer-events: none;
+  z-index: 10;
 }
 
 .nb-ring {
-  width: 7.5px;
-  height: 25px;
+  width: 8px;
+  height: 22px;
   border-radius: 4px;
-  background: linear-gradient(180deg, #E5E7EB 0%, #9CA3AF 45%, #4B5563 75%, #1F2937 100%);
+  background: linear-gradient(180deg, #A8A8B0 0%, #8D8D95 45%, #55555C 80%, #2A2A2E 100%);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.28);
 }
 
@@ -191,11 +208,13 @@ body.dark-theme .hero-notebook-card,
 
 .hero-role-text {
   display: inline-block;
-  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
-  font-size: clamp(1.4rem, 2.3vw, 2.05rem);
+  font-family: var(--font-heading, 'Onest', sans-serif);
+  font-size: clamp(1.32rem, 2.25vw, 2.05rem);
   font-weight: 700;
-  color: #0F1115;
+  color: var(--ink, #1B1B1E);
   letter-spacing: -0.025em;
+  line-height: 1.15;
+  white-space: nowrap;
   transform-origin: top center;
   backface-visibility: hidden;
   transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.45s ease;
@@ -212,12 +231,12 @@ body.dark-theme .hero-notebook-card,
   opacity: 0;
 }
 
-/* Counter at bottom-right ("01 / 05") */
+/* Counter at bottom-right ("01 / 05") in faint grey 14px mono */
 .hero-role-counter {
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: #9CA3AF;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-grey, #A9A6A0);
   letter-spacing: 0.08em;
   margin-left: 1rem;
   align-self: flex-end;
@@ -234,23 +253,23 @@ body.dark-theme .hero-notebook-card,
   flex-wrap: wrap;
 }
 
-/* Primary "START A PROJECT ->" Pill Button */
+/* Primary "START A PROJECT ->" Pill Button: dark pill (--btn) with white circle arrow */
 .hero-btn-start-project {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  background: #0B0D13;
+  background: var(--btn, #26262C);
   color: #FFFFFF;
   border: none;
   border-radius: 999px;
-  padding: 0.95rem 1.85rem;
-  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  padding: 0.85rem 1.6rem 0.85rem 1.85rem;
+  font-family: var(--font-heading, 'Onest', sans-serif);
   font-size: 0.8125rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   cursor: pointer;
-  box-shadow: 0 8px 22px rgba(11, 13, 19, 0.22);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 22px rgba(25, 25, 28, 0.22);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
   text-decoration: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -258,17 +277,22 @@ body.dark-theme .hero-notebook-card,
 
 .hero-btn-start-project:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(11, 13, 19, 0.32);
+  box-shadow: 0 12px 28px rgba(25, 25, 28, 0.32);
 }
 
 .hero-btn-start-project:active {
   transform: scale(0.97);
 }
 
-.btn-arrow-badge {
+.hero-btn-start-project .btn-arrow-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  color: var(--btn, #26262C);
   transition: transform 0.25s ease;
 }
 
@@ -294,13 +318,13 @@ body.dark-theme .hero-btn-start-project .btn-arrow-badge,
   border-radius: 50%;
 }
 
-/* Secondary "VIEW MY WORK" Text Button with Subtle Underline */
+/* Secondary "VIEW MY WORK" Text Button: plain text link in --ink. Hover only lifts, never changes hue. */
 .hero-btn-view-work {
   display: inline-block;
   background: transparent;
   border: none;
-  color: inherit;
-  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  color: var(--ink, #1B1B1E);
+  font-family: var(--font-heading, 'Onest', sans-serif);
   font-size: 0.84rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -308,7 +332,7 @@ body.dark-theme .hero-btn-start-project .btn-arrow-badge,
   padding: 0.85rem 0.4rem;
   cursor: pointer;
   position: relative;
-  transition: color 0.25s ease;
+  transition: transform 0.25s ease;
 }
 
 .hero-btn-view-work::after {
@@ -322,6 +346,11 @@ body.dark-theme .hero-btn-start-project .btn-arrow-badge,
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.25s ease;
+}
+
+.hero-btn-view-work:hover {
+  transform: translateY(-2px);
+  color: var(--ink, #1B1B1E);
 }
 
 .hero-btn-view-work:hover::after {
@@ -482,7 +511,22 @@ body.dark-theme .hero-photo-spotlight.active,
     max-width: 440px !important;
     width: 100% !important;
     margin: 0 auto 0.75rem auto !important;
-    padding: 1.2rem 1.4rem !important;
+    padding: 1.15rem 1.35rem 1.05rem 1.35rem !important;
+    border: 2px solid var(--ink, #1B1B1E) !important;
+    box-shadow:
+      0 2px 0 #ECE9E3,
+      0 3px 0 #D6D2CA,
+      0 5px 0 #CBC7BF,
+      5px 10px 0px 0px var(--shadow-dark, #19191C) !important;
+  }
+
+  .hero-role-text {
+    font-size: clamp(1.15rem, 4.4vw, 1.45rem) !important;
+  }
+
+  .hero-role-counter {
+    font-size: 13px !important;
+    margin-left: 0.85rem !important;
   }
 
   .hero-col-right {
@@ -521,11 +565,22 @@ body.dark-theme .hero-photo-spotlight.active,
   }
 
   .hero-notebook-card {
-    padding: 1rem 1rem !important;
+    padding: 0.95rem 1.05rem 0.9rem 1.05rem !important;
+    max-width: 100% !important;
+    border: 2px solid var(--ink, #1B1B1E) !important;
+    box-shadow:
+      0 2px 0 #ECE9E3,
+      0 3px 0 #D6D2CA,
+      4px 8px 0px 0px var(--shadow-dark, #19191C) !important;
   }
 
   .hero-role-text {
-    font-size: clamp(1.05rem, 4vw, 1.25rem) !important;
+    font-size: clamp(1.02rem, 4.2vw, 1.25rem) !important;
+  }
+
+  .hero-role-counter {
+    font-size: 11px !important;
+    margin-left: 0.5rem !important;
   }
 
   .hero-photo-wrapper {
@@ -556,7 +611,8 @@ body.dark-theme .hero-photo-spotlight.active,
   .ref-hero-section,
   .hero-photo-container,
   .hero-anim-item,
-  .hero-role-text {
+  .hero-role-text,
+  .hero-notebook-card {
     animation: none !important;
     transition: none !important;
     transform: none !important;

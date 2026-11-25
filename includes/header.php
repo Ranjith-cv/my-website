@@ -37,10 +37,10 @@ $pageDesc  = isset($customDesc) ? $customDesc : 'Portfolio of Ranjith C V, Senio
   <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
   <link rel="apple-touch-icon" href="assets/images/favicon.svg">
 
-  <!-- Google Fonts Preconnect & Fonts -->
+  <!-- Google Fonts Preconnect & Fonts: Onest (Rishi Thakor Typeface) + Fallbacks -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Space+Grotesk:wght@500;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800;900&family=Montserrat:wght@500;700;800&family=Space+Grotesk:wght@500;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Core Stylesheets with Cache Busting -->
   <link rel="stylesheet" href="assets/css/style.css?v=<?= file_exists(__DIR__ . '/../assets/css/style.css') ? filemtime(__DIR__ . '/../assets/css/style.css') : time() ?>">
