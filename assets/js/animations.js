@@ -935,10 +935,9 @@
       });
     }
 
-    // Desktop Smooth Automatic Horizontal Project Carousel (Right to Left)
+    // Automatic Horizontal Project Carousel (Desktop GSAP + Mobile Native Smooth Scroll)
     function startAutoPlay() {
       stopAutoPlay();
-      if (isMobile) return;
 
       autoPlayTimer = setInterval(() => {
         if (isHovered || isDragging) return;
@@ -946,16 +945,32 @@
         const expandedCard = document.querySelector('.astraz-project-card.is-expanded');
         if (expandedCard) return;
 
-        const maxScroll = getMaxScroll();
-        if (maxScroll <= 0) return;
+        if (isMobile) {
+          if (!viewport) return;
+          const card = projectCards[0];
+          const step = (card ? card.offsetWidth : 320) + 16;
+          const maxSl = viewport.scrollWidth - viewport.clientWidth;
+          if (maxSl <= 0) return;
 
-        const step = getCardStep();
-        if (Math.abs(currentX) >= maxScroll - 12) {
-          // Smoothly loop back to first project
-          slideTo(0, 1.0, 'power2.inOut');
+          if (viewport.scrollLeft >= maxSl - 20) {
+            // Smoothly loop back to first project
+            viewport.scrollTo({ left: 0, behavior: 'smooth' });
+          } else {
+            // Advance by one card
+            viewport.scrollBy({ left: step, behavior: 'smooth' });
+          }
         } else {
-          // Advance right-to-left
-          slideTo(currentX - step, 0.75, 'power2.out');
+          const maxScroll = getMaxScroll();
+          if (maxScroll <= 0) return;
+
+          const step = getCardStep();
+          if (Math.abs(currentX) >= maxScroll - 12) {
+            // Smoothly loop back to first project
+            slideTo(0, 1.0, 'power2.inOut');
+          } else {
+            // Advance right-to-left
+            slideTo(currentX - step, 0.75, 'power2.out');
+          }
         }
       }, 3600);
     }
@@ -967,7 +982,7 @@
       }
     }
 
-    // Pause automatic movement on hover, resume automatically on leave
+    // Pause automatic movement on hover or touch, resume automatically
     if (viewport) {
       viewport.addEventListener('mouseenter', () => {
         isHovered = true;
@@ -978,6 +993,22 @@
         isHovered = false;
         startAutoPlay();
       });
+
+      // Mobile Touch Interaction: Pause on touch, resume after touch ends
+      let touchResumeTimer = null;
+      viewport.addEventListener('touchstart', () => {
+        isHovered = true;
+        stopAutoPlay();
+        if (touchResumeTimer) clearTimeout(touchResumeTimer);
+      }, { passive: true });
+
+      viewport.addEventListener('touchend', () => {
+        if (touchResumeTimer) clearTimeout(touchResumeTimer);
+        touchResumeTimer = setTimeout(() => {
+          isHovered = false;
+          startAutoPlay();
+        }, 4000);
+      }, { passive: true });
     }
 
     // Previous / Next Navigation Arrows
@@ -1119,22 +1150,19 @@
       if (newIsMobile !== isMobile) {
         isMobile = newIsMobile;
         if (isMobile) {
-          stopAutoPlay();
           gsap.set(track, { clearProps: 'transform' });
           if (viewport) viewport.scrollLeft = 0;
         } else {
           currentX = 0;
           slideTo(0, 0.2);
-          startAutoPlay();
         }
+        startAutoPlay();
       }
       updateArrowStates();
     });
 
-    // Start auto carousel on desktop
-    if (!isMobile) {
-      startAutoPlay();
-    }
+    // Start auto carousel on both desktop and mobile
+    startAutoPlay();
     updateArrowStates();
   }
 
