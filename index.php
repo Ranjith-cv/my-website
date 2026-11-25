@@ -366,117 +366,6 @@ include __DIR__ . '/includes/header.php';
         </div>
       </div>
 
-      <!-- Modern Interactive Service Ticker Ribbon (Elevated Badge UI) -->
-      <div class="doors-marquee-wrap" aria-label="Testing Services Ticker">
-        <div class="doors-marquee-track">
-          <!-- SET 1 -->
-          <div class="service-ticker-chip chip-manual" data-door-id="0" role="button" tabindex="0" title="Inspect Manual Testing">
-            <span class="chip-icon-box">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                <polyline points="9 12 11 14 15 10"></polyline>
-              </svg>
-            </span>
-            <span class="chip-title">MANUAL TESTING</span>
-            <span class="chip-badge-tag">01 • QA</span>
-            <span class="chip-status-dot dot-manual"></span>
-          </div>
-          <div class="marquee-separator" aria-hidden="true"><span class="separator-diamond">◆</span></div>
-
-          <div class="service-ticker-chip chip-automation" data-door-id="1" role="button" tabindex="0" title="Inspect Automation Testing">
-            <span class="chip-icon-box">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polyline>
-              </svg>
-            </span>
-            <span class="chip-title">AUTOMATION TESTING</span>
-            <span class="chip-badge-tag">02 • CI/CD</span>
-            <span class="chip-status-dot dot-auto"></span>
-          </div>
-          <div class="marquee-separator" aria-hidden="true"><span class="separator-diamond">◆</span></div>
-
-          <div class="service-ticker-chip chip-ai" data-door-id="2" role="button" tabindex="0" title="Inspect AI Testing">
-            <span class="chip-icon-box">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"></path>
-                <circle cx="19" cy="5" r="1.5" fill="currentColor"></circle>
-              </svg>
-            </span>
-            <span class="chip-title">AI TESTING &amp; LLM VERIFICATION</span>
-            <span class="chip-badge-tag">03 • GENAI</span>
-            <span class="chip-status-dot dot-ai"></span>
-          </div>
-          <div class="marquee-separator" aria-hidden="true"><span class="separator-diamond">◆</span></div>
-
-          <div class="service-ticker-chip chip-security" data-door-id="3" role="button" tabindex="0" title="Inspect Security & Auditing">
-            <span class="chip-icon-box">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                <circle cx="12" cy="16" r="1.5"></circle>
-              </svg>
-            </span>
-            <span class="chip-title">SECURITY &amp; AUDITING</span>
-            <span class="chip-badge-tag">04 • SEC</span>
-            <span class="chip-status-dot dot-sec"></span>
-          </div>
-          <div class="marquee-separator" aria-hidden="true"><span class="separator-diamond">◆</span></div>
-
-          <!-- SET 2 (Identical for seamless infinite marquee loop) -->
-          <div class="service-ticker-chip chip-manual" data-door-id="0" role="button" tabindex="0" title="Inspect Manual Testing">
-            <span class="chip-icon-box">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                <polyline points="9 12 11 14 15 10"></polyline>
-              </svg>
-            </span>
-            <span class="chip-title">MANUAL TESTING</span>
-            <span class="chip-badge-tag">01 • QA</span>
-            <span class="chip-status-dot dot-manual"></span>
-          </div>
-          <div class="marquee-separator" aria-hidden="true"><span class="separator-diamond">◆</span></div>
-
-          <div class="service-ticker-chip chip-automation" data-door-id="1" role="button" tabindex="0" title="Inspect Automation Testing">
-            <span class="chip-icon-box">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polyline>
-              </svg>
-            </span>
-            <span class="chip-title">AUTOMATION TESTING</span>
-            <span class="chip-badge-tag">02 • CI/CD</span>
-            <span class="chip-status-dot dot-auto"></span>
-          </div>
-          <div class="marquee-separator" aria-hidden="true"><span class="separator-diamond">◆</span></div>
-
-          <div class="service-ticker-chip chip-ai" data-door-id="2" role="button" tabindex="0" title="Inspect AI Testing">
-            <span class="chip-icon-box">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"></path>
-                <circle cx="19" cy="5" r="1.5" fill="currentColor"></circle>
-              </svg>
-            </span>
-            <span class="chip-title">AI TESTING &amp; LLM VERIFICATION</span>
-            <span class="chip-badge-tag">03 • GENAI</span>
-            <span class="chip-status-dot dot-ai"></span>
-          </div>
-          <div class="marquee-separator" aria-hidden="true"><span class="separator-diamond">◆</span></div>
-
-          <div class="service-ticker-chip chip-security" data-door-id="3" role="button" tabindex="0" title="Inspect Security & Auditing">
-            <span class="chip-icon-box">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                <circle cx="12" cy="16" r="1.5"></circle>
-              </svg>
-            </span>
-            <span class="chip-title">SECURITY &amp; AUDITING</span>
-            <span class="chip-badge-tag">04 • SEC</span>
-            <span class="chip-status-dot dot-sec"></span>
-          </div>
-          <div class="marquee-separator" aria-hidden="true"><span class="separator-diamond">◆</span></div>
-        </div>
-      </div>
-
     </div>
   </div>
 
@@ -564,7 +453,12 @@ include __DIR__ . '/includes/header.php';
 </section>
 
 <!-- ==========================================================================
-     SECTION 3: ASTRAZ TESTED PROJECTS — HORIZONTAL PINNED GALLERY
+     SECTION 4: "TESTING TYPES I COVER" — DUAL-ROW CLIENT-LOGO SLIDER
+     ========================================================================== -->
+<?php include __DIR__ . '/components/testing-types.php'; ?>
+
+<!-- ==========================================================================
+     SECTION 5: ASTRAZ TESTED PROJECTS — HORIZONTAL PINNED GALLERY
      Interactive Category Filter + Horizontal Pinned Showcase Tested by Ranjith C V
      ========================================================================== -->
 <section id="work-section" class="rishi-work-section">

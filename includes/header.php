@@ -37,9 +37,10 @@ $pageDesc  = isset($customDesc) ? $customDesc : 'Portfolio of Ranjith C V, Senio
   <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
   <link rel="apple-touch-icon" href="assets/images/favicon.svg">
 
-  <!-- Google Fonts Preconnect -->
+  <!-- Google Fonts Preconnect & Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Space+Grotesk:wght@500;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Core Stylesheets with Cache Busting -->
   <link rel="stylesheet" href="assets/css/style.css?v=<?= file_exists(__DIR__ . '/../assets/css/style.css') ? filemtime(__DIR__ . '/../assets/css/style.css') : time() ?>">
@@ -47,6 +48,7 @@ $pageDesc  = isset($customDesc) ? $customDesc : 'Portfolio of Ranjith C V, Senio
   <link rel="stylesheet" href="assets/css/responsive.css?v=<?= file_exists(__DIR__ . '/../assets/css/responsive.css') ? filemtime(__DIR__ . '/../assets/css/responsive.css') : time() ?>">
   <link rel="stylesheet" href="assets/css/hero.css?v=<?= file_exists(__DIR__ . '/../assets/css/hero.css') ? filemtime(__DIR__ . '/../assets/css/hero.css') : time() ?>">
   <link rel="stylesheet" href="assets/css/chatbot.css?v=<?= file_exists(__DIR__ . '/../assets/css/chatbot.css') ? filemtime(__DIR__ . '/../assets/css/chatbot.css') : time() ?>">
+  <link rel="stylesheet" href="assets/css/testing-types.css?v=<?= file_exists(__DIR__ . '/../assets/css/testing-types.css') ? filemtime(__DIR__ . '/../assets/css/testing-types.css') : time() ?>">
 
   <!-- Lucide Icons CDN (Fallback to SVG) -->
   <script src="https://unpkg.com/lucide@latest" defer></script>

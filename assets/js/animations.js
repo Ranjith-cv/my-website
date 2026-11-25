@@ -545,23 +545,39 @@
       });
     });
 
-    // Event Listeners for Interactive Service Ticker Chips
-    const tickerChips = document.querySelectorAll('.service-ticker-chip');
-    tickerChips.forEach(chip => {
-      chip.addEventListener('click', () => {
-        const doorId = chip.getAttribute('data-door-id');
-        const targetDoor = document.getElementById('door-btn-' + doorId);
-        if (targetDoor) {
-          targetDoor.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          setTimeout(() => {
-            enterDoor(targetDoor);
-          }, 300);
+    // Event Listeners for Testing Types Tiles (Interactive Door Navigation)
+    const testingTiles = document.querySelectorAll('.testing-tile');
+    testingTiles.forEach(tile => {
+      tile.addEventListener('click', () => {
+        const typeId = tile.getAttribute('data-type');
+        const doorMapping = {
+          'manual': '0',
+          'functional': '0',
+          'usability': '0',
+          'compatibility': '0',
+          'uat': '0',
+          'automation': '1',
+          'regression': '1',
+          'api': '1',
+          'ai': '2',
+          'performance': '3',
+          'security': '3'
+        };
+        const doorId = doorMapping[typeId];
+        if (doorId !== undefined) {
+          const targetDoor = document.getElementById('door-btn-' + doorId);
+          if (targetDoor) {
+            targetDoor.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => {
+              enterDoor(targetDoor);
+            }, 450);
+          }
         }
       });
-      chip.addEventListener('keydown', (e) => {
+      tile.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          chip.click();
+          tile.click();
         }
       });
     });
