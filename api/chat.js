@@ -1,25 +1,44 @@
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
+const url = require('url');
 
-// Try reading local .env if available
-function getEnvKey() {
-  if (process.env.GEMINI_API_KEY) {
-    return process.env.GEMINI_API_KEY;
-  }
+function loadConfig() {
+  const config = {
+    apiKey: process.env.GEMINI_API_KEY || '',
+    model: process.env.GEMINI_MODEL || 'gemini-2.5-flash',
+    baseUrl: process.env.GEMINI_API_BASE_URL || 'https://generativelanguage.googleapis.com/v1beta',
+    temperature: parseFloat(process.env.GEMINI_TEMPERATURE || '0.7'),
+    maxOutputTokens: parseInt(process.env.GEMINI_MAX_OUTPUT_TOKENS || '8192', 10),
+    topP: parseFloat(process.env.GEMINI_TOP_P || '0.95'),
+    topK: parseInt(process.env.GEMINI_TOP_K || '40', 10)
+  };
+
   try {
     const envPath = path.resolve(process.cwd(), '.env');
     if (fs.existsSync(envPath)) {
       const content = fs.readFileSync(envPath, 'utf8');
-      const match = content.match(/GEMINI_API_KEY\s*=\s*(.+)/);
-      if (match && match[1]) {
-        return match[1].trim().replace(/^["']|["']$/g, '');
+      const lines = content.split('\n');
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed || trimmed.startsWith('#')) continue;
+        const match = trimmed.match(/^([^=]+)=(.*)$/);
+        if (match) {
+          const key = match[1].trim();
+          const val = match[2].trim().replace(/^["']|["']$/g, '');
+          if (key === 'GEMINI_API_KEY' && !config.apiKey) config.apiKey = val;
+          if (key === 'GEMINI_MODEL' && !process.env.GEMINI_MODEL) config.model = val;
+          if (key === 'GEMINI_API_BASE_URL' && !process.env.GEMINI_API_BASE_URL) config.baseUrl = val;
+          if (key === 'GEMINI_TEMPERATURE' && !process.env.GEMINI_TEMPERATURE) config.temperature = parseFloat(val);
+          if (key === 'GEMINI_MAX_OUTPUT_TOKENS' && !process.env.GEMINI_MAX_OUTPUT_TOKENS) config.maxOutputTokens = parseInt(val, 10);
+          if (key === 'GEMINI_TOP_P' && !process.env.GEMINI_TOP_P) config.topP = parseFloat(val);
+          if (key === 'GEMINI_TOP_K' && !process.env.GEMINI_TOP_K) config.topK = parseInt(val, 10);
+        }
       }
     }
-  } catch (err) {
-    // Ignore error
-  }
-  return process.env.GEMINI_API_KEY || '';
+  } catch (err) {}
+
+  return config;
 }
 
 const SYSTEM_INSTRUCTION = `You are the official AI QA Assistant for Ranjith C V, Senior Software Tester at Astraz Software Solutions.
@@ -79,15 +98,22 @@ module.exports = async (req, res) => {
     });
   }
 
-  const apiKey = getEnvKey();
-  const models = ['gemini-3.5-flash-lite', 'gemini-3.8-flash', 'gemini-flash-latest'];
+  const config = loadConfig();
+  
+  // Model prioritization: user-configured model first, then compatible fallback models
+  const candidateModels = [
+    config.model,
+    'gemini-3.5-flash-lite',
+    'gemini-3.8-flash',
+    'gemini-flash-latest'
+  ].filter((v, i, a) => v && a.indexOf(v) === i);
 
   let replyText = null;
   let lastError = null;
 
-  for (const model of models) {
+  for (const model of candidateModels) {
     try {
-      replyText = await callGeminiAPI(apiKey, model, userMessage.trim());
+      replyText = await callGeminiAPI(config, model, userMessage.trim());
       if (replyText) break;
     } catch (err) {
       lastError = err;
@@ -108,7 +134,7 @@ module.exports = async (req, res) => {
   });
 };
 
-function callGeminiAPI(apiKey, model, prompt) {
+function callGeminiAPI(config, model, prompt) {
   return new Promise((resolve, reject) => {
     const payload = JSON.stringify({
       systemInstruction: {
@@ -121,16 +147,20 @@ function callGeminiAPI(apiKey, model, prompt) {
         }
       ],
       generationConfig: {
-        temperature: 0.7,
-        topP: 0.95,
-        maxOutputTokens: 600
+        temperature: config.temperature,
+        topP: config.topP,
+        topK: config.topK,
+        maxOutputTokens: Math.min(config.maxOutputTokens, 1200) // Optimal for interactive chat
       }
     });
 
+    const parsedBase = url.parse(config.baseUrl || 'https://generativelanguage.googleapis.com/v1beta');
+    const basePath = (parsedBase.pathname || '').replace(/\/+$/, '');
+
     const options = {
-      hostname: 'generativelanguage.googleapis.com',
-      port: 443,
-      path: `/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`,
+      hostname: parsedBase.hostname || 'generativelanguage.googleapis.com',
+      port: parsedBase.port || 443,
+      path: `${basePath}/models/${model}:generateContent?key=${encodeURIComponent(config.apiKey)}`,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

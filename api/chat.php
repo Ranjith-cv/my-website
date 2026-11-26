@@ -2,6 +2,7 @@
 /**
  * GEMINI AI QA ASSISTANT BACKEND (PHP / XAMPP)
  * Proxies chat requests securely to Google Gemini Generative Language API
+ * Using configuration loaded from .env or server environment
  */
 
 header('Content-Type: application/json; charset=UTF-8');
@@ -22,28 +23,39 @@ if ($requestMethod !== 'POST') {
     exit;
 }
 
-// 1. Read API Key from environment or .env
-function getGeminiApiKey() {
-    $envKey = getenv('GEMINI_API_KEY');
-    if ($envKey) return trim($envKey);
-
-    if (isset($_ENV['GEMINI_API_KEY']) && !empty($_ENV['GEMINI_API_KEY'])) {
-        return trim($_ENV['GEMINI_API_KEY']);
-    }
+// Load full Gemini configuration from environment or .env
+function loadGeminiConfig() {
+    $config = [
+        'apiKey' => getenv('GEMINI_API_KEY') ?: ($_ENV['GEMINI_API_KEY'] ?? ''),
+        'model' => getenv('GEMINI_MODEL') ?: ($_ENV['GEMINI_MODEL'] ?? 'gemini-2.5-flash'),
+        'baseUrl' => getenv('GEMINI_API_BASE_URL') ?: ($_ENV['GEMINI_API_BASE_URL'] ?? 'https://generativelanguage.googleapis.com/v1beta'),
+        'temperature' => (float)(getenv('GEMINI_TEMPERATURE') ?: ($_ENV['GEMINI_TEMPERATURE'] ?? 0.7)),
+        'maxOutputTokens' => (int)(getenv('GEMINI_MAX_OUTPUT_TOKENS') ?: ($_ENV['GEMINI_MAX_OUTPUT_TOKENS'] ?? 8192)),
+        'topP' => (float)(getenv('GEMINI_TOP_P') ?: ($_ENV['GEMINI_TOP_P'] ?? 0.95)),
+        'topK' => (int)(getenv('GEMINI_TOP_K') ?: ($_ENV['GEMINI_TOP_K'] ?? 40)),
+    ];
 
     $envFile = dirname(__DIR__) . '/.env';
     if (file_exists($envFile)) {
         $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         foreach ($lines as $line) {
             $line = trim($line);
-            if (strpos($line, '#') === 0) continue;
-            if (preg_match('/^GEMINI_API_KEY\s*=\s*(.+)$/', $line, $matches)) {
-                return trim(trim($matches[1], "\"'"));
+            if (empty($line) || strpos($line, '#') === 0) continue;
+            if (preg_match('/^([^=]+)=(.*)$/', $line, $matches)) {
+                $key = trim($matches[1]);
+                $val = trim(trim($matches[2]), "\"'");
+                if ($key === 'GEMINI_API_KEY' && empty($config['apiKey'])) $config['apiKey'] = $val;
+                if ($key === 'GEMINI_MODEL' && (getenv('GEMINI_MODEL') === false)) $config['model'] = $val;
+                if ($key === 'GEMINI_API_BASE_URL' && (getenv('GEMINI_API_BASE_URL') === false)) $config['baseUrl'] = $val;
+                if ($key === 'GEMINI_TEMPERATURE' && (getenv('GEMINI_TEMPERATURE') === false)) $config['temperature'] = (float)$val;
+                if ($key === 'GEMINI_MAX_OUTPUT_TOKENS' && (getenv('GEMINI_MAX_OUTPUT_TOKENS') === false)) $config['maxOutputTokens'] = (int)$val;
+                if ($key === 'GEMINI_TOP_P' && (getenv('GEMINI_TOP_P') === false)) $config['topP'] = (float)$val;
+                if ($key === 'GEMINI_TOP_K' && (getenv('GEMINI_TOP_K') === false)) $config['topK'] = (int)$val;
             }
         }
     }
 
-    return '';
+    return $config;
 }
 
 $rawInput = file_get_contents('php://input');
@@ -69,7 +81,7 @@ if (empty($userMessage)) {
     exit;
 }
 
-$apiKey = getGeminiApiKey();
+$config = loadGeminiConfig();
 
 $systemInstruction = "You are the official AI QA Assistant for Ranjith C V, Senior Software Tester at Astraz Software Solutions.\n"
     . "Key facts:\n"
@@ -80,7 +92,13 @@ $systemInstruction = "You are the official AI QA Assistant for Ranjith C V, Seni
     . "- Notable Projects: LENSFED Welfare App, Asraya KVVES Kannur App, AAWK Emergency Roadside App, Hote Staff App, Vajra Gold & Diamonds.\n"
     . "Guidelines: Answer clearly, professionally, and concisely in 2-4 short paragraphs or bullet points. When relevant, invite the user to book a consultation or connect on WhatsApp.";
 
-$models = ['gemini-3.5-flash-lite', 'gemini-3.8-flash', 'gemini-flash-latest'];
+$candidateModels = array_unique([
+    $config['model'],
+    'gemini-3.5-flash-lite',
+    'gemini-3.8-flash',
+    'gemini-flash-latest'
+]);
+
 $replyText = null;
 
 $payload = json_encode([
@@ -94,14 +112,18 @@ $payload = json_encode([
         ]
     ],
     'generationConfig' => [
-        'temperature' => 0.7,
-        'topP' => 0.95,
-        'maxOutputTokens' => 600
+        'temperature' => $config['temperature'],
+        'topP' => $config['topP'],
+        'topK' => $config['topK'],
+        'maxOutputTokens' => min($config['maxOutputTokens'], 1200)
     ]
 ], JSON_UNESCAPED_SLASHES);
 
-foreach ($models as $model) {
-    $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key=" . urlencode($apiKey);
+$baseUrl = rtrim($config['baseUrl'], '/');
+
+foreach ($candidateModels as $model) {
+    if (empty($model)) continue;
+    $url = "{$baseUrl}/models/{$model}:generateContent?key=" . urlencode($config['apiKey']);
 
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
