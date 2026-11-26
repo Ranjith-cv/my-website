@@ -464,126 +464,174 @@
     }
 
     /* ------------------------------------------------------------------------
-       8. EXECUTIVE QA KNOWLEDGE BASE QUERY HANDLER
+       8. GEMINI AI QA ASSISTANT ENGINE (API INTEGRATION + KNOWLEDGE FALLBACK)
        ------------------------------------------------------------------------ */
-    function handleAiQuery(query) {
-      const q = (query || '').toLowerCase().trim();
+    function formatMarkdownToHtml(markdown) {
+      if (!markdown) return '';
+      let html = markdown
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/__(.*?)__/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/^\s*[\*\-]\s+(.*)$/gm, '• $1<br>')
+        .replace(/^\s*(\d+\.)\s+(.*)$/gm, '<strong>$1</strong> $2<br>')
+        .replace(/\n\n+/g, '<br><br>')
+        .replace(/\n/g, '<br>');
+
+      return html;
+    }
+
+    async function handleAiQuery(query) {
+      const q = (query || '').trim();
       if (!q) return;
 
       showTypingIndicator();
 
-      const typingDuration = Math.floor(
-        Math.random() * (CHATBOT_CONFIG.timings.typingMax - CHATBOT_CONFIG.timings.typingMin) +
-        CHATBOT_CONFIG.timings.typingMin
-      );
+      // 1. Attempt Live Google Gemini API via serverless or PHP endpoint
+      try {
+        const isPhpUrl = window.location.pathname.endsWith('.php');
+        const endpoint = isPhpUrl ? 'api/chat.php' : '/api/chat';
+        
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 12000);
 
-      setTimeout(() => {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          body: JSON.stringify({ message: q }),
+          signal: controller.signal
+        });
+
+        clearTimeout(timeoutId);
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data && data.reply) {
+            removeTypingIndicator();
+            const formatted = formatMarkdownToHtml(data.reply);
+            streamBotMessage(formatted);
+            return;
+          }
+        }
+        throw new Error('Non-OK response from AI backend');
+      } catch (err) {
+        console.info('[Chatbot] Gemini API live call routed to fallback:', err.message || err);
         removeTypingIndicator();
+        fallbackLocalKnowledgeBase(q);
+      }
+    }
 
-        // 1. GREETINGS & COURTESY
-        const isHowAreYou = /how\s*(are|r)\s*(you|u)|how's\s*it\s*going|how\s*do\s*you\s*do|how\s*is\s*everything|hru\b/i.test(q);
-        const isGreeting = /^(h[yei]+|hello|helo|heyy?|greetings|good\s*(morning|afternoon|evening)|sup|howdy|yo|ola|namaste|whats?\s*up|wassup)\b/i.test(q);
+    function fallbackLocalKnowledgeBase(query) {
+      const q = (query || '').toLowerCase().trim();
 
-        if (isHowAreYou) {
-          streamBotMessage(`Hello! I'm doing great, thank you so much for asking! 😊 How are you doing today?<br><br>
+      // 1. GREETINGS & COURTESY
+      const isHowAreYou = /how\s*(are|r)\s*(you|u)|how's\s*it\s*going|how\s*do\s*you\s*do|how\s*is\s*everything|hru\b/i.test(q);
+      const isGreeting = /^(h[yei]+|hello|helo|heyy?|greetings|good\s*(morning|afternoon|evening)|sup|howdy|yo|ola|namaste|whats?\s*up|wassup)\b/i.test(q);
+
+      if (isHowAreYou) {
+        streamBotMessage(`Hello! I'm doing great, thank you so much for asking! 😊 How are you doing today?<br><br>
 I'm Ranjith's AI QA Assistant at <strong>Astraz Software Solutions</strong>. I'm here to help you with:<br>
 • <strong>Manual &amp; Automated QA</strong>: Functional matrices, Playwright, Cypress &amp; CI/CD<br>
 • <strong>Proven Track Record</strong>: 200+ commercial projects tested, 4,000+ critical bugs identified<br>
 • <strong>AI Testing</strong>: Hallucination audits, BLEU scoring &amp; prompt injection defense.<br><br>
 What QA challenges can I help you unpack today?`);
-          return;
-        }
+        return;
+      }
 
-        if (isGreeting) {
-          streamBotMessage(`Hi there! 👋 Welcome! I'm Ranjith's AI QA Assistant at <strong>Astraz Software Solutions</strong>.<br><br>
+      if (isGreeting) {
+        streamBotMessage(`Hi there! 👋 Welcome! I'm Ranjith's AI QA Assistant at <strong>Astraz Software Solutions</strong>.<br><br>
 Whether you're planning a new web/mobile launch, looking to automate existing regression suites, or need enterprise-grade security testing, I'm here to help.<br><br>
 Feel free to ask a question or tap one of the suggested topics below!`);
-          return;
-        }
+        return;
+      }
 
-        // 2. WHO IS RANJITH & CURRENT POSITION
-        if (q.includes('who is') || q.includes('about ranjith') || q.includes('tell me about') || q.includes('ranjith')) {
-          streamBotMessage(`<strong>Ranjith C V</strong> is a <strong>Senior Software Tester</strong> at <strong>Astraz Software Solutions</strong>.<br><br>
+      // 2. WHO IS RANJITH & CURRENT POSITION
+      if (q.includes('who is') || q.includes('about ranjith') || q.includes('tell me about') || q.includes('ranjith')) {
+        streamBotMessage(`<strong>Ranjith C V</strong> is a <strong>Senior Software Tester</strong> at <strong>Astraz Software Solutions</strong>.<br><br>
 He specializes in delivering bulletproof software quality across Web, Mobile, and AI platforms. With over <strong>200+ verified projects tested</strong> and <strong>4,000+ critical bugs identified</strong>, he guarantees zero defect escapes into production.`);
-          return;
-        }
+        return;
+      }
 
-        if (q.includes('experience') || q.includes('company') || q.includes('astraz') || q.includes('current role')) {
-          streamBotMessage(`Ranjith is currently leading quality assurance as <strong>Senior Software Tester at Astraz Software Solutions</strong> (career started on <strong>June 10, 2025</strong>).<br><br>
+      if (q.includes('experience') || q.includes('company') || q.includes('astraz') || q.includes('current role')) {
+        streamBotMessage(`Ranjith is currently leading quality assurance as <strong>Senior Software Tester at Astraz Software Solutions</strong> (career started on <strong>June 10, 2025</strong>).<br><br>
 At Astraz, he is responsible for comprehensive manual testing, automated regression pipelines, AI model evaluations, and ensuring 100% production-ready release confidence for enterprise clients across India and the UAE.`);
-          return;
-        }
+        return;
+      }
 
-        // 3. MANUAL QA
-        if (q.includes('manual') || q.includes('exploratory') || q.includes('smoke') || q.includes('sanity') || q.includes('test case')) {
-          streamBotMessage(`<strong>Ranjith's Manual Testing Practice:</strong><br><br>
+      // 3. MANUAL QA
+      if (q.includes('manual') || q.includes('exploratory') || q.includes('smoke') || q.includes('sanity') || q.includes('test case')) {
+        streamBotMessage(`<strong>Ranjith's Manual Testing Practice:</strong><br><br>
 • <strong>Edge-Case Defect Hunting</strong>: Uncovering elusive defects that automated scripts miss, including state race conditions and UI render glitches.<br>
 • <strong>Cross-Browser &amp; OS Coverage</strong>: Rigorous compatibility validation across Chrome, Safari, Firefox, Edge, Android &amp; iOS.<br>
 • <strong>Defect Traceability</strong>: Clear, reproducible bug reports with steps, environment telemetry, video evidence, and severity metrics.<br>
 • <strong>Zero Escaped Bugs</strong>: 99.8% production deploy release stability.`);
-          return;
-        }
+        return;
+      }
 
-        // 4. AUTOMATION & CI/CD
-        if (q.includes('automation') || q.includes('playwright') || q.includes('cypress') || q.includes('selenium') || q.includes('ci/cd') || q.includes('pipeline')) {
-          streamBotMessage(`<strong>Test Automation &amp; CI/CD Architecture:</strong><br><br>
+      // 4. AUTOMATION & CI/CD
+      if (q.includes('automation') || q.includes('playwright') || q.includes('cypress') || q.includes('selenium') || q.includes('ci/cd') || q.includes('pipeline')) {
+        streamBotMessage(`<strong>Test Automation &amp; CI/CD Architecture:</strong><br><br>
 Ranjith builds modern, resilient, non-flaky end-to-end automation suites:<br>
 • <strong>Playwright &amp; Cypress</strong>: Modular Page Object Model (POM) architecture.<br>
 • <strong>85% Continuous Regression Coverage</strong>: Slashing manual regression cycles from days to under 15 minutes.<br>
 • <strong>GitHub Actions CI/CD</strong>: Headless parallel test runs, automated failure screenshots, and PR validation gates.<br>
 • <strong>API Automation</strong>: REST &amp; GraphQL contract testing with Postman and Newman.`);
-          return;
-        }
+        return;
+      }
 
-        // 5. AI TESTING & LLM VERIFICATION
-        if (q.includes('ai') || q.includes('llm') || q.includes('rag') || q.includes('hallucination') || q.includes('prompt')) {
-          streamBotMessage(`<strong>AI Testing &amp; LLM Quality Engineering:</strong><br><br>
+      // 5. AI TESTING & LLM VERIFICATION
+      if (q.includes('ai') || q.includes('llm') || q.includes('rag') || q.includes('hallucination') || q.includes('prompt')) {
+        streamBotMessage(`<strong>AI Testing &amp; LLM Quality Engineering:</strong><br><br>
 Ranjith ensures Generative AI applications perform safely and predictably:<br>
 • <strong>Hallucination Detection &amp; BLEU Scoring</strong>: Measuring output factual accuracy against ground truth.<br>
 • <strong>Prompt Injection Defense</strong>: Adversarial jailbreak and system-prompt extraction penetration audits.<br>
 • <strong>RAG Verification</strong>: Context retrieval relevance and citation precision testing.<br>
 • <strong>API Guardrails</strong>: Rate limiting, schema validation, and structured JSON latency testing.`);
-          return;
-        }
+        return;
+      }
 
-        // 6. TESTED PROJECTS (200+)
-        if (q.includes('project') || q.includes('portfolio') || q.includes('lensfed') || q.includes('work') || q.includes('200')) {
-          streamBotMessage(`<strong>Featured Projects Tested by Ranjith:</strong><br><br>
+      // 6. TESTED PROJECTS (200+)
+      if (q.includes('project') || q.includes('portfolio') || q.includes('lensfed') || q.includes('work') || q.includes('200')) {
+        streamBotMessage(`<strong>Featured Projects Tested by Ranjith:</strong><br><br>
 1. <strong>LENSFED Welfare App</strong> (Mobile member benefits, biometrics &amp; offline data sync)<br>
 2. <strong>Asraya KVVES Kannur App</strong> (Financial welfare disbursement &amp; PDF statement calculation)<br>
 3. <strong>AAWK Mobile App</strong> (Emergency roadside breakdown dispatch &amp; push notification matrices)<br>
 4. <strong>Hote Restaurant Staff App</strong> (High-speed table order concurrency &amp; real-time KOT routing)<br><br>
 You can explore the live interactive cards in the <strong>Featured QA Projects</strong> section!`);
-          return;
-        }
+        return;
+      }
 
-        // 7. REGRESSION VS RETESTING
-        if (q.includes('regression') || q.includes('retesting')) {
-          streamBotMessage(`<strong>Regression Testing vs Retesting:</strong><br><br>
+      // 7. REGRESSION VS RETESTING
+      if (q.includes('regression') || q.includes('retesting')) {
+        streamBotMessage(`<strong>Regression Testing vs Retesting:</strong><br><br>
 • <strong>Retesting</strong>: Verifies that a specific reported bug has been resolved and passes the original reproduction steps.<br>
 • <strong>Regression Testing</strong>: Verifies that code modifications, bug fixes, or new features did NOT inadvertently break existing, previously working system functionality.<br><br>
 Ranjith automates 85% of critical regression suites via CI/CD pipelines so every deploy is certified defect-free.`);
-          return;
-        }
+        return;
+      }
 
-        // 8. BOOK CONSULTATION
-        if (q.includes('consultation') || q.includes('book') || q.includes('hire') || q.includes('contact') || q.includes('call') || q.includes('rate')) {
-          streamBotMessage(`Ranjith is open for freelance consulting, automated framework audits, and enterprise QA engagements.<br><br>
+      // 8. BOOK CONSULTATION
+      if (q.includes('consultation') || q.includes('book') || q.includes('hire') || q.includes('contact') || q.includes('call') || q.includes('rate')) {
+        streamBotMessage(`Ranjith is open for freelance consulting, automated framework audits, and enterprise QA engagements.<br><br>
 <button type="button" class="chat-action-btn" onclick="openEnquiryModalGlobal()">
   <span>Book a Testing Consultation &rarr;</span>
 </button><br><br>
 Or connect directly via WhatsApp anytime!`);
-          return;
-        }
+        return;
+      }
 
-        // DEFAULT INTELLIGENT QA FALLBACK
-        streamBotMessage(`Great question regarding "${escapeHtml(query)}"!<br><br>
+      // DEFAULT INTELLIGENT QA FALLBACK
+      streamBotMessage(`Great question regarding "${escapeHtml(query)}"!<br><br>
 In software quality assurance, Ranjith focuses on three non-negotiable pillars:<br>
 1. <strong>Exhaustive Coverage</strong>: Zero untested critical paths.<br>
 2. <strong>Speed &amp; Automation</strong>: 85% continuous regression via CI/CD.<br>
 3. <strong>Measurable Stability</strong>: 99.8% production sign-off confidence.<br><br>
 Would you like to explore <strong>Manual QA</strong>, <strong>Automation Frameworks</strong>, or <strong>AI Testing</strong> in more detail?`);
-      }, typingDuration);
     }
 
     function escapeHtml(text) {

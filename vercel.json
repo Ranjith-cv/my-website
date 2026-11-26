@@ -3,6 +3,14 @@
   "cleanUrls": true,
   "rewrites": [
     {
+      "source": "/api/chat.php",
+      "destination": "/api/chat"
+    },
+    {
+      "source": "/api/chat",
+      "destination": "/api/chat"
+    },
+    {
       "source": "/process-contact.php",
       "destination": "/api/process-contact"
     },
