@@ -1,16 +1,18 @@
 /* ==========================================================================
-   TESTING TYPES I COVER — SLEEK & BALANCED SLIDER STRIP
-   - Dual-row infinite 60fps marquee with colorful gradient icon badges
-   - Scaled for refined visual proportion & responsive elegance
+   TESTING TYPES I COVER — ULTRA-PREMIUM CLIENT-LOGO SLIDER STRIP
+   - Dual-row infinite 60fps marquee with authentic Lucide vector icons
+   - Apple/Linear-grade glassmorphic gradient badges with micro-highlight sheen
+   - Warm off-white paper cards with soft directional underglow on hover
+   - Seamless Rishi Thakor design language with responsive typography
    - Row 1: Right-to-Left (70s), Row 2: Left-to-Right reverse (80s)
-   - Only transform and opacity animated for 60fps performance
+   - Only transform and opacity animated for buttery 60fps performance
    ========================================================================== */
 
 .testing-types-section {
   position: relative;
   width: 100%;
   background: transparent;
-  padding: clamp(45px, 6vh, 72px) 0;
+  padding: clamp(48px, 6vh, 76px) 0;
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -29,17 +31,18 @@ body.dark-theme .testing-types-section {
 .testing-types-header {
   text-align: center;
   max-width: 760px;
-  margin: 0 auto clamp(26px, 4vh, 42px);
+  margin: 0 auto clamp(28px, 4vh, 44px);
 }
 
 .testing-types-heading {
-  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-heading, 'Onest', sans-serif);
   font-weight: 800;
   font-size: clamp(26px, 3.6vw, 42px);
   color: var(--ink, #1B1B1E);
   line-height: 1.15;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
   margin: 0 0 10px 0;
+  transition: color 0.35s ease;
 }
 
 body.dark-theme .testing-types-heading {
@@ -47,12 +50,13 @@ body.dark-theme .testing-types-heading {
 }
 
 .testing-types-subline {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-body, 'Onest', sans-serif);
   font-weight: 500;
   font-size: clamp(13px, 1.15vw, 15px);
   color: var(--muted, #6E6C68);
-  line-height: 1.45;
+  line-height: 1.5;
   margin: 0;
+  transition: color 0.35s ease;
 }
 
 body.dark-theme .testing-types-subline {
@@ -65,10 +69,10 @@ body.dark-theme .testing-types-subline {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 22px;
   overflow: hidden;
-  mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
   user-select: none;
 }
 
@@ -78,12 +82,12 @@ body.dark-theme .testing-types-subline {
   overflow: hidden;
   display: flex;
   align-items: center;
-  min-height: 205px;
+  min-height: 208px;
 }
 
 .testing-types-track {
   display: flex;
-  align-items: center; /* Vertically centered for staggered height tiles */
+  align-items: center;
   gap: 20px;
   width: max-content;
   will-change: transform;
@@ -122,15 +126,15 @@ body.dark-theme .testing-types-subline {
 }
 
 /* ==========================================================================
-   REFINED DESKTOP TILE SPECIFICATIONS: 175px wide, radius 22px, background #F7F8FF, gap 20px
-   Staggered Heights: 185px / 168px / 152px (centered vertically)
+   PREMIUM DESKTOP TILE: 175px wide x 184px high, uniform across all cards
    ========================================================================== */
 .testing-tile {
   width: 175px;
-  border-radius: 22px;
-  background: var(--bg-soft, #E9E6E0);
+  height: 184px;
+  border-radius: 20px;
+  background: var(--card, #FBFAF7);
   border: 1px solid var(--line, #DEDAD3);
-  padding: 16px 12px 14px 12px;
+  padding: 18px 12px 14px 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -138,56 +142,80 @@ body.dark-theme .testing-types-subline {
   text-align: center;
   flex-shrink: 0;
   box-sizing: border-box;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 2px 8px rgba(27, 27, 30, 0.04), 0 1px 2px rgba(27, 27, 30, 0.02);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   position: relative;
+  isolation: isolate;
 }
 
 body.dark-theme .testing-tile {
-  background: #141721;
-  border-color: rgba(255, 255, 255, 0.05);
+  background: #141722;
+  border-color: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
 }
 
-/* Staggered Heights */
-.tile-h-0 {
-  height: 185px;
-}
-
-.tile-h-1 {
-  height: 168px;
-}
-
+/* Staggered Height overrides to keep strict 100% uniformity */
+.tile-h-0,
+.tile-h-1,
 .tile-h-2 {
-  height: 152px;
+  height: 184px;
 }
 
-/* Inside Tile: 68px gradient rounded-square badge (radius 18) with white line icon */
+/* ==========================================================================
+   LUCIDE ICON BADGE: Glassmorphic Sheen & Bevel
+   ========================================================================== */
 .type-badge {
-  width: 68px;
-  height: 68px;
-  border-radius: 18px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: 58px;
+  height: 58px;
+  border-radius: 17px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 11px;
   flex-shrink: 0;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  box-shadow:
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.12),
+    0 8px 20px -4px var(--badge-glow, rgba(0, 0, 0, 0.2));
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
 }
 
+/* Gloss reflection top highlight */
+.type-badge::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0.06) 42%, transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Crisp Lucide SVG icon with micro drop-shadow */
 .type-badge svg {
-  width: 28px;
-  height: 28px;
+  position: relative;
+  z-index: 2;
+  width: 25px;
+  height: 25px;
   flex-shrink: 0;
+  filter: drop-shadow(0 1.5px 2px rgba(0, 0, 0, 0.22));
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Type Name: Montserrat 700 13.5px, #1B1B1E */
+/* ==========================================================================
+   TYPOGRAPHY
+   ========================================================================== */
 .type-title {
-  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-heading, 'Onest', sans-serif);
   font-weight: 700;
-  font-size: 13.5px;
+  font-size: 13px;
   color: var(--ink, #1B1B1E);
-  line-height: 1.25;
+  line-height: 1.22;
+  letter-spacing: -0.02em;
   margin: 0 0 3px 0;
   transition: color 0.25s ease;
 }
@@ -196,9 +224,8 @@ body.dark-theme .type-title {
   color: #F1F3F8;
 }
 
-/* Short Line: 500 11px, #6E6C68 */
 .type-subline {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-body, 'Onest', sans-serif);
   font-weight: 500;
   font-size: 11px;
   color: var(--muted, #6E6C68);
@@ -211,25 +238,40 @@ body.dark-theme .type-subline {
   color: #94A3B8;
 }
 
-/* Hover: tile lifts 5px, background tints to type's light color or card, badge scales 1.08 and rotates -4deg */
+/* ==========================================================================
+   HOVER INTERACTIONS: Smooth Lift, Diffused Ambient Glow, Badge Scale
+   ========================================================================== */
 .testing-tile:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
   background: var(--card, #FBFAF7);
-  box-shadow: 0 12px 28px rgba(25, 25, 28, 0.1);
+  border-color: var(--tile-border, var(--line, #DEDAD3));
+  box-shadow:
+    0 16px 36px -8px var(--tile-glow, rgba(27, 27, 30, 0.14)),
+    0 4px 12px rgba(27, 27, 30, 0.04);
 }
 
 body.dark-theme .testing-tile:hover {
-  background: #1B1F2D;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+  background: #191D2B;
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow:
+    0 18px 40px -8px var(--tile-glow, rgba(0, 0, 0, 0.6)),
+    0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 .testing-tile:hover .type-badge {
-  transform: scale(1.08) rotate(-4deg);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+  transform: scale(1.08) translateY(-2px);
+  box-shadow:
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.12),
+    0 12px 24px -4px var(--badge-glow);
+}
+
+.testing-tile:hover .type-badge svg {
+  transform: scale(1.05);
 }
 
 /* ==========================================================================
-   TABLET RESPONSIVENESS (768px - 1024px)
+   TABLET RESPONSIVENESS (769px - 1024px)
    ========================================================================== */
 @media (max-width: 1024px) and (min-width: 769px) {
   .testing-types-track {
@@ -241,42 +283,45 @@ body.dark-theme .testing-tile:hover {
   }
 
   .testing-types-row {
-    min-height: 185px;
+    min-height: 190px;
   }
 
   .testing-tile {
     width: 155px;
-    border-radius: 19px;
-    padding: 13px 10px;
+    height: 168px;
+    border-radius: 18px;
+    padding: 14px 10px 12px 10px;
   }
 
-  .tile-h-0 { height: 172px; }
-  .tile-h-1 { height: 156px; }
-  .tile-h-2 { height: 142px; }
+  .tile-h-0,
+  .tile-h-1,
+  .tile-h-2 {
+    height: 168px;
+  }
 
   .type-badge {
-    width: 60px;
-    height: 60px;
-    border-radius: 16px;
-    margin-bottom: 8px;
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+    margin-bottom: 9px;
   }
 
   .type-badge svg {
-    width: 25px;
-    height: 25px;
+    width: 22px;
+    height: 22px;
   }
 
   .type-title {
-    font-size: 12.5px;
+    font-size: 12px;
   }
 
   .type-subline {
-    font-size: 10.5px;
+    font-size: 10px;
   }
 }
 
 /* ==========================================================================
-   MOBILE RESPONSIVENESS (< 768px): tiles 135px wide, badges 48px
+   MOBILE RESPONSIVENESS (< 768px): tiles 135px wide, uniform 144px height
    ========================================================================== */
 @media (max-width: 768px) {
   .testing-types-section {
@@ -293,36 +338,39 @@ body.dark-theme .testing-tile:hover {
   }
 
   .testing-types-row {
-    min-height: 160px;
+    min-height: 162px;
   }
 
   .testing-types-track {
     gap: 12px;
   }
 
-  /* Mobile: tiles 135px wide */
   .testing-tile {
     width: 135px;
+    height: 144px;
     border-radius: 16px;
-    padding: 10px 8px 8px 8px;
+    padding: 11px 8px 9px 8px;
   }
 
-  .tile-h-0 { height: 148px; }
-  .tile-h-1 { height: 135px; }
-  .tile-h-2 { height: 122px; }
+  .tile-h-0,
+  .tile-h-1,
+  .tile-h-2 {
+    height: 144px;
+  }
 
-  /* Mobile: badges 48px */
   .type-badge {
-    width: 48px;
-    height: 48px;
-    border-radius: 13px;
-    margin-bottom: 6px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    margin-bottom: 7px;
+    box-shadow:
+      inset 0 1px 1px 0 rgba(255, 255, 255, 0.45),
+      0 6px 14px -3px var(--badge-glow, rgba(0, 0, 0, 0.2));
   }
 
   .type-badge svg {
-    width: 20px;
-    height: 20px;
+    width: 19px;
+    height: 19px;
   }
 
   .type-title {
@@ -342,25 +390,28 @@ body.dark-theme .testing-tile:hover {
    ========================================================================== */
 @media (max-width: 380px) {
   .testing-tile {
-    width: 122px;
+    width: 120px;
+    height: 132px;
     border-radius: 14px;
-    padding: 8px 6px;
+    padding: 9px 6px;
   }
 
-  .tile-h-0 { height: 138px; }
-  .tile-h-1 { height: 126px; }
-  .tile-h-2 { height: 114px; }
+  .tile-h-0,
+  .tile-h-1,
+  .tile-h-2 {
+    height: 132px;
+  }
 
   .type-badge {
-    width: 42px;
-    height: 42px;
+    width: 38px;
+    height: 38px;
     border-radius: 11px;
     margin-bottom: 5px;
   }
 
   .type-badge svg {
-    width: 18px;
-    height: 18px;
+    width: 17px;
+    height: 17px;
   }
 
   .type-title {
