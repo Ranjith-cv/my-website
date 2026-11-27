@@ -760,6 +760,20 @@ Would you like to explore any of these topics, or schedule a direct consultation
 
       const formData = new FormData(form);
 
+      // Optional direct Google Sheets Web App Webhook dispatch
+      const sheetUrl = window.GOOGLE_SHEET_WEBAPP_URL;
+      if (sheetUrl && typeof sheetUrl === 'string' && sheetUrl.startsWith('http')) {
+        try {
+          fetch(sheetUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: formData
+          }).catch(e => console.warn('Google Sheet client dispatch warning:', e));
+        } catch (e) {
+          console.warn('Google Sheet dispatch error:', e);
+        }
+      }
+
       try {
         const response = await fetch('process-contact.php', {
           method: 'POST',

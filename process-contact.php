@@ -147,6 +147,52 @@ if (count($existingMessages) > 100) {
 $saved = file_put_contents($dataFile, json_encode($existingMessages, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES), LOCK_EX);
 
 if ($saved !== false) {
+    // Optional: Forward enquiry to Google Sheets Web App Webhook
+    $sheetWebhook = getenv('GOOGLE_SHEET_WEBAPP_URL') ?: ($_ENV['GOOGLE_SHEET_WEBAPP_URL'] ?? '');
+    if (empty($sheetWebhook)) {
+        $envFile = __DIR__ . '/.env';
+        if (file_exists($envFile)) {
+            $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+            foreach ($lines as $line) {
+                if (strpos(trim($line), 'GOOGLE_SHEET_WEBAPP_URL=') === 0) {
+                    $parts = explode('=', $line, 2);
+                    $sheetWebhook = trim(trim($parts[1] ?? ''), "\"'");
+                    break;
+                }
+            }
+        }
+    }
+
+    if (!empty($sheetWebhook) && filter_var($sheetWebhook, FILTER_VALIDATE_URL)) {
+        try {
+            $payload = json_encode([
+                'ticket_id' => $cleanData['id'],
+                'name'      => $cleanData['name'],
+                'email'     => $cleanData['email'],
+                'phone'     => $cleanData['phone'],
+                'service'   => $cleanData['inquiry_type'] ?: $cleanData['subject'],
+                'message'   => $cleanData['message'],
+                'form_type' => $_POST['form_type'] ?? 'testing_consultation'
+            ]);
+
+            $ch = curl_init($sheetWebhook);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($payload)
+            ]);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 6);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+            @curl_exec($ch);
+            @curl_close($ch);
+        } catch (\Throwable $t) {
+            // Error ignored to avoid blocking the user response
+        }
+    }
+
     // Regenerate CSRF token for next submission
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 
